@@ -38,7 +38,7 @@ export class OverworldScene extends CustomScene {
                 if (x === playerCoords.x && y === playerCoords.y) {
                     this.player = new WorldPlayer(this, cx, cy);
                     wc.setCellState({ clearFogOfWar: true });
-                    this.cameras.main.centerOn(cx, cy);
+                    this.cameras.main.startFollow(this.player);
                 }
 
                 if (map.cellIsAdjacentToPlayer(x, y)) {

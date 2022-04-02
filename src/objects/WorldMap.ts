@@ -60,6 +60,7 @@ export const WorldAssets = {
 
 export class WorldMap {
     private _cells: Cell[][];
+    private playerHomeCoords: { x: number; y: number };
     private currentPlayerCoords: { x: number; y: number };
 
     // TODO Deep ReadOnly?
@@ -72,11 +73,12 @@ export class WorldMap {
     }
 
     constructor() {
-        this._cells = this.generateMap();
         this.currentPlayerCoords = {
             x: Math.floor(MAP_WIDTH / 2),
             y: Math.floor(MAP_HEIGHT / 2),
         };
+        this.playerHomeCoords = { ...this.playerCoords };
+        this._cells = this.generateMap();
     }
 
     public cellIsAdjacentToPlayer(x: number, y: number) {
@@ -169,6 +171,10 @@ export class WorldMap {
 
             map[ry][rx].type = CellType.Colony;
         }
+
+        // set the player home to a colony tile as well
+        map[this.playerHomeCoords.y][this.playerHomeCoords.x].type =
+            CellType.Colony;
 
         return map;
     }
