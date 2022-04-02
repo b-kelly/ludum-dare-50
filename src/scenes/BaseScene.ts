@@ -1,13 +1,12 @@
-import { debugConfig } from "../debug-config";
 import { baseTextOptions } from "../shared";
 import { Button } from "../UI/Button";
 import { LogScene } from "./LogScene";
 
-export class StartMenuScene extends Phaser.Scene {
-    static readonly KEY = "StartMenuScene";
+export class BaseScene extends Phaser.Scene {
+    static readonly KEY = "BaseScene";
 
     constructor() {
-        super({ key: StartMenuScene.KEY });
+        super({ key: BaseScene.KEY });
     }
 
     preload() {
@@ -15,13 +14,6 @@ export class StartMenuScene extends Phaser.Scene {
     }
 
     create() {
-        // @ts-expect-error Added by webpack.DefinePlugin
-        if (DEV) {
-            console.warn("LOADING DEBUG CONFIG OVERRIDES");
-            this.scene.launch(debugConfig.sceneKey, debugConfig.data);
-            return;
-        }
-
         const text = this.add.text(
             0,
             0,

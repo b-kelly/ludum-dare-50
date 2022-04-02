@@ -1,3 +1,4 @@
+import { LogScene } from "./scenes/LogScene";
 import { StartMenuScene } from "./scenes/StartMenuScene";
 
 export const gameConfig: Phaser.Types.Core.GameConfig = {
@@ -23,5 +24,5 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
 
     parent: "js-game-container",
     autoFocus: true,
-    scene: [StartMenuScene],
+    scene: [StartMenuScene, LogScene],
 };

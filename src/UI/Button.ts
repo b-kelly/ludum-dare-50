@@ -32,4 +32,8 @@ export class Button extends Phaser.GameObjects.Text {
             );
         scene.add.existing(this);
     }
+
+    setOnClick(callback: () => void) {
+        this.off("pointerup").on("pointerup", callback);
+    }
 }
