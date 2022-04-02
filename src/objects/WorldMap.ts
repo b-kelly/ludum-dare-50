@@ -5,11 +5,11 @@ const MAP_HEIGHT = 30;
 
 // TODO
 enum CellType {
-    Empty,
-    Colony,
-    Forest,
-    Desert,
-    Wetland,
+    Empty = 0,
+    Colony = 1,
+    Forest = 2,
+    Desert = 3,
+    Wetland = 4,
 }
 
 const cellTypeSpawnData: Record<
@@ -21,30 +21,27 @@ const cellTypeSpawnData: Record<
     }
 > = {
     [CellType.Empty]: null,
-    [CellType.Colony]: {
-        spawnRate: 0,
-        clusterSizeUpper: 1,
-        clusterSizeLower: 1,
-    },
+    [CellType.Colony]: null,
     [CellType.Forest]: {
         spawnRate: 0.025,
-        clusterSizeUpper: 1,
+        clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
     [CellType.Desert]: {
         spawnRate: 0.025,
-        clusterSizeUpper: 1,
+        clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
     [CellType.Wetland]: {
         spawnRate: 0.025,
-        clusterSizeUpper: 1,
+        clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
 } as const;
 
 interface Cell {
     type: CellType;
+    visited: boolean;
 }
 
 export class WorldMap {
@@ -107,21 +104,83 @@ export class WorldMap {
         for (let y = 0; y < MAP_HEIGHT; y++) {
             map[y] = [];
             for (let x = 0; x < MAP_WIDTH; x++) {
+                const cellType = this.pickCellType();
                 map[y][x] = {
-                    type: this.pickCellType(),
+                    visited: cellType !== CellType.Empty,
+                    // randomly distribute seeds
+                    type: cellType,
+                    // TODO pickEvent
                 };
             }
         }
 
-        // randomly distribute seeds
+        // go through and grow the seeds
+        for (let y = 0; y < MAP_HEIGHT; y++) {
+            for (let x = 0; x < MAP_WIDTH; x++) {
+                const cell = map[y][x];
+
+                if (cell.type !== CellType.Empty) {
+                    const meta = cellTypeSpawnData[cell.type];
+                    const count = Phaser.Math.RND.integerInRange(
+                        meta.clusterSizeLower,
+                        meta.clusterSizeUpper
+                    );
+
+                    // cluster size of one means just this cell
+                    if (count > 1) {
+                        for (let i = 0; i < count; i++) {
+                            const neighbor = this.getRandomAdjacentCell(
+                                map,
+                                x,
+                                y
+                            );
+
+                            if (neighbor && !neighbor.visited) {
+                                neighbor.type = cell.type;
+                                neighbor.visited = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         return map;
     }
 
+    private getRandomAdjacentCell(map: Cell[][], x: number, y: number) {
+        const rx = Phaser.Math.RND.integerInRange(-1, 1);
+        const ry = Phaser.Math.RND.integerInRange(-1, 1);
+
+        const newX = x + rx;
+        const newY = y + ry;
+
+        if (newX < 0 || newX >= MAP_WIDTH || newY < 0 || newY >= MAP_HEIGHT) {
+            return null;
+        }
+
+        return map[newY][newX];
+    }
+
     private pickCellType() {
-        //
-        cellTypeSpawnData;
-        return CellType.Empty;
+        let ret = CellType.Empty;
+
+        Object.entries(cellTypeSpawnData).forEach(([key, data]) => {
+            if (!data) {
+                return true;
+            }
+
+            const rng = Phaser.Math.RND.frac();
+            if (rng <= data.spawnRate) {
+                ret = +key;
+                return false;
+            }
+
+            // proceed to the next type
+            return true;
+        });
+
+        return ret;
     }
 
     public DEBUG_displayMap(): void {
