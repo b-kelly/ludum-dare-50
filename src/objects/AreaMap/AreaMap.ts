@@ -1,23 +1,11 @@
+import { AreaSpriteSheet } from "./AreaSpriteSheet";
+
 export enum CellState {
     Open,
     Filled,
     Wall,
-    Resource,
+    //Resource,
 }
-
-/**
- * 64x64 grid
- * for each subsection
- * 1 top-left corner
- * 2 top edge next to path
- * 3-4 interior
- * 4-5 path
- * 5-6 2x2 statement pieces (fills in interior)
- * 7 filler objects (fills in interior)
- *
- * randomly rotate interior tiles
- * path tiles rotate
- */
 
 /** Generates a connected "cave" with cellular automata */
 export class AreaMap {
@@ -26,7 +14,7 @@ export class AreaMap {
     private readonly _startLocation: { x: number; y: number };
 
     private readonly chanceToStartOpen = 0.4;
-    private readonly chanceToGenerateResource = 0.01;
+    //private readonly chanceToGenerateResource = 0.01;
     private readonly requiredNeighborsForLife = 4;
     private readonly requiredNeighborsForBirth = 3;
     private readonly iterations = 4;
@@ -51,11 +39,16 @@ export class AreaMap {
 
     /** Tile map expects this backwards from how we're rendering it */
     toTilemap(): CellState[][] {
+        const sheet = new AreaSpriteSheet(null); // TODO TYPE
         const tilemap = [];
         for (let i = 0; i < this._size.width; i++) {
             tilemap[i] = [];
             for (let j = 0; j < this._size.height; j++) {
-                tilemap[i][j] = this._map[j][i];
+                const currentCell = this._map[j][i];
+                const randomSpriteFrame =
+                    sheet.getRandomFrameByType(currentCell);
+
+                tilemap[i][j] = randomSpriteFrame;
             }
         }
 
@@ -160,10 +153,11 @@ export class AreaMap {
                     cell === CellState.Filled &&
                     this.getOpenNeighbors(map, i, j) > 0
                 ) {
-                    map[i][j] =
-                        Math.random() < this.chanceToGenerateResource
-                            ? CellState.Resource
-                            : CellState.Wall;
+                    map[i][j] = CellState.Wall;
+                    // map[i][j] =
+                    //     Math.random() < this.chanceToGenerateResource
+                    //         ? CellState.Resource
+                    //         : CellState.Wall;
                 }
             }
         }
@@ -218,9 +212,9 @@ export class AreaMap {
                     case CellState.Wall:
                         ctx.fillStyle = "grey";
                         break;
-                    case CellState.Resource:
-                        ctx.fillStyle = "red";
-                        break;
+                    // case CellState.Resource:
+                    //     ctx.fillStyle = "red";
+                    //     break;
                     default:
                         ctx.fillStyle = "black";
                 }
