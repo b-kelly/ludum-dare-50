@@ -29,6 +29,6 @@ function onComplete(this: Phaser.Scene) {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: OverworldScene.KEY,
+    sceneKey: ExploreScene.KEY,
     data: {},
 };

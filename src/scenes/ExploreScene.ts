@@ -11,6 +11,8 @@ export class ExploreScene extends CustomScene {
     private map: AreaMap;
     private tileMap: Phaser.Tilemaps.Tilemap;
 
+    private player: Phaser.GameObjects.Rectangle;
+
     constructor() {
         super({ key: ExploreScene.KEY });
     }
@@ -46,6 +48,22 @@ export class ExploreScene extends CustomScene {
         layer.setCollision([0], false);
         layer.setCollisionByExclusion([0], true);
 
+        const coords = this.translateCoord(
+            this.map.startLocation.x,
+            this.map.startLocation.y
+        );
+        this.player = this.add
+            .rectangle(coords.x, coords.y, TILE_WIDTH, TILE_WIDTH, 0xff0000)
+            .setOrigin(0, 0);
+        this.cameras.main.startFollow(this.player);
+
         this.map.DEBUG_displayMap();
+    }
+
+    private translateCoord(xIndex: number, yIndex: number) {
+        return {
+            x: xIndex * TILE_WIDTH,
+            y: yIndex * TILE_WIDTH,
+        };
     }
 }
