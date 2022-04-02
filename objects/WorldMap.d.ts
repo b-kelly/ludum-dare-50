@@ -8,7 +8,7 @@ declare enum CellType {
 }
 interface Cell {
     type: CellType;
-    visited: boolean;
+    clearedFogOfWar: boolean;
 }
 export declare const WorldAssets: {
     readonly tiles: "tiles";
@@ -33,7 +33,14 @@ export declare class WorldMap {
     DEBUG_displayMap(): void;
 }
 export declare class WorldCell extends Phaser.GameObjects.Sprite {
+    private overlay;
+    private hasFogOfWar;
     constructor(scene: CustomScene, xIndex: number, yIndex: number, cell: Cell);
+    setCellState(state: {
+        isVisitable?: boolean;
+        clearFogOfWar?: boolean;
+    }): void;
+    private setOverlayState;
     private initEventListeners;
     private hover;
     private static getRandomSpriteFrame;
