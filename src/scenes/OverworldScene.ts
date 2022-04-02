@@ -1,17 +1,17 @@
 import { CustomScene } from "../objects/CustomScene";
 import { WorldCell, WorldPlayer } from "../objects/WorldMap";
 
-export class MapScene extends CustomScene {
-    static readonly KEY = "MapScene";
+export class OverworldScene extends CustomScene {
+    static readonly KEY = "OverworldScene";
 
     private player: WorldPlayer;
 
     constructor() {
-        super({ key: MapScene.KEY });
+        super({ key: OverworldScene.KEY });
     }
 
     init(data: object) {
-        console.log(MapScene.KEY, data);
+        console.log(OverworldScene.KEY, data);
     }
 
     preload() {
@@ -20,12 +20,12 @@ export class MapScene extends CustomScene {
 
     create() {
         this.drawHexMap();
+        this.global.worldMap.DEBUG_displayMap();
     }
 
     private drawHexMap() {
         const map = this.global.worldMap;
         const playerCoords = map.playerCoords;
-        console.log(playerCoords);
 
         map.cells.forEach((row, y) => {
             row.forEach((cell, x) => {

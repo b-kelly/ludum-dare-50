@@ -5,8 +5,43 @@ const MAP_HEIGHT = 30;
 
 // TODO
 enum CellType {
-    Unknown,
+    Empty,
+    Colony,
+    Forest,
+    Desert,
+    Wetland,
 }
+
+const cellTypeSpawnData: Record<
+    CellType,
+    {
+        spawnRate: number;
+        clusterSizeUpper: number;
+        clusterSizeLower: number;
+    }
+> = {
+    [CellType.Empty]: null,
+    [CellType.Colony]: {
+        spawnRate: 0,
+        clusterSizeUpper: 1,
+        clusterSizeLower: 1,
+    },
+    [CellType.Forest]: {
+        spawnRate: 0.025,
+        clusterSizeUpper: 1,
+        clusterSizeLower: 1,
+    },
+    [CellType.Desert]: {
+        spawnRate: 0.025,
+        clusterSizeUpper: 1,
+        clusterSizeLower: 1,
+    },
+    [CellType.Wetland]: {
+        spawnRate: 0.025,
+        clusterSizeUpper: 1,
+        clusterSizeLower: 1,
+    },
+} as const;
 
 interface Cell {
     type: CellType;
@@ -73,12 +108,72 @@ export class WorldMap {
             map[y] = [];
             for (let x = 0; x < MAP_WIDTH; x++) {
                 map[y][x] = {
-                    type: CellType.Unknown,
+                    type: this.pickCellType(),
                 };
             }
         }
 
+        // randomly distribute seeds
+
         return map;
+    }
+
+    private pickCellType() {
+        //
+        cellTypeSpawnData;
+        return CellType.Empty;
+    }
+
+    public DEBUG_displayMap(): void {
+        const display = document.querySelector<HTMLCanvasElement>(".js-map");
+        display.classList.remove("hide-debug");
+        const map = this._cells;
+
+        const ctx = display.getContext("2d");
+        const width = 10;
+        const scale = 4; // increase this to make the display physically larger, scaling the canvas view to match
+        const ctxScale = (1 / width) * scale;
+
+        display.width = MAP_WIDTH * scale;
+        display.height = MAP_HEIGHT * scale;
+        ctx.scale(ctxScale, ctxScale);
+
+        for (let i = 0; i < map.length; i++) {
+            for (let j = 0; j < map[i].length; j++) {
+                const cell = map[i][j];
+                switch (cell.type) {
+                    case CellType.Empty:
+                        ctx.fillStyle = "white";
+                        break;
+                    case CellType.Colony:
+                        ctx.fillStyle = "black";
+                        break;
+                    case CellType.Desert:
+                        ctx.fillStyle = "yellow";
+                        break;
+                    case CellType.Forest:
+                        ctx.fillStyle = "green";
+                        break;
+                    case CellType.Wetland:
+                        ctx.fillStyle = "blue";
+                        break;
+                    default:
+                        ctx.fillStyle = "black";
+                }
+
+                ctx.fillRect(i * width, j * width, width, width);
+            }
+        }
+
+        // draw the player start pos
+        ctx.fillStyle = "hotpink";
+        const playerWidth = width / 2; // show some of the square behind the player for debugging
+        ctx.fillRect(
+            this.currentPlayerCoords.x * width + playerWidth / 2,
+            this.currentPlayerCoords.y * width + playerWidth / 2,
+            playerWidth,
+            playerWidth
+        );
     }
 }
 

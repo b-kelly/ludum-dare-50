@@ -2,7 +2,7 @@
 
 import { BaseScene } from "./scenes/BaseScene";
 import { ExploreScene } from "./scenes/ExploreScene";
-import { MapScene } from "./scenes/MapScene";
+import { OverworldScene } from "./scenes/OverworldScene";
 
 interface DebugConfig {
     sceneKey?: string;
@@ -29,6 +29,6 @@ function onComplete(this: Phaser.Scene) {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: BaseScene.KEY,
+    sceneKey: OverworldScene.KEY,
     data: {},
 };

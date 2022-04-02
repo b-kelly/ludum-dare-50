@@ -5,3 +5,11 @@ body {
     width: 100%;
     height: 100%;
 }
+
+.js-hide-debug {
+    display: none;
+}
+
+.debug-map {
+    border: 1px solid black;
+}

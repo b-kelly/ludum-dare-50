@@ -9,3 +9,7 @@ export const GeneralAssets = {
 
 // tiles are 64x64 px
 export const TILE_WIDTH = 64;
+
+export function DEBUG_isDebugBuild() {
+    return process.env.NODE_ENV === "development";
+}

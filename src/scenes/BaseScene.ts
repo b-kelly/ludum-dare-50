@@ -1,7 +1,7 @@
 import { CustomScene } from "../objects/CustomScene";
 import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
-import { MapScene } from "./MapScene";
+import { OverworldScene } from "./OverworldScene";
 
 export class BaseScene extends CustomScene {
     static readonly KEY = "BaseScene";
@@ -27,7 +27,7 @@ export class BaseScene extends CustomScene {
             y: 0,
             text: "Next",
             onClick: () => {
-                this.scene.start(MapScene.KEY, {});
+                this.scene.start(OverworldScene.KEY, {});
             },
         });
     }
