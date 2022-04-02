@@ -7,4 +7,5 @@ export declare class MapScene extends CustomScene {
     preload(): void;
     create(): void;
     private drawHexMap;
+    private selectSquare;
 }
