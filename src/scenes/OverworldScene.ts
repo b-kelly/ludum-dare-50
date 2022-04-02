@@ -37,11 +37,12 @@ export class OverworldScene extends CustomScene {
 
                 if (x === playerCoords.x && y === playerCoords.y) {
                     this.player = new WorldPlayer(this, cx, cy);
+                    wc.setCellState({ clearFogOfWar: true });
                     this.cameras.main.centerOn(cx, cy);
                 }
 
                 if (map.cellIsAdjacentToPlayer(x, y)) {
-                    //wc.setFillStyle(0x0000ff);
+                    wc.setCellState({ isVisitable: true, clearFogOfWar: true });
                     wc.on("pointerup", () => this.selectSquare(x, y));
                 }
             });
