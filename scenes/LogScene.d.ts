@@ -1,4 +1,5 @@
-export declare class LogScene extends Phaser.Scene {
+import { CustomScene } from "../objects/CustomScene";
+export declare class LogScene extends CustomScene {
     static readonly KEY = "LogScene";
     private content;
     private interactButton;
@@ -14,5 +15,4 @@ export declare class LogScene extends Phaser.Scene {
     update(): void;
     private scrollDown;
     private showNext;
-    private debugGenerateText;
 }

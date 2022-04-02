@@ -5,4 +5,5 @@ export declare class BaseScene extends CustomScene {
     init(data: object): void;
     preload(): void;
     create(): void;
+    private createResourcesDisplay;
 }
