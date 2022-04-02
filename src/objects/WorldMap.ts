@@ -55,6 +55,7 @@ export const WorldAssets = {
         [CellType.Desert]: 2,
         [CellType.Empty]: 3,
         [CellType.Colony]: 4,
+        Overlay: 5,
     },
 } as const;
 
@@ -268,8 +269,10 @@ export class WorldMap {
 }
 
 export class WorldCell extends Phaser.GameObjects.Sprite {
-    private overlay: Phaser.GameObjects.Polygon;
+    private overlay: Phaser.GameObjects.Sprite;
     private hasFogOfWar: boolean;
+    private currentState: Parameters<WorldCell["setOverlayState"]>[0];
+    private prevState: Parameters<WorldCell["setOverlayState"]>[0];
 
     constructor(
         scene: CustomScene,
@@ -284,7 +287,6 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         const height = 14 * pixelSize;
         const width = 23 * pixelSize;
         const h2 = height / 2;
-        const w2 = width - h2;
 
         const x = width * xIndex - h2 * xIndex;
         let y = height * yIndex;
@@ -306,14 +308,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
 
         // TODO looks like the overlay needs to be one "pixel" both wider and longer
         // prettier-ignore
-        this.overlay = scene.add.polygon(x, y, [
-            0,h2, // P1
-            h2,0, // P2
-            w2,0, // P3
-            width,h2, // P4
-            w2,height, // P5
-            h2,height, // P6
-        ], 0xffffff, 0.50).setOrigin(0, 0);
+        this.overlay = scene.add.sprite(x, y, WorldAssets.tiles, WorldAssets.tilesData.Overlay * TILES_SHEET_WIDTH).setOrigin(0, 0);
 
         this.setOverlayState(cell.clearedFogOfWar ? null : "fog");
         this.hasFogOfWar = !cell.clearedFogOfWar;
@@ -331,26 +326,29 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     }
 
     setCellState(state: { isVisitable?: boolean; clearFogOfWar?: boolean }) {
-        if (state.isVisitable) {
-            this.setTint(0x0000ff);
-        } else {
-            this.setTint(null);
-        }
-
         if (state.clearFogOfWar) {
             this.hasFogOfWar = false;
             this.setOverlayState(null);
         }
+        if (state.isVisitable) {
+            this.setOverlayState("visitable");
+        }
     }
 
-    private setOverlayState(state: "fog" | "hover" | null) {
+    private setOverlayState(state: "fog" | "hover" | "visitable" | null) {
+        this.prevState = this.currentState;
+
         this.overlay.setVisible(!!state);
 
         if (state === "fog") {
-            this.overlay.setFillStyle(0x000000, 0.9);
+            this.overlay.setTint(0x000000).setAlpha(0.95);
         } else if (state === "hover") {
-            this.overlay.setFillStyle(0xffffff, 0.5);
+            this.overlay.setTint(0xffffff).setAlpha(0.5);
+        } else if (state === "visitable") {
+            this.overlay.setTint(0x0000ff).setAlpha(0.3);
         }
+
+        this.currentState = state;
     }
 
     private initEventListeners() {
@@ -365,7 +363,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             return;
         }
 
-        this.setOverlayState(hasEntered ? "hover" : null);
+        this.setOverlayState(hasEntered ? "hover" : this.prevState);
     }
 
     private static getRandomSpriteFrame(type: CellType) {
