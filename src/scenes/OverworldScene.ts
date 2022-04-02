@@ -1,5 +1,5 @@
 import { CustomScene } from "../objects/CustomScene";
-import { WorldCell, WorldPlayer } from "../objects/WorldMap";
+import { WorldAssets, WorldCell, WorldPlayer } from "../objects/WorldMap";
 
 export class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
@@ -15,7 +15,10 @@ export class OverworldScene extends CustomScene {
     }
 
     preload() {
-        // TODO
+        this.load.spritesheet(WorldAssets.tiles, "assets/hex-sprites.png", {
+            frameWidth: 23 * 8,
+            frameHeight: 14 * 8,
+        });
     }
 
     create() {
@@ -38,7 +41,7 @@ export class OverworldScene extends CustomScene {
                 }
 
                 if (map.cellIsAdjacentToPlayer(x, y)) {
-                    wc.setFillStyle(0x0000ff);
+                    //wc.setFillStyle(0x0000ff);
                     wc.on("pointerup", () => this.selectSquare(x, y));
                 }
             });

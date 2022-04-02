@@ -1,7 +1,7 @@
 import { CustomScene } from "./CustomScene";
 
-const MAP_WIDTH = 30;
-const MAP_HEIGHT = 30;
+const MAP_WIDTH = 31;
+const MAP_HEIGHT = 31;
 
 // TODO
 enum CellType {
@@ -43,6 +43,20 @@ interface Cell {
     type: CellType;
     visited: boolean;
 }
+
+const TILES_SHEET_WIDTH = 4;
+
+export const WorldAssets = {
+    tiles: "tiles",
+    // which row each tileset is on
+    tilesData: {
+        [CellType.Forest]: 0,
+        [CellType.Wetland]: 1,
+        [CellType.Desert]: 2,
+        [CellType.Empty]: 3,
+        [CellType.Colony]: 4,
+    },
+} as const;
 
 export class WorldMap {
     private _cells: Cell[][];
@@ -145,6 +159,15 @@ export class WorldMap {
             }
         }
 
+        // TODO make sure colonies are spaced apart?
+        // generate exactly twelve colonies
+        for (let i = 0; i < 12; i++) {
+            const rx = Phaser.Math.RND.integerInRange(0, MAP_WIDTH - 1);
+            const ry = Phaser.Math.RND.integerInRange(0, MAP_HEIGHT - 1);
+
+            map[ry][rx].type = CellType.Colony;
+        }
+
         return map;
     }
 
@@ -236,9 +259,7 @@ export class WorldMap {
     }
 }
 
-export class WorldCell extends Phaser.GameObjects.Polygon {
-    private prevFillStyle: number;
-
+export class WorldCell extends Phaser.GameObjects.Sprite {
     constructor(
         scene: CustomScene,
         xIndex: number,
@@ -248,10 +269,9 @@ export class WorldCell extends Phaser.GameObjects.Polygon {
         // Time to do some trig to find the point coords!
         // Actually, no thank you, I'll cheat since they're hardcoded
         // (Sorry Mrs. Smith, I never was good at showing my work)
-        const height = 14 * 4;
-        const width = 22 * 4;
+        const height = 14 * 8;
+        const width = 23 * 8;
         const h2 = height / 2;
-        const w2 = width - h2;
 
         const x = width * xIndex - h2 * xIndex;
         let y = height * yIndex;
@@ -260,23 +280,15 @@ export class WorldCell extends Phaser.GameObjects.Polygon {
             y += h2;
         }
 
-        let color = 0xff0000;
+        super(
+            scene,
+            x,
+            y,
+            WorldAssets.tiles,
+            WorldCell.getRandomSpriteFrame(cell.type)
+        );
 
-        if (yIndex % 2) {
-            color = 0x00ff00;
-        }
-
-        // prettier-ignore
-        super(scene, x, y, [
-            0,h2, // P1
-            h2,0, // P2
-            w2,0, // P3
-            width,h2, // P4
-            w2,height, // P5
-            h2,height, // P6
-        ], color);
-
-        this.setOrigin(0, 0).setStrokeStyle(1, 0x000000);
+        this.setOrigin(0, 0); //.setStrokeStyle(1, 0x000000);
         this.scene.add.existing(this);
 
         this.initEventListeners();
@@ -300,10 +312,18 @@ export class WorldCell extends Phaser.GameObjects.Polygon {
 
     private hover(hasEntered: boolean) {
         if (hasEntered) {
-            this.prevFillStyle = this.fillColor;
+            //this.prevFillStyle = this.fillColor;
         }
 
-        this.setFillStyle(hasEntered ? 0xffffff : this.prevFillStyle);
+        //this.setFillStyle(hasEntered ? 0xffffff : this.prevFillStyle);
+    }
+
+    private static getRandomSpriteFrame(type: CellType) {
+        const row = WorldAssets.tilesData[type];
+        const startIndex = row * TILES_SHEET_WIDTH;
+        const rng = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH);
+
+        return startIndex + rng;
     }
 }
 
