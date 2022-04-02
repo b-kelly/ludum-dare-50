@@ -72,6 +72,15 @@ export class AreaSpriteSheet {
         return this.getFrameFromRows(8, 1);
     }
 
+    static getCollisionRanges() {
+        // TODO START OFFSET
+        // rows 0,1,2,3,6,7,8
+        return [
+            [0, 4 * TILES_SHEET_WIDTH - 1],
+            [6 * TILES_SHEET_WIDTH, 9 * TILES_SHEET_WIDTH],
+        ];
+    }
+
     private getFrameFromRows(rowNum: number, rowCount: number) {
         // TODO CELLTYPE START OFFSET
         const rowStartIndex = rowNum * TILES_SHEET_WIDTH;

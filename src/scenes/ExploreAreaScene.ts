@@ -47,8 +47,10 @@ export class ExploreAreaScene extends CustomScene {
         const tiles = this.tileMap.addTilesetImage(AreaSpriteSheet.NAME);
 
         const layer = this.tileMap.createLayer(0, tiles, 0, 0);
-        layer.setCollision([0], false);
-        layer.setCollisionByExclusion([0], true);
+
+        AreaSpriteSheet.getCollisionRanges().forEach(([start, end]) => {
+            layer.setCollisionBetween(start, end, true);
+        });
 
         const coords = this.translateCoord(
             this.map.startLocation.x,
