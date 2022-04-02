@@ -1,3 +1,4 @@
+import "./styles.css";
 import * as Phaser from "phaser";
 import { gameConfig } from "./config";
 
