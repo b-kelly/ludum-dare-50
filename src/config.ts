@@ -13,7 +13,7 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
     scale: {
         width: 1024,
         height: 768,
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.NONE,
     },
 
     physics: {
