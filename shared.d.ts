@@ -3,3 +3,4 @@ export declare const GeneralAssets: {
     readonly background: "background";
 };
 export declare const TILE_WIDTH = 64;
+export declare function DEBUG_isDebugBuild(): boolean;

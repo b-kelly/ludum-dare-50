@@ -1,6 +1,10 @@
 import { CustomScene } from "./CustomScene";
 declare enum CellType {
-    Unknown = 0
+    Empty = 0,
+    Colony = 1,
+    Forest = 2,
+    Desert = 3,
+    Wetland = 4
 }
 interface Cell {
     type: CellType;
@@ -13,6 +17,8 @@ export declare class WorldMap {
     constructor();
     cellIsAdjacentToPlayer(x: number, y: number): boolean;
     private generateMap;
+    private pickCellType;
+    DEBUG_displayMap(): void;
 }
 export declare class WorldCell extends Phaser.GameObjects.Polygon {
     private prevFillStyle;
