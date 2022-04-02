@@ -1,11 +1,7 @@
 import { CustomScene } from "../objects/CustomScene";
-import { baseTextOptions } from "../shared";
+import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { MapScene } from "./MapScene";
-
-const BaseAssets = {
-    background: "background",
-} as const;
 
 export class BaseScene extends CustomScene {
     static readonly KEY = "BaseScene";
@@ -19,12 +15,12 @@ export class BaseScene extends CustomScene {
     }
 
     preload() {
-        this.load.image(BaseAssets.background, "assets/base-bg.png");
+        this.load.image(GeneralAssets.background, "assets/base-bg.png");
     }
 
     create() {
         // add background
-        this.add.image(0, 0, BaseAssets.background).setOrigin(0, 0);
+        this.add.image(0, 0, GeneralAssets.background).setOrigin(0, 0);
         this.createResourcesDisplay();
         new Button(this, {
             x: 0,

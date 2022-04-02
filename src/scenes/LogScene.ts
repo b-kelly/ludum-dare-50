@@ -1,5 +1,5 @@
 import { CustomScene } from "../objects/CustomScene";
-import { baseTextOptions } from "../shared";
+import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 
 export class LogScene extends CustomScene {
@@ -22,10 +22,11 @@ export class LogScene extends CustomScene {
     }
 
     preload() {
-        // TODO
+        this.load.image(GeneralAssets.background, "assets/introLogBg.gif");
     }
 
     create() {
+        this.add.image(0, 0, GeneralAssets.background).setOrigin(0, 0);
         const { width, height } = this.bounds;
 
         const graphics = this.make.graphics({});
