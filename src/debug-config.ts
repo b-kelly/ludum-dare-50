@@ -1,7 +1,7 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
 import { BaseScene } from "./scenes/BaseScene";
-import { ExploreScene } from "./scenes/ExploreScene";
+import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { OverworldScene } from "./scenes/OverworldScene";
 
 interface DebugConfig {
@@ -29,6 +29,6 @@ function onComplete(this: Phaser.Scene) {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: ExploreScene.KEY,
+    sceneKey: ExploreAreaScene.KEY,
     data: {},
 };

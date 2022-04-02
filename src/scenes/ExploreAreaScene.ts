@@ -7,19 +7,19 @@ const ExploreAssets = {
     tiles: "tiles",
 } as const;
 
-export class ExploreScene extends CustomScene {
-    static readonly KEY = "ExploreScene";
+export class ExploreAreaScene extends CustomScene {
+    static readonly KEY = "ExploreAreaScene";
     private map: AreaMap;
     private tileMap: Phaser.Tilemaps.Tilemap;
 
     private player: AreaPlayer;
 
     constructor() {
-        super({ key: ExploreScene.KEY });
+        super({ key: ExploreAreaScene.KEY });
     }
 
     init(data: object) {
-        console.log(ExploreScene.KEY, data, this.global.resources);
+        console.log(ExploreAreaScene.KEY, data, this.global.resources);
     }
 
     preload() {

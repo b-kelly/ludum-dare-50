@@ -4,7 +4,7 @@ import { BaseScene } from "./scenes/BaseScene";
 import { LogScene } from "./scenes/LogScene";
 import { OverworldScene } from "./scenes/OverworldScene";
 import { StartMenuScene } from "./scenes/StartMenuScene";
-import { ExploreScene } from "./scenes/ExploreScene";
+import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { DEBUG_isDebugBuild } from "./shared";
 
 export const game = new Phaser.Game({
@@ -30,7 +30,13 @@ export const game = new Phaser.Game({
 
     parent: "js-game-container",
     autoFocus: true,
-    scene: [StartMenuScene, LogScene, BaseScene, OverworldScene, ExploreScene],
+    scene: [
+        StartMenuScene,
+        LogScene,
+        BaseScene,
+        OverworldScene,
+        ExploreAreaScene,
+    ],
 });
 
 // set the game object on window.instance for easy debugging
