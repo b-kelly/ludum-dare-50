@@ -4,7 +4,7 @@ import { CustomScene } from "./CustomScene";
 const MAP_WIDTH = 31;
 const MAP_HEIGHT = 31;
 
-const SHOW_DEBUG = false;
+const SHOW_DEBUG = true;
 
 // TODO
 enum CellType {
@@ -20,7 +20,7 @@ interface Cell {
     clearedFogOfWar: boolean;
 }
 
-const TILES_SHEET_WIDTH = 4;
+const TILES_SHEET_WIDTH = 3;
 
 const cellTypeSpawnData: Record<
     CellType,
