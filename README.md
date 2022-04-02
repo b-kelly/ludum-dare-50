@@ -1,4 +1,6 @@
-# project-boilerplate
+# ludum-dare-50
+
+Play here: https://b-kelly.github.io/ludum-dare-50/
 
 ## Initial setup
 
