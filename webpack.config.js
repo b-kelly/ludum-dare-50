@@ -43,7 +43,7 @@ module.exports = (_, argv) => {
             new webpack.DefinePlugin({
                 CANVAS_RENDERER: JSON.stringify(true),
                 WEBGL_RENDERER: JSON.stringify(true),
-                DEV: JSON.stringify(process.env.NODE_ENV !== "production"),
+                DEV: JSON.stringify(!isProd),
             }),
             new CopyWebpackPlugin({
                 patterns: [
