@@ -1,4 +1,5 @@
-import { AreaMap } from "../objects/AreaMap";
+import { AreaMap } from "../objects/AreaMap/AreaMap";
+import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
 import { CustomScene } from "../objects/CustomScene";
 import { TILE_WIDTH } from "../shared";
 
@@ -11,7 +12,7 @@ export class ExploreScene extends CustomScene {
     private map: AreaMap;
     private tileMap: Phaser.Tilemaps.Tilemap;
 
-    private player: Phaser.GameObjects.Rectangle;
+    private player: AreaPlayer;
 
     constructor() {
         super({ key: ExploreScene.KEY });
@@ -52,12 +53,16 @@ export class ExploreScene extends CustomScene {
             this.map.startLocation.x,
             this.map.startLocation.y
         );
-        this.player = this.add
-            .rectangle(coords.x, coords.y, TILE_WIDTH, TILE_WIDTH, 0xff0000)
-            .setOrigin(0, 0);
-        this.cameras.main.startFollow(this.player);
+
+        this.player = new AreaPlayer(this, coords.x, coords.y);
+
+        this.physics.add.collider(this.player, layer);
 
         this.map.DEBUG_displayMap();
+    }
+
+    update() {
+        this.player.update();
     }
 
     private translateCoord(xIndex: number, yIndex: number) {

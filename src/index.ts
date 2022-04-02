@@ -5,7 +5,6 @@ import { LogScene } from "./scenes/LogScene";
 import { OverworldScene } from "./scenes/OverworldScene";
 import { StartMenuScene } from "./scenes/StartMenuScene";
 import { ExploreScene } from "./scenes/ExploreScene";
-import { AreaMap } from "./objects/AreaMap";
 import { DEBUG_isDebugBuild } from "./shared";
 
 export const game = new Phaser.Game({
@@ -24,8 +23,8 @@ export const game = new Phaser.Game({
     physics: {
         default: "arcade",
         arcade: {
-            debug: true,
-            gravity: { y: 100 },
+            debug: DEBUG_isDebugBuild(),
+            gravity: { x: 0, y: 0 },
         },
     },
 
