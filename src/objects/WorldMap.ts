@@ -1,7 +1,10 @@
+import { DEBUG_isDebugBuild } from "../shared";
 import { CustomScene } from "./CustomScene";
 
 const MAP_WIDTH = 31;
 const MAP_HEIGHT = 31;
+
+const SHOW_DEBUG = false;
 
 // TODO
 enum CellType {
@@ -11,6 +14,13 @@ enum CellType {
     Desert = 3,
     Wetland = 4,
 }
+
+interface Cell {
+    type: CellType;
+    clearedFogOfWar: boolean;
+}
+
+const TILES_SHEET_WIDTH = 4;
 
 const cellTypeSpawnData: Record<
     CellType,
@@ -38,13 +48,6 @@ const cellTypeSpawnData: Record<
         clusterSizeLower: 1,
     },
 } as const;
-
-interface Cell {
-    type: CellType;
-    clearedFogOfWar: boolean;
-}
-
-const TILES_SHEET_WIDTH = 4;
 
 export const WorldAssets = {
     tiles: "tiles",
@@ -316,13 +319,17 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         this.initEventListeners();
 
         // TODO DEBUG
-        this.scene.add
-            .text(
-                x + h2,
-                y + h2,
-                `${xIndex},${yIndex} ${CellType[cell.type][0].toUpperCase()}`
-            )
-            .setOrigin(0.5, 0.5);
+        if (DEBUG_isDebugBuild() && SHOW_DEBUG) {
+            this.scene.add
+                .text(
+                    x + h2,
+                    y + h2,
+                    `${xIndex},${yIndex} ${CellType[
+                        cell.type
+                    ][0].toUpperCase()}`
+                )
+                .setOrigin(0.5, 0.5);
+        }
     }
 
     setCellState(state: { isVisitable?: boolean; clearFogOfWar?: boolean }) {
@@ -341,7 +348,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         this.overlay.setVisible(!!state);
 
         if (state === "fog") {
-            this.overlay.setTint(0x000000).setAlpha(0.95);
+            this.overlay.setTint(0x000000).setAlpha(0.9);
         } else if (state === "hover") {
             this.overlay.setTint(0xffffff).setAlpha(0.5);
         } else if (state === "visitable") {
