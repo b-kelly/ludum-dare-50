@@ -1,8 +1,15 @@
 import { WorldMap } from "./WorldMap";
 
+const startingValues = {
+    resources: {
+        fuel: 10,
+        food: 10,
+    },
+} as const;
+
 interface Resources {
-    type1: number; // TODO
-    type2: number;
+    fuel: number;
+    food: number;
 }
 
 /** Handy wrapper around our shared data */
@@ -10,10 +17,10 @@ export class GlobalDataStore {
     constructor(private scene: Phaser.Scene) {}
 
     get resources(): Resources {
-        return this.getOrCreate<Resources>("resources", () => ({
-            type1: 0,
-            type2: 0,
-        }));
+        return this.getOrCreate<Resources>(
+            "resources",
+            () => startingValues.resources
+        );
     }
 
     get worldMap(): WorldMap {

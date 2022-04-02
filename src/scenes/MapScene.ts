@@ -1,7 +1,10 @@
 import { CustomScene } from "../objects/CustomScene";
+import { WorldCell, WorldPlayer } from "../objects/WorldMap";
 
 export class MapScene extends CustomScene {
     static readonly KEY = "MapScene";
+
+    private player: WorldPlayer;
 
     constructor() {
         super({ key: MapScene.KEY });
@@ -21,44 +24,23 @@ export class MapScene extends CustomScene {
 
     private drawHexMap() {
         const map = this.global.worldMap;
+        const playerCoords = map.playerCoords;
+        console.log(playerCoords);
 
         map.cells.forEach((row, y) => {
             row.forEach((cell, x) => {
-                this.drawHexagon(x, y);
+                const wc = new WorldCell(this, x, y, cell);
+                const { x: cx, y: cy } = wc.getCenter();
+
+                if (x === playerCoords.x && y === playerCoords.y) {
+                    this.player = new WorldPlayer(this, cx, cy);
+                    this.cameras.main.centerOn(cx, cy);
+                }
+
+                if (map.cellIsAdjacentToPlayer(x, y)) {
+                    wc.setFillStyle(0x0000ff);
+                }
             });
         });
-    }
-
-    private drawHexagon(xIndex: number, yIndex: number) {
-        // Time to do some trig to find the point coords!
-        // Actually, no thank you, I'll cheat since they're hardcoded
-        // (Sorry Mrs. Smith, I never was good at showing my work)
-        const height = 14 * 4;
-        const width = 22 * 4;
-        const h2 = height / 2;
-        const w2 = width - h2;
-
-        const x = width * xIndex - h2 * xIndex;
-        let y = height * yIndex;
-
-        if (xIndex % 2) {
-            y += h2;
-        }
-
-        let color = 0xff0000;
-
-        if (yIndex % 2) {
-            color = 0x00ff00;
-        }
-
-        // prettier-ignore
-        this.add.polygon(x, y, [
-            0,h2, // P1
-            h2,0, // P2
-            w2,0, // P3
-            width,h2, // P4
-            w2,height, // P5
-            h2,height, // P6
-        ], color).setOrigin(0, 0).setStrokeStyle(1, 0x000000);
     }
 }
