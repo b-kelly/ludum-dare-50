@@ -1,7 +1,7 @@
 import { WorldMap } from "./WorldMap";
 interface Resources {
-    type1: number;
-    type2: number;
+    fuel: number;
+    food: number;
 }
 /** Handy wrapper around our shared data */
 export declare class GlobalDataStore {
