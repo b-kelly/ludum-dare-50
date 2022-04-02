@@ -1,4 +1,4 @@
-import { WorldMap } from "./WorldMap";
+import { WorldMap } from "./WorldMap/WorldMap";
 interface Resources {
     fuel: number;
     food: number;

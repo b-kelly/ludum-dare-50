@@ -1,6 +1,6 @@
 import { CustomScene } from "../objects/CustomScene";
-export declare class ExploreScene extends CustomScene {
-    static readonly KEY = "ExploreScene";
+export declare class ExploreAreaScene extends CustomScene {
+    static readonly KEY = "ExploreAreaScene";
     private map;
     private tileMap;
     private player;
