@@ -1,6 +1,6 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
-import { LogScene } from "./scenes/LogScene";
+import { BaseScene } from "./scenes/BaseScene";
 
 interface DebugConfig {
     sceneKey: string;
@@ -8,6 +8,6 @@ interface DebugConfig {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: LogScene.KEY,
+    sceneKey: BaseScene.KEY,
     data: {},
 };
