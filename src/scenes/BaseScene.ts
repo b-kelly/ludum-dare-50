@@ -1,6 +1,7 @@
 import { CustomScene } from "../objects/CustomScene";
 import { baseTextOptions } from "../shared";
 import { Button } from "../UI/Button";
+import { MapScene } from "./MapScene";
 
 const BaseAssets = {
     background: "background",
@@ -30,7 +31,7 @@ export class BaseScene extends CustomScene {
             y: 0,
             text: "Next",
             onClick: () => {
-                //TODO
+                this.scene.start(MapScene.KEY, {});
             },
         });
     }

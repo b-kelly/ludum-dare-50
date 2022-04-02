@@ -18,7 +18,7 @@ export class StartMenuScene extends Phaser.Scene {
     create() {
         if (process.env.NODE_ENV === "development" && debugConfig.sceneKey) {
             console.warn("LOADING DEBUG CONFIG OVERRIDES");
-            this.scene.launch(debugConfig.sceneKey, debugConfig.data);
+            this.scene.start(debugConfig.sceneKey, debugConfig.data);
             return;
         }
 
@@ -37,7 +37,7 @@ export class StartMenuScene extends Phaser.Scene {
                 this.scene.start(LogScene.KEY, {
                     text: this.fetchOpeningScript(),
                     onComplete(this: Phaser.Scene) {
-                        this.scene.launch(BaseScene.KEY);
+                        this.scene.start(BaseScene.KEY);
                     },
                 });
             },

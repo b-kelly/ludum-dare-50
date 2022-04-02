@@ -1,7 +1,6 @@
 import { CustomScene } from "../objects/CustomScene";
 import { baseTextOptions } from "../shared";
 import { Button } from "../UI/Button";
-import { BaseScene } from "./BaseScene";
 
 export class LogScene extends CustomScene {
     static readonly KEY = "LogScene";
