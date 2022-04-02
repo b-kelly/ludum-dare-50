@@ -43,7 +43,6 @@ module.exports = (_, argv) => {
             new webpack.DefinePlugin({
                 CANVAS_RENDERER: JSON.stringify(true),
                 WEBGL_RENDERER: JSON.stringify(true),
-                DEV: JSON.stringify(!isProd),
             }),
             new CopyWebpackPlugin({
                 patterns: [
@@ -54,5 +53,9 @@ module.exports = (_, argv) => {
                 ],
             }),
         ],
+        // yeah I know my code sucks, don't bug me about it
+        performance: {
+            hints: false,
+        },
     };
 };

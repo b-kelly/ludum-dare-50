@@ -6,6 +6,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "webpack serve",
+        "start:prod": "webpack serve --mode=production",
         "build": "webpack --mode=production"
     },
     "author": "",

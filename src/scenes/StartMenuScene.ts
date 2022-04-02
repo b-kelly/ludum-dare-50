@@ -15,8 +15,7 @@ export class StartMenuScene extends Phaser.Scene {
     }
 
     create() {
-        // @ts-expect-error Added by webpack.DefinePlugin
-        if (DEV) {
+        if (process.env.NODE_ENV === "development") {
             console.warn("LOADING DEBUG CONFIG OVERRIDES");
             this.scene.launch(debugConfig.sceneKey, debugConfig.data);
             return;
