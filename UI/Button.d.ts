@@ -9,4 +9,5 @@ export declare class Button extends Phaser.GameObjects.Text {
         height?: number;
         type?: ButtonType;
     });
+    setOnClick(callback: () => void): void;
 }
