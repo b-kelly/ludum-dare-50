@@ -11,5 +11,6 @@ export declare class AreaSpriteSheet {
     getRandomPathFrame(): number;
     getRandomLargeStatementFrames(): number[];
     getRandomSmallStatementFrame(): number;
+    static getCollisionRanges(): number[][];
     private getFrameFromRows;
 }
