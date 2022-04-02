@@ -27,6 +27,11 @@ export class GlobalDataStore {
         return this.getOrCreate("worldMap", () => new WorldMap());
     }
 
+    expendMoveResources() {
+        // TODO SPEND RESOURCES
+        return true;
+    }
+
     private getOrCreate<T>(key: string, defaultVal: () => T): T {
         let ret = this.scene.registry.get(key) as T;
 

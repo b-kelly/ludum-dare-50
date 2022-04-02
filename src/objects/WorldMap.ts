@@ -85,7 +85,26 @@ export class WorldMap {
         this._cells = this.generateMap();
     }
 
-    public cellIsAdjacentToPlayer(x: number, y: number) {
+    getAdjacentCells(px: number, py: number) {
+        return [
+            // top/bottom
+            { x: px, y: py - 1 },
+            { x: px, y: py + 1 },
+            // left row
+            { x: px - 1, y: py },
+            { x: px - 1, y: py + 1 },
+            // right row
+            { x: px + 1, y: py },
+            { x: px + 1, y: py + 1 },
+        ];
+    }
+
+    getPlayerAdjacentCells() {
+        const { x, y } = this.playerCoords;
+        return this.getAdjacentCells(x, y);
+    }
+
+    cellIsAdjacentToPlayer(x: number, y: number) {
         const px = this.currentPlayerCoords.x;
         const py = this.currentPlayerCoords.y;
 
@@ -116,6 +135,11 @@ export class WorldMap {
         }
 
         return false;
+    }
+
+    setPlayerPosition(x: number, y: number) {
+        this.currentPlayerCoords = { x, y };
+        console.log("setting player position", x, y, this);
     }
 
     private generateMap() {
@@ -306,6 +330,8 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             WorldCell.getRandomSpriteFrame(cell.type)
         );
 
+        this.name = WorldCell.genName(xIndex, yIndex);
+
         this.setOrigin(0, 0); //.setStrokeStyle(1, 0x000000);
         this.scene.add.existing(this);
 
@@ -371,6 +397,10 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         }
 
         this.setOverlayState(hasEntered ? "hover" : this.prevState);
+    }
+
+    static genName(x: number, y: number) {
+        return `worldcell-${x}-${y}`;
     }
 
     private static getRandomSpriteFrame(type: CellType) {
