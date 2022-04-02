@@ -28,6 +28,6 @@ function onComplete(this: Phaser.Scene) {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: MapScene.KEY,
+    //sceneKey: MapScene.KEY,
     data: {},
 };

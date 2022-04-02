@@ -11,6 +11,7 @@ enum CellType {
 interface Cell {
     type: CellType;
 }
+
 export class WorldMap {
     private _cells: Cell[][];
     private currentPlayerCoords: { x: number; y: number };
@@ -82,6 +83,8 @@ export class WorldMap {
 }
 
 export class WorldCell extends Phaser.GameObjects.Polygon {
+    private prevFillStyle: number;
+
     constructor(
         scene: CustomScene,
         xIndex: number,
@@ -122,6 +125,8 @@ export class WorldCell extends Phaser.GameObjects.Polygon {
         this.setOrigin(0, 0).setStrokeStyle(1, 0x000000);
         this.scene.add.existing(this);
 
+        this.initEventListeners();
+
         // TODO DEBUG
         this.scene.add
             .text(
@@ -130,6 +135,21 @@ export class WorldCell extends Phaser.GameObjects.Polygon {
                 `${xIndex},${yIndex} ${CellType[cell.type][0].toUpperCase()}`
             )
             .setOrigin(0.5, 0.5);
+    }
+
+    private initEventListeners() {
+        this.setInteractive();
+        this.on("pointerover", () => this.hover(true)).on("pointerout", () =>
+            this.hover(false)
+        );
+    }
+
+    private hover(hasEntered: boolean) {
+        if (hasEntered) {
+            this.prevFillStyle = this.fillColor;
+        }
+
+        this.setFillStyle(hasEntered ? 0xffffff : this.prevFillStyle);
     }
 }
 

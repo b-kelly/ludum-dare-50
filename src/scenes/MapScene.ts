@@ -39,8 +39,13 @@ export class MapScene extends CustomScene {
 
                 if (map.cellIsAdjacentToPlayer(x, y)) {
                     wc.setFillStyle(0x0000ff);
+                    wc.on("pointerup", () => this.selectSquare(x, y));
                 }
             });
         });
+    }
+
+    private selectSquare(x: number, y: number) {
+        console.log(`Clicked ${x} ${y}`);
     }
 }
