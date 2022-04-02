@@ -1,11 +1,8 @@
 import { AreaMap } from "../objects/AreaMap/AreaMap";
 import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
+import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
 import { TILE_WIDTH } from "../shared";
-
-const ExploreAssets = {
-    tiles: "tiles",
-} as const;
 
 export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
@@ -23,10 +20,14 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     preload() {
-        this.load.spritesheet(ExploreAssets.tiles, "assets/tiles.png", {
-            frameWidth: TILE_WIDTH,
-            frameHeight: TILE_WIDTH,
-        });
+        this.load.spritesheet(
+            AreaSpriteSheet.NAME,
+            "assets/explore-tileset.png",
+            {
+                frameWidth: TILE_WIDTH,
+                frameHeight: TILE_WIDTH,
+            }
+        );
     }
 
     create() {
@@ -43,7 +44,7 @@ export class ExploreAreaScene extends CustomScene {
             )
         );
 
-        const tiles = this.tileMap.addTilesetImage(ExploreAssets.tiles);
+        const tiles = this.tileMap.addTilesetImage(AreaSpriteSheet.NAME);
 
         const layer = this.tileMap.createLayer(0, tiles, 0, 0);
         layer.setCollision([0], false);
