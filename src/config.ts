@@ -1,4 +1,4 @@
-import { GameScene } from "./scenes/GameScene";
+import { StartMenuScene } from "./scenes/StartMenuScene";
 
 export const gameConfig: Phaser.Types.Core.GameConfig = {
     title: "Sample",
@@ -8,9 +8,9 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
     pixelArt: true,
 
     scale: {
-        width: 512,
-        height: 512,
-        mode: Phaser.Scale.NONE,
+        width: 1024,
+        height: 768,
+        mode: Phaser.Scale.FIT,
     },
 
     physics: {
@@ -23,5 +23,5 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
 
     parent: "js-game-container",
     autoFocus: true,
-    scene: [GameScene],
+    scene: [StartMenuScene],
 };
