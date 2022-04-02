@@ -1,29 +1,14 @@
 export declare enum CellState {
     Open = 0,
     Filled = 1,
-    Wall = 2,
-    Resource = 3
+    Wall = 2
 }
-/**
- * 64x64 grid
- * for each subsection
- * 1 top-left corner
- * 2 top edge next to path
- * 3-4 interior
- * 4-5 path
- * 5-6 2x2 statement pieces (fills in interior)
- * 7 filler objects (fills in interior)
- *
- * randomly rotate interior tiles
- * path tiles rotate
- */
 /** Generates a connected "cave" with cellular automata */
 export declare class AreaMap {
     private _map;
     private readonly _size;
     private readonly _startLocation;
     private readonly chanceToStartOpen;
-    private readonly chanceToGenerateResource;
     private readonly requiredNeighborsForLife;
     private readonly requiredNeighborsForBirth;
     private readonly iterations;
