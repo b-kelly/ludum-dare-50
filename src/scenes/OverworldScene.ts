@@ -1,5 +1,7 @@
 import { CustomScene } from "../objects/CustomScene";
-import { WorldAssets, WorldCell, WorldPlayer } from "../objects/WorldMap";
+import { WorldCell } from "../objects/WorldMap/WorldCell";
+import { WorldAssets } from "../objects/WorldMap/WorldMap";
+import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
 
 export class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
