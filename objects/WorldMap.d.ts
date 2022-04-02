@@ -28,7 +28,16 @@ export declare class WorldMap {
     get cells(): ReadonlyArray<ReadonlyArray<Readonly<Cell>>>;
     get playerCoords(): Readonly<WorldMap["currentPlayerCoords"]>;
     constructor();
+    getAdjacentCells(px: number, py: number): {
+        x: number;
+        y: number;
+    }[];
+    getPlayerAdjacentCells(): {
+        x: number;
+        y: number;
+    }[];
     cellIsAdjacentToPlayer(x: number, y: number): boolean;
+    setPlayerPosition(x: number, y: number): void;
     private generateMap;
     private getRandomAdjacentCell;
     private pickCellType;
@@ -47,6 +56,7 @@ export declare class WorldCell extends Phaser.GameObjects.Sprite {
     private setOverlayState;
     private initEventListeners;
     private hover;
+    static genName(x: number, y: number): string;
     private static getRandomSpriteFrame;
 }
 export declare class WorldPlayer extends Phaser.GameObjects.Rectangle {

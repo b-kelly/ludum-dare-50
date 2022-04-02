@@ -9,6 +9,7 @@ export declare class GlobalDataStore {
     constructor(scene: Phaser.Scene);
     get resources(): Resources;
     get worldMap(): WorldMap;
+    expendMoveResources(): boolean;
     private getOrCreate;
 }
 export {};
