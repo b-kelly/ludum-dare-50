@@ -18,10 +18,12 @@ export declare const WorldAssets: {
         readonly 3: 2;
         readonly 0: 3;
         readonly 1: 4;
+        readonly Overlay: 5;
     };
 };
 export declare class WorldMap {
     private _cells;
+    private playerHomeCoords;
     private currentPlayerCoords;
     get cells(): ReadonlyArray<ReadonlyArray<Readonly<Cell>>>;
     get playerCoords(): Readonly<WorldMap["currentPlayerCoords"]>;
@@ -35,6 +37,8 @@ export declare class WorldMap {
 export declare class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay;
     private hasFogOfWar;
+    private currentState;
+    private prevState;
     constructor(scene: CustomScene, xIndex: number, yIndex: number, cell: Cell);
     setCellState(state: {
         isVisitable?: boolean;
