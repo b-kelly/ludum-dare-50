@@ -8,7 +8,7 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
 
     type: Phaser.AUTO,
 
-    pixelArt: true,
+    pixelArt: false,
 
     scale: {
         width: 1024,

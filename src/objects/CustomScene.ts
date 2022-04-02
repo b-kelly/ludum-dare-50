@@ -1,5 +1,6 @@
 interface Resources {
     type1: number; // TODO
+    type2: number;
 }
 
 /** Handy wrapper around our shared data */
@@ -12,6 +13,7 @@ class GlobalDataStore {
         if (typeof ret === "undefined") {
             ret = {
                 type1: 0,
+                type2: 0,
             };
 
             this.resources = ret;
@@ -28,6 +30,14 @@ class GlobalDataStore {
 /** Custom version of Scene that has helpers on it */
 export class CustomScene extends Phaser.Scene {
     global: GlobalDataStore;
+
+    get bounds() {
+        const { width, height } = this.cameras.main;
+        return {
+            width,
+            height,
+        };
+    }
 
     constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
         super(config);

@@ -1,6 +1,7 @@
 import { debugConfig } from "../debug-config";
 import { baseTextOptions } from "../shared";
 import { Button } from "../UI/Button";
+import { BaseScene } from "./BaseScene";
 import { LogScene } from "./LogScene";
 
 export class StartMenuScene extends Phaser.Scene {
@@ -15,7 +16,7 @@ export class StartMenuScene extends Phaser.Scene {
     }
 
     create() {
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "development" && debugConfig.sceneKey) {
             console.warn("LOADING DEBUG CONFIG OVERRIDES");
             this.scene.launch(debugConfig.sceneKey, debugConfig.data);
             return;
@@ -35,6 +36,9 @@ export class StartMenuScene extends Phaser.Scene {
             onClick: () => {
                 this.scene.start(LogScene.KEY, {
                     text: this.fetchOpeningScript(),
+                    onComplete(this: Phaser.Scene) {
+                        this.scene.launch(BaseScene.KEY);
+                    },
                 });
             },
         });

@@ -1,8 +1,9 @@
+import { CustomScene } from "../objects/CustomScene";
 import { baseTextOptions } from "../shared";
 import { Button } from "../UI/Button";
 import { BaseScene } from "./BaseScene";
 
-export class LogScene extends Phaser.Scene {
+export class LogScene extends CustomScene {
     static readonly KEY = "LogScene";
 
     private content: string[];
@@ -10,25 +11,15 @@ export class LogScene extends Phaser.Scene {
     private interactButton: Button;
     private text: Phaser.GameObjects.Text;
 
-    private onComplete: () => void;
+    private onComplete: (this: Phaser.Scene) => void;
 
     constructor() {
         super({ key: LogScene.KEY });
     }
 
     init(data: { text: string[]; onComplete: () => void }) {
-        // TODO DEBUG
-        if (!data?.text) {
-            data = {
-                text: this.debugGenerateText(),
-                onComplete: () => {
-                    this.scene.start(BaseScene.KEY, {});
-                },
-            };
-        }
-
         this.content = data.text;
-        this.onComplete = data.onComplete;
+        this.onComplete = data.onComplete.bind(this);
     }
 
     preload() {
@@ -36,7 +27,7 @@ export class LogScene extends Phaser.Scene {
     }
 
     create() {
-        const { width, height } = this.cameras.main;
+        const { width, height } = this.bounds;
 
         const graphics = this.make.graphics({});
         graphics.fillRect(0, 0, width, height);
@@ -59,6 +50,7 @@ export class LogScene extends Phaser.Scene {
             },
         });
         this.interactButton.setOrigin(1, 1);
+        this.showNext();
     }
 
     update(/*time: number*/) {
@@ -72,24 +64,11 @@ export class LogScene extends Phaser.Scene {
     }
 
     private showNext() {
-        if (this.text.y * -1 >= this.text.height - this.cameras.main.height) {
+        if (this.text.y * -1 >= this.text.height - this.bounds.height) {
             this.interactButton.text = "Next";
             this.interactButton.setOnClick(() => {
                 this.onComplete();
             });
         }
-    }
-
-    private debugGenerateText() {
-        const text = [];
-
-        // generate a bunch of lines
-        for (let i = 0; i < 25; i++) {
-            text.push(
-                `(${i}) Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, maiores!`
-            );
-        }
-
-        return text;
     }
 }
