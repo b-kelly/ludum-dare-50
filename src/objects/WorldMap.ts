@@ -41,7 +41,7 @@ const cellTypeSpawnData: Record<
 
 interface Cell {
     type: CellType;
-    visited: boolean;
+    clearedFogOfWar: boolean;
 }
 
 const TILES_SHEET_WIDTH = 4;
@@ -113,16 +113,18 @@ export class WorldMap {
     }
 
     private generateMap() {
-        const map: Cell[][] = [];
+        type GenCell = Cell & { _visited: boolean };
+        const map: GenCell[][] = [];
 
         for (let y = 0; y < MAP_HEIGHT; y++) {
             map[y] = [];
             for (let x = 0; x < MAP_WIDTH; x++) {
                 const cellType = this.pickCellType();
                 map[y][x] = {
-                    visited: cellType !== CellType.Empty,
+                    _visited: cellType !== CellType.Empty,
                     // randomly distribute seeds
                     type: cellType,
+                    clearedFogOfWar: false,
                     // TODO pickEvent
                 };
             }
@@ -147,11 +149,11 @@ export class WorldMap {
                                 map,
                                 x,
                                 y
-                            );
+                            ) as GenCell;
 
-                            if (neighbor && !neighbor.visited) {
+                            if (neighbor && !neighbor._visited) {
                                 neighbor.type = cell.type;
-                                neighbor.visited = true;
+                                neighbor._visited = true;
                             }
                         }
                     }
@@ -260,18 +262,23 @@ export class WorldMap {
 }
 
 export class WorldCell extends Phaser.GameObjects.Sprite {
+    private overlay: Phaser.GameObjects.Polygon;
+    private hasFogOfWar: boolean;
+
     constructor(
         scene: CustomScene,
         xIndex: number,
         yIndex: number,
         cell: Cell
     ) {
+        const pixelSize = 8;
         // Time to do some trig to find the point coords!
         // Actually, no thank you, I'll cheat since they're hardcoded
         // (Sorry Mrs. Smith, I never was good at showing my work)
-        const height = 14 * 8;
-        const width = 23 * 8;
+        const height = 14 * pixelSize;
+        const width = 23 * pixelSize;
         const h2 = height / 2;
+        const w2 = width - h2;
 
         const x = width * xIndex - h2 * xIndex;
         let y = height * yIndex;
@@ -291,6 +298,20 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         this.setOrigin(0, 0); //.setStrokeStyle(1, 0x000000);
         this.scene.add.existing(this);
 
+        // TODO looks like the overlay needs to be one "pixel" both wider and longer
+        // prettier-ignore
+        this.overlay = scene.add.polygon(x, y, [
+            0,h2, // P1
+            h2,0, // P2
+            w2,0, // P3
+            width,h2, // P4
+            w2,height, // P5
+            h2,height, // P6
+        ], 0xffffff, 0.50).setOrigin(0, 0);
+
+        this.setOverlayState(cell.clearedFogOfWar ? null : "fog");
+        this.hasFogOfWar = !cell.clearedFogOfWar;
+
         this.initEventListeners();
 
         // TODO DEBUG
@@ -303,6 +324,29 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             .setOrigin(0.5, 0.5);
     }
 
+    setCellState(state: { isVisitable?: boolean; clearFogOfWar?: boolean }) {
+        if (state.isVisitable) {
+            this.setTint(0x0000ff);
+        } else {
+            this.setTint(null);
+        }
+
+        if (state.clearFogOfWar) {
+            this.hasFogOfWar = false;
+            this.setOverlayState(null);
+        }
+    }
+
+    private setOverlayState(state: "fog" | "hover" | null) {
+        this.overlay.setVisible(!!state);
+
+        if (state === "fog") {
+            this.overlay.setFillStyle(0x000000, 0.9);
+        } else if (state === "hover") {
+            this.overlay.setFillStyle(0xffffff, 0.5);
+        }
+    }
+
     private initEventListeners() {
         this.setInteractive();
         this.on("pointerover", () => this.hover(true)).on("pointerout", () =>
@@ -311,11 +355,11 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     }
 
     private hover(hasEntered: boolean) {
-        if (hasEntered) {
-            //this.prevFillStyle = this.fillColor;
+        if (this.hasFogOfWar) {
+            return;
         }
 
-        //this.setFillStyle(hasEntered ? 0xffffff : this.prevFillStyle);
+        this.setOverlayState(hasEntered ? "hover" : null);
     }
 
     private static getRandomSpriteFrame(type: CellType) {
