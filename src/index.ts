@@ -9,6 +9,9 @@ import { DEBUG_isDebugBuild } from "./shared";
 import { StatusUiScene } from "./scenes/StatusUiScene";
 import { DayReviewScene } from "./scenes/DayReviewScene";
 
+const USE_TEST_SEED = true;
+const TEST_SEED = ["ld50"];
+
 export const game = new Phaser.Game({
     title: "Sample",
 
@@ -29,6 +32,8 @@ export const game = new Phaser.Game({
             gravity: { x: 0, y: 0 },
         },
     },
+
+    seed: DEBUG_isDebugBuild() && USE_TEST_SEED ? TEST_SEED : null,
 
     parent: "js-game-container",
     autoFocus: true,

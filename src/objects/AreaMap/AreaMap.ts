@@ -75,20 +75,38 @@ export class AreaMap {
     /** Tile map expects this backwards from how we're rendering it */
     toTilemap(sheet: AreaSpriteSheet): AreaCell[][] {
         const tilemap = [];
-        for (let i = 0; i < this._size.width; i++) {
-            tilemap[i] = [];
-            for (let j = 0; j < this._size.height; j++) {
-                const currentCell = this._map[j][i];
+        for (let x = 0; x < this._size.width; x++) {
+            tilemap[x] = [];
+            for (let y = 0; y < this._size.height; y++) {
+                const currentCell = this._map[y][x];
                 // TODO re-randomizes the tile sprites every time the scene launches
                 const randomSpriteFrame = sheet.getRandomFrameByType(
                     currentCell.state
                 );
 
-                tilemap[i][j] = randomSpriteFrame;
+                tilemap[x][y] = randomSpriteFrame;
             }
         }
 
         return tilemap;
+    }
+
+    getResources() {
+        const resources = [];
+
+        for (let y = 0; y < this._size.height; y++) {
+            for (let x = 0; x < this._size.width; x++) {
+                if (this._map[y][x].resource) {
+                    resources.push({
+                        resource: this._map[y][x].resource,
+                        x,
+                        y,
+                    });
+                }
+            }
+        }
+
+        return resources;
     }
 
     /** Completely generates a cave */
@@ -108,12 +126,12 @@ export class AreaMap {
     private initializeMap() {
         const map: AreaCell[][] = [];
         // init an empty map with random cells burrowed out
-        for (let i = 0; i < this._size.width; i++) {
-            map[i] = [];
-            for (let j = 0; j < this._size.height; j++) {
-                map[i][j] = {
+        for (let y = 0; y < this._size.height; y++) {
+            map[y] = [];
+            for (let x = 0; x < this._size.width; x++) {
+                map[y][x] = {
                     state:
-                        Math.random() < this.chanceToStartOpen
+                        Phaser.Math.RND.frac() < this.chanceToStartOpen
                             ? CellState.Open
                             : CellState.Filled,
                 };
@@ -124,15 +142,15 @@ export class AreaMap {
     }
 
     /** Get the count of open neighbors around a given cell */
-    private getOpenNeighbors(map: AreaCell[][], x: number, y: number) {
+    private getOpenNeighbors(map: AreaCell[][], px: number, py: number) {
         let openNeighbors = 0;
-        for (let i = -1; i < 2; i++) {
-            for (let j = -1; j < 2; j++) {
-                if (i == 0 && j == 0) {
+        for (let y = -1; y < 2; y++) {
+            for (let x = -1; x < 2; x++) {
+                if (x == 0 && y == 0) {
                     continue;
                 }
-                const xNeighbor = x + i;
-                const yNeighbor = y + j;
+                const xNeighbor = px + x;
+                const yNeighbor = py + y;
 
                 // consider neighbors that are off the map as "filled"
                 if (
@@ -145,7 +163,7 @@ export class AreaMap {
                 }
 
                 // if this neighbor is open, increment the count
-                else if (map[xNeighbor][yNeighbor].state === CellState.Open) {
+                else if (map[yNeighbor][xNeighbor].state === CellState.Open) {
                     openNeighbors += 1;
                 }
             }
@@ -156,15 +174,15 @@ export class AreaMap {
     /** Runs a single cellular automata simulation step on a map */
     private runSimulationStep(currentMap: AreaCell[][]) {
         const newMap: AreaCell[][] = [];
-        for (let i = 0; i < this._size.width; i++) {
-            newMap[i] = [];
-            for (let j = 0; j < this._size.height; j++) {
+        for (let y = 0; y < this._size.height; y++) {
+            newMap[y] = [];
+            for (let x = 0; x < this._size.width; x++) {
                 // check how many neighbors this cell has
-                const openNeighbors = this.getOpenNeighbors(currentMap, i, j);
+                const openNeighbors = this.getOpenNeighbors(currentMap, x, y);
 
                 // live cells stay alive if they have enough neighbors
-                if (currentMap[i][j].state === CellState.Open) {
-                    newMap[i][j] = {
+                if (currentMap[y][x].state === CellState.Open) {
+                    newMap[y][x] = {
                         state:
                             openNeighbors >= this.requiredNeighborsForLife
                                 ? CellState.Open
@@ -172,7 +190,7 @@ export class AreaMap {
                     };
                 } else {
                     // dead cells come alive if they have enough neighbors
-                    newMap[i][j] = {
+                    newMap[y][x] = {
                         state:
                             openNeighbors > this.requiredNeighborsForBirth
                                 ? CellState.Open
@@ -191,20 +209,20 @@ export class AreaMap {
         const entries = Object.entries(spawnRates);
 
         // run through each cell mark it as a wall if it has any open neighbors
-        for (let i = 0; i < this._size.width; i++) {
-            for (let j = 0; j < this._size.height; j++) {
-                const cell = map[i][j];
+        for (let y = 0; y < this._size.height; y++) {
+            for (let x = 0; x < this._size.width; x++) {
+                const cell = map[y][x];
                 if (
                     cell.state === CellState.Filled &&
-                    this.getOpenNeighbors(map, i, j) > 0
+                    this.getOpenNeighbors(map, x, y) > 0
                 ) {
-                    map[i][j] = {
+                    map[y][x] = {
                         state: CellState.Wall,
                     };
                 } else if (cell.state === CellState.Open) {
                     entries.forEach((kv) => {
                         if (Phaser.Math.RND.frac() <= kv[1]) {
-                            map[i][j].resource = kv[0] as keyof Resources;
+                            map[y][x].resource = kv[0] as keyof Resources;
                             return false;
                         }
                     });
@@ -213,29 +231,81 @@ export class AreaMap {
         }
     }
 
-    /** Finds an open space near the bottom middle of the map for the player to spawn */
+    /** Finds an open space near the middle of the map for the player to spawn */
     private findSuitableStartLocation(map: AreaCell[][]) {
-        const middle = Math.floor(this._size.width / 2);
-        for (let i = this._size.height - 1; i >= 0; i--) {
-            for (let j = 0, len = this.size.width / 2; j < len; j++) {
-                // look to the left/right of the middle for an open cell
-                const left = middle - j;
-                const right = middle + j;
+        const xMid = Math.floor(this._size.width / 2);
+        const yMid = Math.floor(this._size.height / 2);
 
-                if (left >= 0 && map[left][i].state === CellState.Open) {
-                    return { x: left, y: i };
+        // the center cell is open, so use it
+        if (map[yMid][xMid].state === CellState.Open) {
+            return { x: xMid, y: yMid };
+        }
+
+        let currentX = xMid;
+        let currentY = yMid;
+
+        // start searching the cells around the center point, roughly increasing the radius as we go
+        for (let y = 1; y < yMid; y++) {
+            for (let x = 1; x < xMid; x++) {
+                // UGH look at this nasty copy/paste job
+
+                // left
+                currentX = xMid - x;
+                currentY = yMid;
+                let cell = map[currentY][currentX];
+                if (cell?.state === CellState.Open) {
+                    return { x: currentX, y: currentY };
                 }
 
-                if (
-                    right < this._size.width &&
-                    map[right][i].state === CellState.Open
-                ) {
-                    return { x: right, y: i };
+                //right
+                currentX = xMid + x;
+                currentY = yMid;
+                cell = map[currentY][currentX];
+                if (cell?.state === CellState.Open) {
+                    return { x: currentX, y: currentY };
                 }
 
-                // else - we didn't find an open cell, so move on to the next row up
+                //up
+                currentX = xMid;
+                currentY = yMid - y;
+                cell = map[currentY][currentX];
+                if (cell?.state === CellState.Open) {
+                    return { x: currentX, y: currentY };
+                }
+
+                //down
+                currentX = xMid;
+                currentY = yMid + y;
+                cell = map[currentY][currentX];
+                if (cell?.state === CellState.Open) {
+                    return { x: currentX, y: currentY };
+                }
             }
         }
+
+        // TODO no empty cells found?
+        throw "Cannot spawn player - no empty cells found";
+
+        // for (let y = this._size.height - 1; y >= 0; y--) {
+        //     for (let x = 0, len = this.size.width / 2; x < len; x++) {
+        //         // look to the left/right of the middle for an open cell
+        //         const left = middle - x;
+        //         const right = middle + x;
+
+        //         if (left >= 0 && map[y][left].state === CellState.Open) {
+        //             return { x: left, y: y };
+        //         }
+
+        //         if (
+        //             right < this._size.width &&
+        //             map[y][right].state === CellState.Open
+        //         ) {
+        //             return { x: right, y: y };
+        //         }
+
+        //         // else - we didn't find an open cell, so move on to the next row up
+        //     }
+        // }
     }
 
     public DEBUG_displayMap(): void {
@@ -245,7 +315,7 @@ export class AreaMap {
 
         const ctx = display.getContext("2d");
         const width = 10;
-        const scale = 4; // increase this to make the display physically larger, scaling the canvas view to match
+        const scale = 8; // increase this to make the display physically larger, scaling the canvas view to match
         const ctxScale = (1 / width) * scale;
 
         display.width = this.size.width * scale;
@@ -266,19 +336,21 @@ export class AreaMap {
                         ctx.fillStyle = "black";
                 }
 
+                ctx.fillRect(i * width, j * width, width, width);
+
                 if (cell.resource) {
                     switch (cell.resource) {
                         case "food":
-                            ctx.fillStyle = "red";
+                            ctx.fillStyle = "green";
                             break;
                         case "water":
                             ctx.fillStyle = "blue";
                             break;
                         case "filters":
-                            ctx.fillStyle = "green";
+                            ctx.fillStyle = "red";
                             break;
                         case "parts":
-                            ctx.fillStyle = "gold";
+                            ctx.fillStyle = "hotpink";
                             break;
                         case "fuel":
                         default:
@@ -286,12 +358,17 @@ export class AreaMap {
                     }
                 }
 
-                ctx.fillRect(i * width, j * width, width, width);
+                ctx.fillRect(
+                    i * width + width / 4,
+                    j * width + width / 4,
+                    width / 2,
+                    width / 2
+                );
             }
         }
 
         // draw the player start pos
-        ctx.fillStyle = "hotpink";
+        ctx.fillStyle = "gold";
         ctx.fillRect(
             this.startLocation.x * width,
             this.startLocation.y * width,

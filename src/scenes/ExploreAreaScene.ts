@@ -1,5 +1,6 @@
 import { AreaMap } from "../objects/AreaMap/AreaMap";
 import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
+import { AreaResource } from "../objects/AreaMap/AreaResource";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
 import { Cell } from "../objects/WorldMap/shared";
@@ -38,6 +39,15 @@ export class ExploreAreaScene extends CustomScene {
         this.load.spritesheet(
             GeneralAssets.areaPlayer,
             "assets/exl-topdown.png",
+            {
+                frameWidth: TILE_WIDTH,
+                frameHeight: TILE_WIDTH,
+            }
+        );
+
+        this.load.spritesheet(
+            GeneralAssets.resources,
+            "assets/resource-spritesheet.png",
             {
                 frameWidth: TILE_WIDTH,
                 frameHeight: TILE_WIDTH,
@@ -90,6 +100,8 @@ export class ExploreAreaScene extends CustomScene {
             onClick: () => this.leaveArea(),
         }).setScrollFactor(0, 0);
 
+        this.spawnResources();
+
         this.map.DEBUG_displayMap();
 
         if (!this.scene.isActive(StatusUiScene.KEY)) {
@@ -99,6 +111,21 @@ export class ExploreAreaScene extends CustomScene {
 
     update() {
         this.player.update();
+    }
+
+    private spawnResources() {
+        const resources = this.map.getResources();
+
+        resources.forEach((r) => {
+            const coord = this.translateCoord(r.x, r.y);
+            new AreaResource(
+                this,
+                coord.x,
+                coord.y,
+                r.resource,
+                this.currentCell.biome
+            );
+        });
     }
 
     private leaveArea() {
