@@ -285,27 +285,6 @@ export class AreaMap {
 
         // TODO no empty cells found?
         throw "Cannot spawn player - no empty cells found";
-
-        // for (let y = this._size.height - 1; y >= 0; y--) {
-        //     for (let x = 0, len = this.size.width / 2; x < len; x++) {
-        //         // look to the left/right of the middle for an open cell
-        //         const left = middle - x;
-        //         const right = middle + x;
-
-        //         if (left >= 0 && map[y][left].state === CellState.Open) {
-        //             return { x: left, y: y };
-        //         }
-
-        //         if (
-        //             right < this._size.width &&
-        //             map[y][right].state === CellState.Open
-        //         ) {
-        //             return { x: right, y: y };
-        //         }
-
-        //         // else - we didn't find an open cell, so move on to the next row up
-        //     }
-        // }
     }
 
     public DEBUG_displayMap(): void {
