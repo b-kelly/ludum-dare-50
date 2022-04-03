@@ -29,7 +29,7 @@ export class ExploreAreaScene extends CustomScene {
     preload() {
         this.load.spritesheet(
             AreaSpriteSheet.NAME,
-            "assets/explore-tileset.png",
+            "assets/sprites/areamap-tileset.png",
             {
                 frameWidth: TILE_WIDTH,
                 frameHeight: TILE_WIDTH,
@@ -38,7 +38,7 @@ export class ExploreAreaScene extends CustomScene {
 
         this.load.spritesheet(
             GeneralAssets.areaPlayer,
-            "assets/exl-topdown.png",
+            "assets/sprites/player.png",
             {
                 frameWidth: TILE_WIDTH,
                 frameHeight: TILE_WIDTH,
@@ -47,7 +47,7 @@ export class ExploreAreaScene extends CustomScene {
 
         this.load.spritesheet(
             GeneralAssets.resources,
-            "assets/resource-spritesheet.png",
+            "assets/sprites/resources-tileset.png",
             {
                 frameWidth: TILE_WIDTH,
                 frameHeight: TILE_WIDTH,

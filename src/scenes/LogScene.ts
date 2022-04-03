@@ -24,7 +24,7 @@ export class LogScene extends CustomScene {
     preload() {
         this.load.image(
             GeneralAssets.logBackground,
-            "assets/bg.intro-log-bg.gif"
+            "assets/bg/intro-log-bg.gif"
         );
     }
 
