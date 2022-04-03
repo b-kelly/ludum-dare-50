@@ -1,13 +1,11 @@
 import { CustomScene } from "../objects/CustomScene";
-import { Resources } from "../objects/GlobalDataStore";
+import { EventOutcome } from "../objects/EventManager";
 export declare class DayStartScene extends CustomScene {
     static readonly KEY = "DayStartScene";
-    private eventMessage;
-    private eventModifiers;
+    private eventOutcome;
     constructor();
     init(data: {
-        eventMessage: string;
-        eventModifiers: Resources;
+        eventOutcome: EventOutcome;
     }): void;
     preload(): void;
     create(): void;

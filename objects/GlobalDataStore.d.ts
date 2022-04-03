@@ -1,3 +1,4 @@
+import { GameEvent } from "./EventManager";
 import { WorldMap } from "./WorldMap/WorldMap";
 export interface Resources {
     fuel: number;
@@ -6,9 +7,13 @@ export interface Resources {
     parts: number;
     filters: number;
 }
+interface CurrentDay {
+    haul: Resources;
+    events: GameEvent[];
+}
 interface CampaignStats {
     dayCount: number;
-    dailyHauls: Resources[];
+    dailyProgress: CurrentDay[];
 }
 /** Handy wrapper around our shared data */
 export declare class GlobalDataStore {
@@ -17,8 +22,9 @@ export declare class GlobalDataStore {
     get resources(): Readonly<Resources>;
     get worldMap(): WorldMap;
     get campaignStats(): CampaignStats;
-    get currentDay(): Resources;
-    addResourceToHaul(key: keyof Resources, count: number): void;
+    get currentDay(): CurrentDay;
+    logEvent(event: GameEvent): void;
+    adjustHaul(delta: Partial<Resources>): void;
     endDay(): void;
     expendMoveResources(amtToExpend: number): boolean;
     private updateResources;
