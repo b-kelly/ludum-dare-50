@@ -1,6 +1,9 @@
 import { Cell } from "./shared";
 export declare const MAP_WIDTH = 31;
 export declare const MAP_HEIGHT = 31;
+declare type GenCell = Cell & {
+    _visited: boolean;
+};
 export declare const WorldAssets: {
     readonly tiles: "tiles";
     readonly tilesData: {
@@ -25,20 +28,25 @@ export declare class WorldMap {
         x: number;
         y: number;
     };
-    getAdjacentCells(px: number, py: number): {
+    getAdjacentCellCoords(px: number, py: number): {
         x: number;
         y: number;
     }[];
-    getPlayerAdjacentCells(): {
+    getAdjacentCells(map: GenCell[][], px: number, py: number): GenCell[];
+    getPlayerAdjacentCellCoords(): {
         x: number;
         y: number;
     }[];
     cellIsAdjacentToPlayer(x: number, y: number): boolean;
     setPlayerPosition(x: number, y: number): void;
     private generateMap;
+    private growSeed;
+    private fillDefaultCell;
     private getRandomAdjacentCell;
     private pickCellBiome;
     private pickCellType;
     private getRandomSpriteFrame;
+    private assignBiomeType;
     DEBUG_displayMap(): void;
 }
+export {};
