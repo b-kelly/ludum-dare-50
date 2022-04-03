@@ -1,3 +1,4 @@
+import { GameEvent } from "./EventManager";
 import { WorldMap } from "./WorldMap/WorldMap";
 
 const startingValues = {
@@ -18,9 +19,14 @@ export interface Resources {
     filters: number;
 }
 
+interface CurrentDay {
+    haul: Resources;
+    events: GameEvent[];
+}
+
 interface CampaignStats {
     dayCount: number;
-    dailyHauls: Resources[]; //TODO track daily losses?
+    dailyProgress: CurrentDay[];
 }
 
 /** Handy wrapper around our shared data */
@@ -44,43 +50,60 @@ export class GlobalDataStore {
     get campaignStats() {
         return this.getOrCreate<CampaignStats>("campainStats", () => ({
             dayCount: 0,
-            dailyHauls: [],
+            dailyProgress: [],
         }));
     }
 
-    get currentDay(): Resources {
-        return this.getOrCreate<Resources>("currentDay", () => ({
-            fuel: 0,
-            food: 0,
-            water: 0,
-            parts: 0,
-            filters: 0,
+    get currentDay(): CurrentDay {
+        return this.getOrCreate<CurrentDay>("currentDay", () => ({
+            haul: {
+                fuel: 0,
+                food: 0,
+                water: 0,
+                parts: 0,
+                filters: 0,
+            },
+            events: [],
         }));
     }
 
-    addResourceToHaul(key: keyof Resources, count: number) {
+    logEvent(event: GameEvent) {
         const curr = this.currentDay;
-        curr[key] += count;
+        curr.events.push(event);
+
+        this.scene.registry.set("currentDay", curr);
+    }
+
+    adjustHaul(delta: Partial<Resources>) {
+        const curr = this.currentDay;
+
+        Object.keys(delta).forEach((k: keyof Resources) => {
+            curr.haul[k] += delta[k];
+        });
 
         this.scene.registry.set("currentDay", curr);
     }
 
     endDay() {
         const curr = this.currentDay;
+        const haul = curr.haul;
         const res = this.resources;
 
         // TODO replenish daily fuel here or after showing stats?
         this.updateResources({
-            food: curr.food + res.food,
-            fuel: curr.fuel + res.fuel,
-            water: curr.water + res.water,
-            parts: curr.parts + res.parts,
-            filters: curr.filters + res.filters,
+            food: haul.food + res.food,
+            fuel: haul.fuel + res.fuel,
+            water: haul.water + res.water,
+            parts: haul.parts + res.parts,
+            filters: haul.filters + res.filters,
         });
 
         const stats = this.campaignStats;
         stats.dayCount += 1;
-        stats.dailyHauls.push(curr);
+        stats.dailyProgress.push({
+            haul: haul,
+            events: curr.events,
+        });
 
         this.scene.registry.set("campaignStats", stats);
     }

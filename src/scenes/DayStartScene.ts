@@ -1,4 +1,5 @@
 import { CustomScene } from "../objects/CustomScene";
+import { EventOutcome } from "../objects/EventManager";
 import { Resources } from "../objects/GlobalDataStore";
 import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
@@ -7,16 +8,14 @@ import { StatusUiScene } from "./StatusUiScene";
 
 export class DayStartScene extends CustomScene {
     static readonly KEY = "DayStartScene";
-    private eventMessage: string;
-    private eventModifiers: Resources;
+    private eventOutcome: EventOutcome;
 
     constructor() {
         super({ key: DayStartScene.KEY });
     }
 
-    init(data: { eventMessage: string; eventModifiers: Resources }) {
-        this.eventMessage = data.eventMessage;
-        this.eventModifiers = data.eventModifiers;
+    init(data: { eventOutcome: EventOutcome }) {
+        this.eventOutcome = data.eventOutcome;
     }
 
     preload() {
@@ -30,7 +29,7 @@ export class DayStartScene extends CustomScene {
         new Button(this, {
             x: 0,
             y: 0,
-            text: "Next",
+            text: "Explore",
             onClick: () => {
                 this.scene.start(OverworldScene.KEY, {});
             },
@@ -58,19 +57,21 @@ export class DayStartScene extends CustomScene {
         const startXPos = width * 0.25;
         let startYPos = height * 0.125;
 
-        if (this.eventMessage) {
-            this.add.text(startXPos, startYPos, this.eventMessage);
+        if (this.eventOutcome?.message) {
+            this.add.text(startXPos, startYPos, this.eventOutcome.message);
             startYPos += textHeight;
         }
 
-        const resources = this.global.resources;
-        Object.entries(resources).forEach(
+        const currentResources = this.global.resources;
+        const startingResources =
+            this.eventOutcome?.resourcesPrior || currentResources;
+        Object.entries(startingResources).forEach(
             (kv: [keyof Resources, number], i) => {
                 let message = `${kv[0]}: ${String(kv[1])}`;
 
-                const modifier = this.eventModifiers?.[kv[0]];
+                const modifier = this.eventOutcome?.resourceDelta?.[kv[0]];
                 if (modifier) {
-                    message += ` ${modifier}`;
+                    message += ` ${modifier} = ${currentResources[kv[0]]}`;
                 }
 
                 this.add.text(

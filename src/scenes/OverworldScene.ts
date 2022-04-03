@@ -5,7 +5,6 @@ import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
 import { GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayReviewScene } from "./DayReviewScene";
-import { DayStartScene } from "./DayStartScene";
 import { ExploreAreaScene } from "./ExploreAreaScene";
 import { StatusUiScene } from "./StatusUiScene";
 

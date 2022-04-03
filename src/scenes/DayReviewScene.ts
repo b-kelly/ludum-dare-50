@@ -41,15 +41,14 @@ export class DayReviewScene extends CustomScene {
     }
 
     private sleepAndStartNextDay() {
-        // TODO EVENT! Break stuff, whatever
+        // spawn a daily event
+        const outcome = this.eventManager.spawnDailyEvent();
+
+        // end and finalize the day's results
+        this.global.endDay();
+
         this.scene.start(DayStartScene.KEY, {
-            eventMessage:
-                "Here's all the crud that broke while you were out.\nAlso, there was a fire (lol).",
-            eventModifiers: {
-                filters: -1,
-                parts: -2,
-                food: -5,
-            },
+            eventOutcome: outcome,
         });
     }
 
