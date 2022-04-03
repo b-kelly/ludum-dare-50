@@ -27,6 +27,8 @@ const startingValues = {
         parts: 0,
         filters: 0,
     },
+    fuelCostVisitedTile: 1,
+    fuelCostUnvisitedTile: 2,
 } as const;
 
 export interface Resources {
@@ -40,6 +42,8 @@ export interface Resources {
 interface BaseStatus {
     maxStorage: Resources;
     dailyReplenish: Resources;
+    fuelCostVisitedTile: number;
+    fuelCostUnvisitedTile: number;
 }
 
 interface CurrentDay {
@@ -76,6 +80,8 @@ export class GlobalDataStore {
         return this.getOrCreate("baseStatus", () => ({
             maxStorage: startingValues.maxStorage,
             dailyReplenish: startingValues.dailyReplenish,
+            fuelCostUnvisitedTile: startingValues.fuelCostUnvisitedTile,
+            fuelCostVisitedTile: startingValues.fuelCostVisitedTile,
         }));
     }
 

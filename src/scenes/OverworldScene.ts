@@ -104,11 +104,13 @@ export class OverworldScene extends CustomScene {
             return false;
         }
 
-        // TODO don't hardcode
-        const cost = this.global.worldMap.cells[y][x].playerHasVisited ? 1 : 2;
+        let fuelCost = this.global.baseStatus.fuelCostUnvisitedTile;
+        if (this.global.worldMap.cells[y][x].playerHasVisited) {
+            fuelCost = this.global.baseStatus.fuelCostVisitedTile;
+        }
 
-        // TODO if there are not enough resources to move
-        if (!this.global.expendMoveResources(cost)) {
+        // if there are not enough resources to move
+        if (!this.global.expendMoveResources(fuelCost)) {
             console.log("TODO CANNOT MOVE");
             return false;
         }
@@ -192,8 +194,7 @@ export class OverworldScene extends CustomScene {
             const wc = this.getCell(c.x, c.y);
 
             if (!wc) {
-                // TODO ERROR
-                return true;
+                throw `Unable to find WorldCell for x${c.x} y${c.y}`;
             }
 
             if (disable) {
