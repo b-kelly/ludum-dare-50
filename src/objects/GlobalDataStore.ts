@@ -10,7 +10,7 @@ const startingValues = {
     },
 } as const;
 
-interface Resources {
+export interface Resources {
     fuel: number;
     food: number;
     water: number;

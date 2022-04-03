@@ -32,6 +32,8 @@ export class AreaSpriteSheet {
             return this.getRandomInteriorFrame();
         } else if (state === CellState.Wall) {
             return this.getRandomWallFrame();
+        } else if (state === CellState.Resource) {
+            return this.getRandomSmallStatementFrame(); // TODO RESOURCE IMAGE
         }
 
         throw "You should never see this";
@@ -72,7 +74,7 @@ export class AreaSpriteSheet {
         return this.getFrameFromRows(8, 1);
     }
 
-    static getCollisionRanges() {
+    getCollisionRanges() {
         // TODO START OFFSET
         // rows 0,1,2,3,6,7,8
         return [

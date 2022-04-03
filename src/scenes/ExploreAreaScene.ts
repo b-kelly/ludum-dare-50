@@ -2,6 +2,7 @@ import { AreaMap } from "../objects/AreaMap/AreaMap";
 import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
+import { Cell } from "../objects/WorldMap/shared";
 import { GeneralAssets, TILE_WIDTH } from "../shared";
 import { Button } from "../UI/Button";
 import { OverworldScene } from "./OverworldScene";
@@ -11,6 +12,7 @@ export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
     private map: AreaMap;
     private tileMap: Phaser.Tilemaps.Tilemap;
+    private currentCell: Cell & { x: number; y: number };
 
     private player: AreaPlayer;
 
@@ -18,8 +20,8 @@ export class ExploreAreaScene extends CustomScene {
         super({ key: ExploreAreaScene.KEY });
     }
 
-    init(data: object) {
-        console.log(ExploreAreaScene.KEY, data, this.global.resources);
+    init(data: ExploreAreaScene["currentCell"]) {
+        this.currentCell = data;
     }
 
     preload() {
@@ -43,14 +45,16 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     create() {
+        const aSSheet = new AreaSpriteSheet(this.currentCell.type);
+
         this.createAnimations();
-        this.map = new AreaMap(50, 50);
+        this.map = new AreaMap(50, 50, this.currentCell.type);
         this.tileMap = new Phaser.Tilemaps.Tilemap(
             this,
             Phaser.Tilemaps.Parsers.Parse(
                 "areamap",
                 Phaser.Tilemaps.Formats.ARRAY_2D,
-                this.map.toTilemap(),
+                this.map.toTilemap(aSSheet),
                 TILE_WIDTH,
                 TILE_WIDTH,
                 false
@@ -61,7 +65,7 @@ export class ExploreAreaScene extends CustomScene {
 
         const layer = this.tileMap.createLayer(0, tiles, 0, 0);
 
-        AreaSpriteSheet.getCollisionRanges().forEach(([start, end]) => {
+        aSSheet.getCollisionRanges().forEach(([start, end]) => {
             layer.setCollisionBetween(start, end, true);
         });
 

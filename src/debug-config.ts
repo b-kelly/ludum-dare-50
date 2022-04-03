@@ -1,5 +1,6 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
+import { CellType } from "./objects/WorldMap/shared";
 import { BaseScene } from "./scenes/BaseScene";
 import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { OverworldScene } from "./scenes/OverworldScene";
@@ -30,5 +31,7 @@ function onComplete(this: Phaser.Scene) {
 
 export const debugConfig: DebugConfig = {
     sceneKey: ExploreAreaScene.KEY,
-    data: {},
+    data: {
+        type: CellType.Desert,
+    },
 };

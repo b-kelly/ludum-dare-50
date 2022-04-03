@@ -1,17 +1,46 @@
+import { Resources } from "../GlobalDataStore";
+import { CellType } from "../WorldMap/shared";
 import { AreaSpriteSheet } from "./AreaSpriteSheet";
 
 export enum CellState {
     Open,
     Filled,
     Wall,
-    //Resource,
+    Resource,
 }
+
+const resourceSpawnRate: Record<CellType, Record<keyof Resources, number>> = {
+    [CellType.Colony]: null,
+    [CellType.Empty]: null,
+    [CellType.Desert]: {
+        fuel: 0.01,
+        food: 0.01,
+        water: 0.01,
+        filters: 0.01,
+        parts: 0.01,
+    },
+    [CellType.Forest]: {
+        fuel: 0.01,
+        food: 0.01,
+        water: 0.01,
+        filters: 0.01,
+        parts: 0.01,
+    },
+    [CellType.Wetland]: {
+        fuel: 0.01,
+        food: 0.01,
+        water: 0.01,
+        filters: 0.01,
+        parts: 0.01,
+    },
+} as const;
 
 /** Generates a connected "cave" with cellular automata */
 export class AreaMap {
     private _map: CellState[][] = [];
     private readonly _size: { width: number; height: number };
     private readonly _startLocation: { x: number; y: number };
+    private readonly _cellType: CellType;
 
     private readonly chanceToStartOpen = 0.4;
     //private readonly chanceToGenerateResource = 0.01;
@@ -31,15 +60,15 @@ export class AreaMap {
         return this._startLocation;
     }
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, type: CellType) {
         this._size = { width, height };
+        this._cellType = type;
         this._map = this.generateMap();
         this._startLocation = this.findSuitableStartLocation(this._map);
     }
 
     /** Tile map expects this backwards from how we're rendering it */
-    toTilemap(): CellState[][] {
-        const sheet = new AreaSpriteSheet(null); // TODO TYPE
+    toTilemap(sheet: AreaSpriteSheet): CellState[][] {
         const tilemap = [];
         for (let i = 0; i < this._size.width; i++) {
             tilemap[i] = [];
@@ -146,6 +175,9 @@ export class AreaMap {
 
     /** Mark all the cavern walls in place, placing resources on them if able */
     private markWallsAndPlaceResources(map: CellState[][]) {
+        const spawnRates = resourceSpawnRate[this._cellType] || {};
+        const entries = Object.entries(spawnRates);
+
         // run through each cell mark it as a wall if it has any open neighbors
         for (let i = 0; i < this._size.width; i++) {
             for (let j = 0; j < this._size.height; j++) {
@@ -155,10 +187,13 @@ export class AreaMap {
                     this.getOpenNeighbors(map, i, j) > 0
                 ) {
                     map[i][j] = CellState.Wall;
-                    // map[i][j] =
-                    //     Math.random() < this.chanceToGenerateResource
-                    //         ? CellState.Resource
-                    //         : CellState.Wall;
+                } else if (cell === CellState.Open) {
+                    entries.forEach((kv) => {
+                        if (Phaser.Math.RND.frac() <= kv[1]) {
+                            map[i][j] = CellState.Resource; // TODO SPECIFIC RESOURCE
+                            return false;
+                        }
+                    });
                 }
             }
         }
