@@ -41,20 +41,16 @@ class Indicator {
             .setOrigin(0, 0.5);
         scene.add.group([icon, this.haulText], {});
 
-        this.updateText(true);
+        this.updateText();
 
         // TODO Show potential/realized losses/gains when applicable?
-
-        this.scene.registry.events.on("changedata", () =>
-            this.updateText(false)
-        );
     }
 
-    private updateText(force: boolean) {
-        if (!force && !this.scene.scene.isActive(StatusUiScene.KEY)) {
-            return;
-        }
+    update() {
+        this.updateText();
+    }
 
+    private updateText() {
         const haulCount = this.scene.global.currentDay.haul[this.type];
         this.haulText.text = `(${haulCount > 0 ? "+" : ""}${haulCount})`;
 
@@ -98,6 +94,18 @@ export class StatusUiScene extends CustomScene {
 
         Object.keys(this.text).forEach((k: keyof Resources, i) => {
             this.text[k] = new Indicator(this, i * 200, 0, k);
+        });
+
+        this.registry.events.on("changedata", () => {
+            if (!this.scene.isActive(StatusUiScene.KEY)) {
+                return;
+            }
+
+            Object.values(this.text).forEach((t) => t.update());
+        });
+
+        this.events.on("shutdown", () => {
+            this.registry.events.off("changedata");
         });
     }
 }
