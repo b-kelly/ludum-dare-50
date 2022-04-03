@@ -45,11 +45,11 @@ export class AreaSpriteSheet {
             return this.getRandomInteriorFrame();
         } else if (state === CellState.Wall) {
             return this.getRandomWallFrame();
-        } else if (state === CellState.Resource) {
-            return this.getRandomSmallStatementFrame(); // TODO RESOURCE IMAGE
         }
 
-        throw "You should never see this";
+        throw `Unable to get frame for CellState: ${String(state)} (${
+            CellState[state]
+        })`;
     }
 
     getRandomCornerFrame() {

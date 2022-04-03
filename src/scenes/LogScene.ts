@@ -54,10 +54,6 @@ export class LogScene extends CustomScene {
         this.showNext();
     }
 
-    update(/*time: number*/) {
-        /* TODO update all the things */
-    }
-
     // TODO scroll up?
     private scrollDown() {
         this.text.y -= 100; // TODO what's the height of one line?

@@ -19,10 +19,6 @@ export class OverworldScene extends CustomScene {
         super({ key: OverworldScene.KEY });
     }
 
-    init() {
-        // TODO
-    }
-
     preload() {
         this.load.spritesheet(WorldAssets.tiles, "assets/hex-sprites.png", {
             frameWidth: 23 * 8,

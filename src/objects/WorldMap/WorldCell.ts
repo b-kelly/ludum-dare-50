@@ -53,7 +53,6 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
 
         this.initEventListeners();
 
-        // TODO DEBUG
         if (DEBUG_isDebugBuild() && SHOW_DEBUG) {
             const typeStr = cell.type.slice(0, 3).toUpperCase();
             const biomeStr = cell.biome.slice(0, 3).toUpperCase();

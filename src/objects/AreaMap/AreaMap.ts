@@ -6,7 +6,6 @@ export enum CellState {
     Open,
     Filled,
     Wall,
-    Resource,
 }
 
 interface AreaCell {

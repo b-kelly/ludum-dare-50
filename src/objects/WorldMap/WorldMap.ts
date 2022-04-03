@@ -48,7 +48,6 @@ export const WorldAssets = {
         Empty: 3,
         Colony: 4,
         Overlay: 5,
-        default: 5, //TODO need sprites for these
     },
 } as const;
 
