@@ -1,9 +1,9 @@
-import { CellType } from "../WorldMap/shared";
+import { CellBiome } from "../WorldMap/shared";
 import { CellState } from "./AreaMap";
 export declare class AreaSpriteSheet {
     static NAME: string;
     private startingIndex;
-    constructor(type: CellType);
+    constructor(type: CellBiome);
     getRandomFrameByType(state: CellState): number;
     getRandomCornerFrame(): number;
     getRandomWallFrame(): number;

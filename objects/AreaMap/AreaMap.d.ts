@@ -1,4 +1,4 @@
-import { CellType } from "../WorldMap/shared";
+import { CellBiome } from "../WorldMap/shared";
 import { AreaSpriteSheet } from "./AreaSpriteSheet";
 export declare enum CellState {
     Open = 0,
@@ -25,7 +25,7 @@ export declare class AreaMap {
         x: number;
         y: number;
     };
-    constructor(width: number, height: number, type: CellType);
+    constructor(width: number, height: number, type: CellBiome);
     /** Tile map expects this backwards from how we're rendering it */
     toTilemap(sheet: AreaSpriteSheet): CellState[][];
     /** Completely generates a cave */

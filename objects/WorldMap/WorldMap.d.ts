@@ -4,12 +4,13 @@ export declare const MAP_HEIGHT = 31;
 export declare const WorldAssets: {
     readonly tiles: "tiles";
     readonly tilesData: {
-        readonly 2: 0;
-        readonly 4: 1;
-        readonly 3: 2;
-        readonly 0: 3;
-        readonly 1: 4;
+        readonly forest: 0;
+        readonly wetland: 1;
+        readonly desert: 2;
+        readonly Empty: 3;
+        readonly Colony: 4;
         readonly Overlay: 5;
+        readonly default: 5;
     };
 };
 export declare class WorldMap {
@@ -36,6 +37,8 @@ export declare class WorldMap {
     setPlayerPosition(x: number, y: number): void;
     private generateMap;
     private getRandomAdjacentCell;
+    private pickCellBiome;
     private pickCellType;
+    private getRandomSpriteFrame;
     DEBUG_displayMap(): void;
 }
