@@ -64,6 +64,10 @@ export class WorldMap {
         };
         this.playerHomeCoords = { ...this.playerCoords };
         this._cells = this.generateMap();
+        this.setPlayerPosition(
+            this.currentPlayerCoords.x,
+            this.currentPlayerCoords.y
+        );
     }
 
     getCell(x: number, y: number) {
