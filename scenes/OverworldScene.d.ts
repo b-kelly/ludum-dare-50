@@ -2,10 +2,12 @@ import { CustomScene } from "../objects/CustomScene";
 export declare class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
     private player;
+    private movingTowardsCoords;
     constructor();
     init(): void;
     preload(): void;
     create(): void;
+    update(): void;
     private exploreCell;
     private drawHexMap;
     private updateMap;
