@@ -12,4 +12,5 @@ export declare class OverworldScene extends CustomScene {
     private updatePlayerAdjacentCells;
     private getCell;
     private selectSquare;
+    private createAnimations;
 }
