@@ -5,7 +5,11 @@ import { CellBiome } from "../WorldMap/shared";
 export class AreaResource extends Phaser.GameObjects.Sprite {
     declare body: Phaser.Physics.Arcade.Body;
 
-    private resource: keyof Resources;
+    private resourceType: keyof Resources;
+
+    get resource() {
+        return this.resourceType;
+    }
 
     constructor(
         scene: Phaser.Scene,
@@ -19,11 +23,36 @@ export class AreaResource extends Phaser.GameObjects.Sprite {
             x + TILE_WIDTH / 2,
             y + TILE_WIDTH / 2,
             GeneralAssets.resources,
-            AreaResource.getResourceSpriteFrame(resource, biome)
+            AreaResource.getRandomResourceSpriteFrame(resource, biome)
         );
+
+        this.resourceType = resource;
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
+    }
+
+    static getGenericResourceSpriteFrame(resource: keyof Resources) {
+        if (resource === "fuel") {
+            return 0;
+        } else if (resource === "water") {
+            return 2;
+        }
+
+        let row = 0;
+
+        switch (resource) {
+            case "food":
+                row = 1;
+                break;
+            case "filters":
+                row = 2;
+                break;
+            case "parts":
+                row = 3;
+        }
+
+        return row * 4 + 3;
     }
 
     /*
@@ -34,7 +63,7 @@ export class AreaResource extends Phaser.GameObjects.Sprite {
      * BBBG - filters
      * BBBG - parts
      */
-    private static getResourceSpriteFrame(
+    private static getRandomResourceSpriteFrame(
         resource: keyof Resources,
         biome: CellBiome
     ) {

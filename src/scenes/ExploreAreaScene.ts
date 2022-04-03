@@ -118,13 +118,20 @@ export class ExploreAreaScene extends CustomScene {
 
         resources.forEach((r) => {
             const coord = this.translateCoord(r.x, r.y);
-            new AreaResource(
+            const res = new AreaResource(
                 this,
                 coord.x,
                 coord.y,
                 r.resource,
                 this.currentCell.biome
             );
+
+            this.physics.add.collider(res, this.player, (r: AreaResource) => {
+                this.global.adjustHaul({
+                    [r.resource]: 1,
+                });
+                r.destroy();
+            });
         });
     }
 
