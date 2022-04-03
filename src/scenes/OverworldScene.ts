@@ -137,7 +137,7 @@ export class OverworldScene extends CustomScene {
     }
 
     private updatePlayerAdjacentCells(disable: boolean) {
-        const adjCells = this.global.worldMap.getPlayerAdjacentCells();
+        const adjCells = this.global.worldMap.getPlayerAdjacentCellCoords();
 
         adjCells.forEach((c) => {
             const wc = this.getCell(c.x, c.y);

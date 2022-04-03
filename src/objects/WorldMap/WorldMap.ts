@@ -3,6 +3,8 @@ import { CellBiome, Cell, CellType, TILES_SHEET_WIDTH } from "./shared";
 export const MAP_WIDTH = 31;
 export const MAP_HEIGHT = 31;
 
+type GenCell = Cell & { _visited: boolean };
+
 const cellBiomeSpawnData: Record<
     CellBiome,
     {
@@ -13,19 +15,19 @@ const cellBiomeSpawnData: Record<
 > = {
     default: null,
     forest: {
-        spawnRate: 0.025,
+        spawnRate: 0.075,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
     desert: {
         spawnRate: 0.025,
-        clusterSizeUpper: 3,
-        clusterSizeLower: 1,
+        clusterSizeUpper: 20,
+        clusterSizeLower: 10,
     },
     wetland: {
-        spawnRate: 0.025,
-        clusterSizeUpper: 3,
-        clusterSizeLower: 1,
+        spawnRate: 0.05,
+        clusterSizeUpper: 8,
+        clusterSizeLower: 5,
     },
 } as const;
 
@@ -90,7 +92,7 @@ export class WorldMap {
         };
     }
 
-    getAdjacentCells(px: number, py: number) {
+    getAdjacentCellCoords(px: number, py: number) {
         return [
             // top/bottom
             { x: px, y: py - 1 },
@@ -104,9 +106,24 @@ export class WorldMap {
         ];
     }
 
-    getPlayerAdjacentCells() {
+    getAdjacentCells(map: GenCell[][], px: number, py: number) {
+        const coords = this.getAdjacentCellCoords(px, py);
+        const cells: GenCell[] = [];
+
+        coords.forEach(({ x, y }) => {
+            if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) {
+                return;
+            }
+
+            cells.push(map[y][x]);
+        });
+
+        return cells;
+    }
+
+    getPlayerAdjacentCellCoords() {
         const { x, y } = this.playerCoords;
-        return this.getAdjacentCells(x, y);
+        return this.getAdjacentCellCoords(x, y);
     }
 
     cellIsAdjacentToPlayer(x: number, y: number) {
@@ -148,7 +165,6 @@ export class WorldMap {
     }
 
     private generateMap() {
-        type GenCell = Cell & { _visited: boolean };
         const map: GenCell[][] = [];
 
         for (let y = 0; y < MAP_HEIGHT; y++) {
@@ -157,59 +173,41 @@ export class WorldMap {
                 // randomly distribute seeds and special cells
                 const cellBiome = this.pickCellBiome();
                 const cellType = this.pickCellType();
-                const spriteFrame = this.getRandomSpriteFrame(
-                    cellBiome,
-                    cellType
-                );
 
                 map[y][x] = {
-                    _visited: cellBiome !== "default",
+                    _visited: false,
                     biome: cellBiome,
+                    type: cellType,
                     clearedFogOfWar: false,
                     playerHasVisited: false,
-                    type: cellType,
-                    randomSpriteFrame: spriteFrame,
+                    randomSpriteFrame: 0, // assigned below
                 };
+
+                this.assignBiomeType(map[y][x], cellBiome, cellType);
             }
         }
 
-        // go through and grow the seeds
+        // go through and grow the seeds, clean up empty areas, etc
         for (let y = 0; y < MAP_HEIGHT; y++) {
             for (let x = 0; x < MAP_WIDTH; x++) {
-                const cell = map[y][x];
+                // fill in any empty areas
+                this.fillDefaultCell(map, x, y);
 
-                if (cell.biome !== "default") {
-                    const meta = cellBiomeSpawnData[cell.biome];
-                    const count = Phaser.Math.RND.integerInRange(
-                        meta.clusterSizeLower,
-                        meta.clusterSizeUpper
-                    );
+                // grow any non-empty areas
+                this.growSeed(map, x, y);
+            }
+        }
 
-                    // cluster size of one means just this cell
-                    if (count > 1) {
-                        for (let i = 0; i < count; i++) {
-                            const neighbor = this.getRandomAdjacentCell(
-                                map,
-                                x,
-                                y
-                            ) as GenCell;
-
-                            if (neighbor && !neighbor._visited) {
-                                neighbor.biome = cell.biome;
-                                neighbor.randomSpriteFrame =
-                                    this.getRandomSpriteFrame(
-                                        neighbor.biome,
-                                        neighbor.type
-                                    );
-                                neighbor._visited = true;
-                            }
-                        }
-                    }
-                }
+        // one more time, fill in any leftover default cells
+        for (let y = 0; y < MAP_HEIGHT; y++) {
+            for (let x = 0; x < MAP_WIDTH; x++) {
+                // fill in any empty areas
+                this.fillDefaultCell(map, x, y);
             }
         }
 
         // TODO make sure colonies are spaced apart?
+        // TODO divide the map into 4/5/4 sections and place one colony randomly within (except the middle/spawn)
         // generate exactly twelve colonies
         for (let i = 0; i < 12; i++) {
             const rx = Phaser.Math.RND.integerInRange(0, MAP_WIDTH - 1);
@@ -224,7 +222,79 @@ export class WorldMap {
         return map;
     }
 
-    private getRandomAdjacentCell(map: Cell[][], x: number, y: number) {
+    private growSeed(map: GenCell[][], x: number, y: number, currentCount = 0) {
+        const cell = map[y][x];
+
+        // we don't want to grow the default biome / already grown cells
+        if (cell.biome === "default" || cell._visited) {
+            return;
+        }
+
+        const meta = cellBiomeSpawnData[cell.biome];
+        const count = Phaser.Math.RND.integerInRange(
+            meta.clusterSizeLower,
+            meta.clusterSizeUpper
+        );
+
+        // cluster size of one means just this cell
+        if (count <= 1) {
+            return;
+        }
+
+        for (let i = 0; i < count; i++) {
+            const neighbor = this.getRandomAdjacentCell(map, x, y)?.cell;
+
+            if (neighbor && !neighbor._visited) {
+                this.assignBiomeType(neighbor, cell.biome, neighbor.type);
+                neighbor._visited = true;
+                currentCount += 1;
+            }
+        }
+
+        // if we still have room to grow the cluster, pick a neighbor and spread
+        if (currentCount < count) {
+            let neighbor: ReturnType<WorldMap["getRandomAdjacentCell"]> = null;
+
+            // TODO can this loop infinitely?
+            while (!neighbor) {
+                neighbor = this.getRandomAdjacentCell(map, x, y);
+            }
+
+            neighbor.cell._visited = false;
+            this.growSeed(
+                map,
+                neighbor.coords.x,
+                neighbor.coords.y,
+                currentCount
+            );
+        }
+    }
+
+    private fillDefaultCell(map: GenCell[][], x: number, y: number) {
+        const cell = map[y][x];
+
+        // don't fill non-empty cells
+        if (cell.biome !== "default") {
+            return;
+        }
+
+        // try to match a neighbor cell if possible
+        const neighbors = this.getAdjacentCells(map, x, y);
+        for (const neighbor of neighbors) {
+            if (neighbor && neighbor.biome !== "default") {
+                this.assignBiomeType(cell, neighbor.biome, cell.type);
+                cell._visited = true;
+                break;
+            }
+        }
+
+        // if no neighber had a type to steal, add an unvisited seed (so it can grow in the next step)
+        if (cell.biome === "default") {
+            this.assignBiomeType(cell, this.pickCellBiome(), cell.type);
+        }
+    }
+
+    private getRandomAdjacentCell(map: GenCell[][], x: number, y: number) {
         const rx = Phaser.Math.RND.integerInRange(-1, 1);
         const ry = Phaser.Math.RND.integerInRange(-1, 1);
 
@@ -235,7 +305,7 @@ export class WorldMap {
             return null;
         }
 
-        return map[newY][newX];
+        return { cell: map[newY][newX], coords: { x: newX, y: newY } };
     }
 
     private pickCellBiome() {
@@ -327,6 +397,11 @@ export class WorldMap {
         return startIndex + rng;
     }
 
+    private assignBiomeType(cell: Cell, biome: CellBiome, type: CellType) {
+        cell.biome = biome;
+        cell.randomSpriteFrame = this.getRandomSpriteFrame(biome, type);
+    }
+
     public DEBUG_displayMap(): void {
         const display = document.querySelector<HTMLCanvasElement>(".js-map");
         display.classList.remove("hide-debug");
@@ -334,7 +409,7 @@ export class WorldMap {
 
         const ctx = display.getContext("2d");
         const width = 10;
-        const scale = 4; // increase this to make the display physically larger, scaling the canvas view to match
+        const scale = 8; // increase this to make the display physically larger, scaling the canvas view to match
         const ctxScale = (1 / width) * scale;
 
         display.width = MAP_WIDTH * scale;
@@ -345,9 +420,6 @@ export class WorldMap {
             for (let j = 0; j < map[i].length; j++) {
                 const cell = map[i][j];
                 switch (cell.biome) {
-                    // case "Colony":
-                    //     ctx.fillStyle = "black";
-                    //     break;
                     case "desert":
                         ctx.fillStyle = "brown";
                         break;
@@ -365,7 +437,17 @@ export class WorldMap {
                 ctx.fillRect(i * width, j * width, width, width);
 
                 if (cell.type !== "empty") {
-                    ctx.fillStyle = cell.type === "event" ? "gold" : "silver";
+                    switch (cell.type) {
+                        case "event":
+                            ctx.fillStyle = "gold";
+                            break;
+                        case "colony":
+                            ctx.fillStyle = "black";
+                            break;
+                        case "explorable":
+                        default:
+                            ctx.fillStyle = "silver";
+                    }
                     ctx.fillRect(
                         i * width + width / 4,
                         j * width + width / 4,
