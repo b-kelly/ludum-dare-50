@@ -30,7 +30,7 @@ function onComplete(this: Phaser.Scene) {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: DayStartScene.KEY,
+    sceneKey: OverworldScene.KEY,
     data: {
         biome: "desert",
     },

@@ -71,7 +71,7 @@ export class StatusUiScene extends CustomScene {
     preload() {
         this.load.spritesheet(
             GeneralAssets.resources,
-            "assets/resource-spritesheet.png",
+            "assets/sprites/resources-tileset.png",
             {
                 frameWidth: TILE_WIDTH,
                 frameHeight: TILE_WIDTH,

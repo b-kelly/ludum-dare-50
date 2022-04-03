@@ -20,14 +20,18 @@ export class OverworldScene extends CustomScene {
     }
 
     preload() {
-        this.load.spritesheet(WorldAssets.tiles, "assets/hex-sprites.png", {
-            frameWidth: 23 * 8,
-            frameHeight: 14 * 8,
-        });
+        this.load.spritesheet(
+            WorldAssets.tiles,
+            "assets/sprites/biome-hex-tileset.png",
+            {
+                frameWidth: 23 * 8,
+                frameHeight: 14 * 8,
+            }
+        );
 
         this.load.spritesheet(
             GeneralAssets.worldPlayer,
-            "assets/overworld-car.png",
+            "assets/sprites/overworld-car.png",
             {
                 frameWidth: 96,
                 frameHeight: 96,

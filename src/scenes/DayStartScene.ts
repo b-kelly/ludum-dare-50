@@ -18,7 +18,10 @@ export class DayStartScene extends CustomScene {
     }
 
     preload() {
-        this.load.image(GeneralAssets.baseBackgroundDay, "assets/base-bg.png");
+        this.load.image(
+            GeneralAssets.baseBackgroundDay,
+            "assets/bg/base-bg.png"
+        );
     }
 
     create() {

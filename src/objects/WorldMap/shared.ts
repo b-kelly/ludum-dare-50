@@ -11,4 +11,4 @@ export interface Cell {
     randomSpriteFrame: number;
 }
 
-export const TILES_SHEET_WIDTH = 3;
+export const TILES_SHEET_WIDTH = 5;

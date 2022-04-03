@@ -10,7 +10,7 @@ import { StatusUiScene } from "./scenes/StatusUiScene";
 import { DayReviewScene } from "./scenes/DayReviewScene";
 import { GameOverScene } from "./scenes/GameOverScene";
 
-const USE_TEST_SEED = true;
+const USE_TEST_SEED = false;
 const TEST_SEED = ["ld50"];
 
 export const game = new Phaser.Game({
@@ -34,7 +34,7 @@ export const game = new Phaser.Game({
         },
     },
 
-    seed: DEBUG_isDebugBuild() && USE_TEST_SEED ? TEST_SEED : null,
+    seed: DEBUG_isDebugBuild() && USE_TEST_SEED ? TEST_SEED : undefined,
 
     parent: "js-game-container",
     autoFocus: true,
