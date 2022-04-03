@@ -1,29 +1,29 @@
-import { CellType, Cell } from "./shared";
+import { CellBiome, Cell } from "./shared";
 
 export const MAP_WIDTH = 31;
 export const MAP_HEIGHT = 31;
 
 const cellTypeSpawnData: Record<
-    CellType,
+    CellBiome,
     {
         spawnRate: number;
         clusterSizeUpper: number;
         clusterSizeLower: number;
     }
 > = {
-    [CellType.Empty]: null,
-    [CellType.Colony]: null,
-    [CellType.Forest]: {
+    [CellBiome.Empty]: null,
+    [CellBiome.Colony]: null,
+    [CellBiome.Forest]: {
         spawnRate: 0.025,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
-    [CellType.Desert]: {
+    [CellBiome.Desert]: {
         spawnRate: 0.025,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
-    [CellType.Wetland]: {
+    [CellBiome.Wetland]: {
         spawnRate: 0.025,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
@@ -34,11 +34,11 @@ export const WorldAssets = {
     tiles: "tiles",
     // which row each tileset is on
     tilesData: {
-        [CellType.Forest]: 0,
-        [CellType.Wetland]: 1,
-        [CellType.Desert]: 2,
-        [CellType.Empty]: 3,
-        [CellType.Colony]: 4,
+        [CellBiome.Forest]: 0,
+        [CellBiome.Wetland]: 1,
+        [CellBiome.Desert]: 2,
+        [CellBiome.Empty]: 3,
+        [CellBiome.Colony]: 4,
         Overlay: 5,
     },
 } as const;
@@ -149,9 +149,9 @@ export class WorldMap {
             for (let x = 0; x < MAP_WIDTH; x++) {
                 const cellType = this.pickCellType();
                 map[y][x] = {
-                    _visited: cellType !== CellType.Empty,
+                    _visited: cellType !== CellBiome.Empty,
                     // randomly distribute seeds
-                    type: cellType,
+                    biome: cellType,
                     clearedFogOfWar: false,
                     playerHasVisited: false,
                     // TODO pickEvent
@@ -164,8 +164,8 @@ export class WorldMap {
             for (let x = 0; x < MAP_WIDTH; x++) {
                 const cell = map[y][x];
 
-                if (cell.type !== CellType.Empty) {
-                    const meta = cellTypeSpawnData[cell.type];
+                if (cell.biome !== CellBiome.Empty) {
+                    const meta = cellTypeSpawnData[cell.biome];
                     const count = Phaser.Math.RND.integerInRange(
                         meta.clusterSizeLower,
                         meta.clusterSizeUpper
@@ -181,7 +181,7 @@ export class WorldMap {
                             ) as GenCell;
 
                             if (neighbor && !neighbor._visited) {
-                                neighbor.type = cell.type;
+                                neighbor.biome = cell.biome;
                                 neighbor._visited = true;
                             }
                         }
@@ -196,12 +196,12 @@ export class WorldMap {
             const rx = Phaser.Math.RND.integerInRange(0, MAP_WIDTH - 1);
             const ry = Phaser.Math.RND.integerInRange(0, MAP_HEIGHT - 1);
 
-            map[ry][rx].type = CellType.Colony;
+            map[ry][rx].biome = CellBiome.Colony;
         }
 
         // set the player home to a colony tile as well
-        map[this.playerHomeCoords.y][this.playerHomeCoords.x].type =
-            CellType.Colony;
+        map[this.playerHomeCoords.y][this.playerHomeCoords.x].biome =
+            CellBiome.Colony;
 
         return map;
     }
@@ -221,7 +221,7 @@ export class WorldMap {
     }
 
     private pickCellType() {
-        let ret: CellType = CellType.Empty;
+        let ret: CellBiome = CellBiome.Empty;
 
         Object.entries(cellTypeSpawnData).forEach(([key, data]) => {
             if (!data) {
@@ -258,20 +258,20 @@ export class WorldMap {
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[i].length; j++) {
                 const cell = map[i][j];
-                switch (cell.type) {
-                    case CellType.Empty:
+                switch (cell.biome) {
+                    case CellBiome.Empty:
                         ctx.fillStyle = "white";
                         break;
-                    case CellType.Colony:
+                    case CellBiome.Colony:
                         ctx.fillStyle = "black";
                         break;
-                    case CellType.Desert:
+                    case CellBiome.Desert:
                         ctx.fillStyle = "yellow";
                         break;
-                    case CellType.Forest:
+                    case CellBiome.Forest:
                         ctx.fillStyle = "green";
                         break;
-                    case CellType.Wetland:
+                    case CellBiome.Wetland:
                         ctx.fillStyle = "blue";
                         break;
                     default:

@@ -1,4 +1,4 @@
-export enum CellType {
+export enum CellBiome {
     Empty = 0,
     Colony = 1,
     Forest = 2,
@@ -7,7 +7,7 @@ export enum CellType {
 }
 
 export interface Cell {
-    type: CellType;
+    biome: CellBiome;
     clearedFogOfWar: boolean;
     playerHasVisited: boolean;
 }

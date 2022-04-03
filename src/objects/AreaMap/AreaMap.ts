@@ -1,5 +1,5 @@
 import { Resources } from "../GlobalDataStore";
-import { CellType } from "../WorldMap/shared";
+import { CellBiome } from "../WorldMap/shared";
 import { AreaSpriteSheet } from "./AreaSpriteSheet";
 
 export enum CellState {
@@ -9,24 +9,24 @@ export enum CellState {
     Resource,
 }
 
-const resourceSpawnRate: Record<CellType, Record<keyof Resources, number>> = {
-    [CellType.Colony]: null,
-    [CellType.Empty]: null,
-    [CellType.Desert]: {
+const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
+    [CellBiome.Colony]: null,
+    [CellBiome.Empty]: null,
+    [CellBiome.Desert]: {
         fuel: 0.01,
         food: 0.01,
         water: 0.01,
         filters: 0.01,
         parts: 0.01,
     },
-    [CellType.Forest]: {
+    [CellBiome.Forest]: {
         fuel: 0.01,
         food: 0.01,
         water: 0.01,
         filters: 0.01,
         parts: 0.01,
     },
-    [CellType.Wetland]: {
+    [CellBiome.Wetland]: {
         fuel: 0.01,
         food: 0.01,
         water: 0.01,
@@ -40,7 +40,7 @@ export class AreaMap {
     private _map: CellState[][] = [];
     private readonly _size: { width: number; height: number };
     private readonly _startLocation: { x: number; y: number };
-    private readonly _cellType: CellType;
+    private readonly _cellType: CellBiome;
 
     private readonly chanceToStartOpen = 0.4;
     //private readonly chanceToGenerateResource = 0.01;
@@ -60,7 +60,7 @@ export class AreaMap {
         return this._startLocation;
     }
 
-    constructor(width: number, height: number, type: CellType) {
+    constructor(width: number, height: number, type: CellBiome) {
         this._size = { width, height };
         this._cellType = type;
         this._map = this.generateMap();

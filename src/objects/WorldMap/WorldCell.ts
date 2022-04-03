@@ -1,6 +1,6 @@
 import { DEBUG_isDebugBuild } from "../../shared";
 import { CustomScene } from "../CustomScene";
-import { Cell, CellType } from "./shared";
+import { Cell, CellBiome } from "./shared";
 import { WorldAssets } from "./WorldMap";
 
 const SHOW_DEBUG = false;
@@ -11,7 +11,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay: Phaser.GameObjects.Sprite;
     private hasFogOfWar: boolean;
     private isVisitable: boolean;
-    private cellType: CellType;
+    private cellType: CellBiome;
 
     constructor(
         scene: CustomScene,
@@ -33,11 +33,11 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         if (xIndex % 2) {
             y += h2;
         }
-        const randomSpriteFrame = WorldCell.getRandomSpriteFrame(cell.type);
+        const randomSpriteFrame = WorldCell.getRandomSpriteFrame(cell.biome);
 
         super(scene, x, y, WorldAssets.tiles, randomSpriteFrame);
 
-        this.cellType = cell.type;
+        this.cellType = cell.biome;
 
         // set the name so we can easily find a specific object later
         this.name = WorldCell.genName(xIndex, yIndex);
@@ -118,12 +118,12 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         return `worldcell-x${x}-y${y}`;
     }
 
-    private static getRandomSpriteFrame(type: CellType) {
+    private static getRandomSpriteFrame(type: CellBiome) {
         const row = WorldAssets.tilesData[type];
         const startIndex = row * TILES_SHEET_WIDTH;
 
         // TODO empty has one sprite for each biome, but this is very confusing!
-        if (type === CellType.Empty) {
+        if (type === CellBiome.Empty) {
             return startIndex;
         }
 

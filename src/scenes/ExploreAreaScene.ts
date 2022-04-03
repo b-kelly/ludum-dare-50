@@ -46,10 +46,10 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     create() {
-        const aSSheet = new AreaSpriteSheet(this.currentCell.type);
+        const aSSheet = new AreaSpriteSheet(this.currentCell.biome);
 
         this.createAnimations();
-        this.map = new AreaMap(50, 50, this.currentCell.type);
+        this.map = new AreaMap(50, 50, this.currentCell.biome);
         this.tileMap = new Phaser.Tilemaps.Tilemap(
             this,
             Phaser.Tilemaps.Parsers.Parse(

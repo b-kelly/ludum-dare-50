@@ -1,4 +1,4 @@
-import { CellType } from "../WorldMap/shared";
+import { CellBiome } from "../WorldMap/shared";
 import { CellState } from "./AreaMap";
 
 const TILES_SHEET_WIDTH = 6;
@@ -21,17 +21,17 @@ export class AreaSpriteSheet {
 
     private startingIndex = 0;
 
-    constructor(type: CellType) {
+    constructor(type: CellBiome) {
         switch (type) {
-            case CellType.Desert:
+            case CellBiome.Desert:
                 // starts on row 9
                 this.startingIndex = 9 * TILES_SHEET_WIDTH;
                 break;
-            case CellType.Wetland:
+            case CellBiome.Wetland:
                 // starts on row 18
                 this.startingIndex = 18 * TILES_SHEET_WIDTH;
                 break;
-            case CellType.Forest:
+            case CellBiome.Forest:
             default:
                 this.startingIndex = 0;
                 break;
