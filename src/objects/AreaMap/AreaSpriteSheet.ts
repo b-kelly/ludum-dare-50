@@ -22,7 +22,20 @@ export class AreaSpriteSheet {
     private startingIndex = 0;
 
     constructor(type: CellType) {
-        // TODO change starting index
+        switch (type) {
+            case CellType.Desert:
+                // starts on row 9
+                this.startingIndex = 9 * TILES_SHEET_WIDTH;
+                break;
+            case CellType.Wetland:
+                // starts on row 18
+                this.startingIndex = 18 * TILES_SHEET_WIDTH;
+                break;
+            case CellType.Forest:
+            default:
+                this.startingIndex = 0;
+                break;
+        }
     }
 
     getRandomFrameByType(state: CellState) {
@@ -59,8 +72,8 @@ export class AreaSpriteSheet {
         const item = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH / 2);
         const rowNum = 6;
         // TODO CELLTYPE START OFFSET
-        const startIndex1 = rowNum * TILES_SHEET_WIDTH;
-        const startIndex2 = (rowNum + 1) * TILES_SHEET_WIDTH;
+        const startIndex1 = this.rowStart(rowNum);
+        const startIndex2 = this.rowStart(rowNum + 1);
 
         return [
             startIndex1 + item, // top left
@@ -75,20 +88,22 @@ export class AreaSpriteSheet {
     }
 
     getCollisionRanges() {
-        // TODO START OFFSET
         // rows 0,1,2,3,6,7,8
         return [
-            [0, 4 * TILES_SHEET_WIDTH - 1],
-            [6 * TILES_SHEET_WIDTH, 9 * TILES_SHEET_WIDTH],
+            [this.rowStart(0), this.rowStart(4) - 1],
+            [this.rowStart(6), this.rowStart(9)],
         ];
     }
 
     private getFrameFromRows(rowNum: number, rowCount: number) {
-        // TODO CELLTYPE START OFFSET
-        const rowStartIndex = rowNum * TILES_SHEET_WIDTH;
+        const rowStartIndex = this.rowStart(rowNum);
         return Phaser.Math.RND.integerInRange(
             rowStartIndex,
             rowStartIndex + TILES_SHEET_WIDTH * rowCount
         );
+    }
+
+    private rowStart(rowNum: number) {
+        return rowNum * TILES_SHEET_WIDTH + this.startingIndex;
     }
 }

@@ -32,6 +32,6 @@ function onComplete(this: Phaser.Scene) {
 export const debugConfig: DebugConfig = {
     sceneKey: ExploreAreaScene.KEY,
     data: {
-        type: CellType.Desert,
+        type: CellType.Forest,
     },
 };
