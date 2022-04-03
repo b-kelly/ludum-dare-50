@@ -9,6 +9,7 @@ export declare class OverworldScene extends CustomScene {
     create(): void;
     update(): void;
     private exploreCell;
+    private returnToCamp;
     private drawHexMap;
     private updateMap;
     private movePlayerToCoord;
