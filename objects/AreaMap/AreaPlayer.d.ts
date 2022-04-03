@@ -1,4 +1,4 @@
-export declare class AreaPlayer extends Phaser.GameObjects.Rectangle {
+export declare class AreaPlayer extends Phaser.GameObjects.Sprite {
     body: Phaser.Physics.Arcade.Body;
     private controls;
     constructor(scene: Phaser.Scene, x: number, y: number);

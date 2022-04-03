@@ -6,6 +6,7 @@ export declare class OverworldScene extends CustomScene {
     init(data: object): void;
     preload(): void;
     create(): void;
+    private exploreCell;
     private drawHexMap;
     private updateMap;
     private movePlayerToCoord;
