@@ -22,17 +22,18 @@ export class LogScene extends CustomScene {
     }
 
     preload() {
-        this.load.image(GeneralAssets.background, "assets/introLogBg.gif");
+        this.load.image(GeneralAssets.logBackground, "assets/introLogBg.gif");
     }
 
     create() {
-        this.add.image(0, 0, GeneralAssets.background).setOrigin(0, 0);
+        this.add.image(0, 0, GeneralAssets.logBackground).setOrigin(0, 0);
         const { width, height } = this.bounds;
 
         const graphics = this.make.graphics({});
         graphics.fillRect(0, 0, width, height);
         const mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
 
+        // TODO MULTIPAGE SUPPORT
         this.text = this.add
             .text(0, 0, this.content, {
                 ...baseTextOptions,

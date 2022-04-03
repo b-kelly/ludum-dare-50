@@ -1,5 +1,5 @@
 import { debugConfig } from "../debug-config";
-import { baseTextOptions, DEBUG_isDebugBuild } from "../shared";
+import { DEBUG_isDebugBuild, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { BaseScene } from "./BaseScene";
 import { LogScene } from "./LogScene";
@@ -12,7 +12,11 @@ export class StartMenuScene extends Phaser.Scene {
     }
 
     preload() {
-        // TODO
+        this.load.image(
+            GeneralAssets.startBackground,
+            "assets/title-screen.png"
+        );
+        this.load.json(GeneralAssets.narration, "assets/narration.json");
     }
 
     create() {
@@ -22,34 +26,25 @@ export class StartMenuScene extends Phaser.Scene {
             return;
         }
 
-        const text = this.add.text(
-            0,
-            0,
-            "Delay the inevitable",
-            baseTextOptions
-        );
+        this.add.image(0, 0, GeneralAssets.startBackground).setOrigin(0, 0);
 
         new Button(this, {
-            x: 0,
-            y: text.displayHeight,
+            x: 300,
+            y: 550,
             text: "Start",
-            onClick: () => {
-                this.scene.start(LogScene.KEY, {
-                    text: this.fetchOpeningScript(),
-                    onComplete(this: Phaser.Scene) {
-                        this.scene.start(BaseScene.KEY);
-                    },
-                });
-            },
+            onClick: () => this.launchGame(),
         });
     }
 
-    private fetchOpeningScript() {
-        // TODO fetch from disk? json file?
-        return [
-            "Some stuff happened.",
-            "Then some other stuff happened.",
-            "And now you're here.",
-        ];
+    private launchGame() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const text = this.cache.json.get(GeneralAssets.narration)
+            .intro as string[];
+        this.scene.start(LogScene.KEY, {
+            text: text,
+            onComplete(this: Phaser.Scene) {
+                this.scene.start(BaseScene.KEY);
+            },
+        });
     }
 }

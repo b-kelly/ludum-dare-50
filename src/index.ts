@@ -6,6 +6,7 @@ import { OverworldScene } from "./scenes/OverworldScene";
 import { StartMenuScene } from "./scenes/StartMenuScene";
 import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { DEBUG_isDebugBuild } from "./shared";
+import { StatusUiScene } from "./scenes/StatusUiScene";
 
 export const game = new Phaser.Game({
     title: "Sample",
@@ -36,6 +37,7 @@ export const game = new Phaser.Game({
         BaseScene,
         OverworldScene,
         ExploreAreaScene,
+        StatusUiScene,
     ],
 });
 

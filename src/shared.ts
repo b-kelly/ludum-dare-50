@@ -4,7 +4,11 @@ export const baseTextOptions: Phaser.Types.GameObjects.Text.TextStyle = {
 };
 
 export const GeneralAssets = {
-    background: "background",
+    narration: "narration",
+    startBackground: "startBackground",
+    logBackground: "logBackground",
+    baseBackgroundDay: "baseBackgroundDay",
+    baseBackgroundNight: "baseBackgroundNight",
 } as const;
 
 // tiles are 64x64 px

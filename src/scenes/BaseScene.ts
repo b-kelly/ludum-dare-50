@@ -15,12 +15,12 @@ export class BaseScene extends CustomScene {
     }
 
     preload() {
-        this.load.image(GeneralAssets.background, "assets/base-bg.png");
+        this.load.image(GeneralAssets.baseBackgroundDay, "assets/base-bg.png");
     }
 
     create() {
         // add background
-        this.add.image(0, 0, GeneralAssets.background).setOrigin(0, 0);
+        this.add.image(0, 0, GeneralAssets.baseBackgroundDay).setOrigin(0, 0);
         this.createResourcesDisplay();
         new Button(this, {
             x: 0,
