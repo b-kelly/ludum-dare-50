@@ -9,4 +9,5 @@ export enum CellType {
 export interface Cell {
     type: CellType;
     clearedFogOfWar: boolean;
+    playerHasVisited: boolean;
 }

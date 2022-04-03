@@ -5,22 +5,35 @@ import { OverworldScene } from "./OverworldScene";
 
 export class BaseScene extends CustomScene {
     static readonly KEY = "BaseScene";
+    private isDay: boolean;
 
     constructor() {
         super({ key: BaseScene.KEY });
     }
 
-    init(data: object) {
-        console.log(BaseScene.KEY, data, this.global.resources);
+    init(data: { isDay: boolean }) {
+        this.isDay = data.isDay;
     }
 
     preload() {
         this.load.image(GeneralAssets.baseBackgroundDay, "assets/base-bg.png");
+        this.load.image(
+            GeneralAssets.baseBackgroundNight,
+            "assets/base-bg-night.png"
+        );
     }
 
     create() {
         // add background
-        this.add.image(0, 0, GeneralAssets.baseBackgroundDay).setOrigin(0, 0);
+        this.add
+            .image(
+                0,
+                0,
+                this.isDay
+                    ? GeneralAssets.baseBackgroundDay
+                    : GeneralAssets.baseBackgroundNight
+            )
+            .setOrigin(0, 0);
         this.createResourcesDisplay();
         new Button(this, {
             x: 0,

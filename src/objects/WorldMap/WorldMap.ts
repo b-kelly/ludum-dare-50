@@ -66,6 +66,10 @@ export class WorldMap {
         this._cells = this.generateMap();
     }
 
+    getCell(x: number, y: number) {
+        return this.cells[y][x];
+    }
+
     getAdjacentCells(px: number, py: number) {
         return [
             // top/bottom
@@ -120,7 +124,7 @@ export class WorldMap {
 
     setPlayerPosition(x: number, y: number) {
         this.currentPlayerCoords = { x, y };
-        console.log("setting player position", x, y, this);
+        this._cells[y][x].playerHasVisited = true;
     }
 
     private generateMap() {
@@ -136,6 +140,7 @@ export class WorldMap {
                     // randomly distribute seeds
                     type: cellType,
                     clearedFogOfWar: false,
+                    playerHasVisited: false,
                     // TODO pickEvent
                 };
             }

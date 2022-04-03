@@ -2,6 +2,8 @@ import { CustomScene } from "../objects/CustomScene";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
+import { GeneralAssets } from "../shared";
+import { StatusUiScene } from "./StatusUiScene";
 
 export class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
@@ -20,12 +22,23 @@ export class OverworldScene extends CustomScene {
             frameWidth: 23 * 8,
             frameHeight: 14 * 8,
         });
+
+        this.load.spritesheet(
+            GeneralAssets.worldPlayer,
+            "assets/overworld-car.png",
+            {
+                frameWidth: 96,
+                frameHeight: 96,
+            }
+        );
     }
 
     create() {
         this.drawHexMap();
         this.updateMap(null, null);
         this.global.worldMap.DEBUG_displayMap();
+
+        this.scene.launch(StatusUiScene.KEY);
     }
 
     private drawHexMap() {
@@ -90,8 +103,11 @@ export class OverworldScene extends CustomScene {
     }
 
     private selectSquare(x: number, y: number) {
+        // TODO don't hardcode
+        const cost = this.global.worldMap.cells[y][x].playerHasVisited ? 1 : 2;
+
         // TODO if there are not enough resources to move
-        if (!this.global.expendMoveResources()) {
+        if (!this.global.expendMoveResources(cost)) {
             console.log("TODO CANNOT MOVE");
             return false;
         }

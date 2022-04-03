@@ -16,7 +16,7 @@ interface Resources {
 export class GlobalDataStore {
     constructor(private scene: Phaser.Scene) {}
 
-    get resources(): Resources {
+    get resources(): Readonly<Resources> {
         return this.getOrCreate<Resources>(
             "resources",
             () => startingValues.resources
@@ -27,8 +27,17 @@ export class GlobalDataStore {
         return this.getOrCreate("worldMap", () => new WorldMap());
     }
 
-    expendMoveResources() {
-        // TODO SPEND RESOURCES
+    expendMoveResources(amtToExpend: number) {
+        const res = this.resources;
+        if (res.fuel - amtToExpend < 0) {
+            return false;
+        }
+
+        this.scene.registry.set("resources", {
+            ...res,
+            fuel: res.fuel - amtToExpend,
+        });
+
         return true;
     }
 
