@@ -45,6 +45,7 @@ export class AreaMap {
             tilemap[i] = [];
             for (let j = 0; j < this._size.height; j++) {
                 const currentCell = this._map[j][i];
+                // TODO re-randomizes the tile sprites every time the scene launches
                 const randomSpriteFrame =
                     sheet.getRandomFrameByType(currentCell);
 

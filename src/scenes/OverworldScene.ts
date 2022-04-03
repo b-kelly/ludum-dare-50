@@ -3,6 +3,8 @@ import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
 import { GeneralAssets } from "../shared";
+import { Button } from "../UI/Button";
+import { ExploreAreaScene } from "./ExploreAreaScene";
 import { StatusUiScene } from "./StatusUiScene";
 
 export class OverworldScene extends CustomScene {
@@ -37,9 +39,23 @@ export class OverworldScene extends CustomScene {
         this.createAnimations();
         this.drawHexMap();
         this.updateMap(null, null);
+
+        new Button(this, {
+            x: 0,
+            y: 50,
+            text: "Explore",
+            onClick: () => this.exploreCell(),
+        }).setScrollFactor(0, 0);
+
         this.global.worldMap.DEBUG_displayMap();
 
         this.scene.launch(StatusUiScene.KEY);
+    }
+
+    private exploreCell() {
+        this.scene.start(ExploreAreaScene.KEY, {
+            ...this.global.worldMap.getPlayerCell(),
+        });
     }
 
     private drawHexMap() {

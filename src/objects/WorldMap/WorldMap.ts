@@ -74,6 +74,15 @@ export class WorldMap {
         return this.cells[y][x];
     }
 
+    getPlayerCell(): Cell & { x: number; y: number } {
+        const cell = this.getCell(this.playerCoords.x, this.playerCoords.y);
+
+        return {
+            ...cell,
+            ...this.playerCoords,
+        };
+    }
+
     getAdjacentCells(px: number, py: number) {
         return [
             // top/bottom

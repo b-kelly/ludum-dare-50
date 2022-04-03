@@ -3,6 +3,8 @@ import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
 import { TILE_WIDTH } from "../shared";
+import { Button } from "../UI/Button";
+import { OverworldScene } from "./OverworldScene";
 
 export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
@@ -61,11 +63,22 @@ export class ExploreAreaScene extends CustomScene {
 
         this.physics.add.collider(this.player, layer);
 
+        new Button(this, {
+            x: 0,
+            y: 50,
+            text: "Leave",
+            onClick: () => this.leaveArea(),
+        }).setScrollFactor(0, 0);
+
         this.map.DEBUG_displayMap();
     }
 
     update() {
         this.player.update();
+    }
+
+    private leaveArea() {
+        this.scene.start(OverworldScene.KEY);
     }
 
     private translateCoord(xIndex: number, yIndex: number) {
