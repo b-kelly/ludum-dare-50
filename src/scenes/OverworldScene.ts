@@ -12,6 +12,7 @@ export class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
     private player: WorldPlayer;
     private movingTowardsCoords: { x: number; y: number };
+    private exploreButton: Button;
 
     constructor() {
         super({ key: OverworldScene.KEY });
@@ -42,11 +43,14 @@ export class OverworldScene extends CustomScene {
         this.drawHexMap();
         this.updateMap(null, null);
 
-        new Button(this, {
+        const playerCell = this.global.worldMap.getPlayerCell();
+
+        this.exploreButton = new Button(this, {
             x: 0,
             y: 50,
             text: "Explore",
             onClick: () => this.exploreCell(),
+            disabled: playerCell.type === "explorable",
         }).setScrollFactor(0, 0);
 
         new Button(this, {
@@ -121,6 +125,9 @@ export class OverworldScene extends CustomScene {
         if (newPX !== null && newPY !== null) {
             this.updatePlayerAdjacentCells(true);
             this.movePlayerToCoord(newPX, newPY);
+
+            const playerCell = this.global.worldMap.getPlayerCell();
+            this.exploreButton?.setDisabled(playerCell.type !== "explorable");
         }
         // TODO clear fog of war in wider area?
 

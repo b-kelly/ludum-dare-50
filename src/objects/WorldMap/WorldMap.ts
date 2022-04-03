@@ -459,13 +459,12 @@ export class WorldMap {
         }
 
         // draw the player start pos
-        ctx.fillStyle = "hotpink";
-        const playerWidth = width / 2; // show some of the square behind the player for debugging
-        ctx.fillRect(
-            this.currentPlayerCoords.x * width + playerWidth / 2,
-            this.currentPlayerCoords.y * width + playerWidth / 2,
-            playerWidth,
-            playerWidth
+        ctx.fillStyle = "black";
+        ctx.strokeRect(
+            this.currentPlayerCoords.x * width,
+            this.currentPlayerCoords.y * width,
+            width,
+            width
         );
     }
 }
