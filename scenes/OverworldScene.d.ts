@@ -3,7 +3,7 @@ export declare class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
     private player;
     constructor();
-    init(data: object): void;
+    init(): void;
     preload(): void;
     create(): void;
     private exploreCell;
