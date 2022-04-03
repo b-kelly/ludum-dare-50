@@ -1,3 +1,4 @@
+import { GeneralAssets } from "../shared";
 import { CustomScene } from "./CustomScene";
 import { Resources } from "./GlobalDataStore";
 import { CellBiome } from "./WorldMap/shared";
@@ -8,6 +9,13 @@ import { CellBiome } from "./WorldMap/shared";
  * map - only happens as a random map event
  */
 type EventType = "none" | "daily" | "map" | "colony";
+
+export interface JsonSchema {
+    colony: GameEvent[];
+    onDay: GameEvent[];
+    resource: GameEvent[];
+    random: GameEvent[];
+}
 
 export interface GameEvent {
     type: EventType;
@@ -42,41 +50,6 @@ export interface EventOutcome {
     /** two part event was a success? */
     eventPassed?: boolean;
 }
-
-// TODO MOVE TO JSON FILE
-const EVENTS: GameEvent[] = [
-    {
-        type: "daily",
-        shortDescriptor: "fire in the greenhouse",
-        message:
-            "Here's all the crud that broke while you were out.\nAlso, there was a fire (lol).",
-        resourceDelta: {
-            filters: -1,
-            parts: -2,
-            food: -5,
-        },
-    },
-    {
-        type: "map",
-        shortDescriptor: "heat wave",
-        message:
-            "It was awfully hot today. You couldn't handle it (weakling)\nand drank way more of your water reserves than you should have.",
-        resourceDelta: {
-            water: -3,
-        },
-    },
-    {
-        type: "none",
-        shortDescriptor: "flat tire",
-        message:
-            "You hit a bad pothole (loser) and had to spend precious time and parts to fix a flat tire.",
-        resourceDelta: {
-            fuel: -1,
-            filters: -1,
-            parts: -2,
-        },
-    },
-];
 
 export class EventManager {
     constructor(private scene: CustomScene) {}
@@ -128,8 +101,99 @@ export class EventManager {
         // Have too much food? Vermin.
         // For now, just check against the type
 
-        return Phaser.Math.RND.pick(
-            EVENTS.filter((e) => e.type === type || e.type === "none")
-        );
+        // Prority 1 (colony only) - Colony discovery
+        // Priority 2 (daily only) - On specific day event
+        // Priority 3a (daily only) - Resource events
+        // Priority 3b (daily/map only) - General random events
+
+        const events = this.events();
+
+        const stats = this.scene.global.campaignStats;
+
+        // colony disovery
+        if (type === "colony") {
+            const colonyCount = stats.colonyCount;
+            const event = events.colony.find(
+                (e) => e.conditions?.coloniesFound === colonyCount
+            );
+
+            if (!event) {
+                throw `Unable to find event for colonyCount ${colonyCount}`;
+            }
+
+            return event;
+        }
+
+        if (type === "daily") {
+            const currentDay = stats.dayCount;
+            let event = events.colony.find(
+                (e) => e.conditions?.onDay === currentDay
+            );
+
+            // don't fret if there's no event specific to this day
+            if (event) {
+                return event;
+            }
+
+            // check for random resource event
+            const currentStash = this.scene.global.resources;
+            event = events.resource.find((e) =>
+                this.checkResourceCondition(e, currentStash)
+            );
+
+            // no event? no worries - random will come through for us
+            if (event) {
+                return event;
+            }
+
+            // general random daily event
+            if (event) {
+                // TODO SUPPORT UNIQUE
+                event = events.random.find(
+                    (e) => e.type === "daily" || e.type === "none"
+                );
+            }
+
+            // yeah, this shouldn't happen if the json is filled
+            if (!event) {
+                throw "Unable to find appropriate daily event";
+            }
+
+            return event;
+        }
+
+        if (type === "map") {
+            // TODO SUPPORT UNIQUE
+            const event = events.random.find(
+                (e) => e.type === "daily" || e.type === "none"
+            );
+
+            // yeah, this shouldn't happen if the json is filled
+            if (!event) {
+                throw "Unable to find appropriate daily event";
+            }
+
+            return event;
+        }
+    }
+
+    private checkResourceCondition(
+        event: GameEvent,
+        currentResources: Resources
+    ) {
+        // TODO
+        return false;
+    }
+
+    private events() {
+        const json = this.scene.cache.json.get(
+            GeneralAssets.events
+        ) as JsonSchema;
+
+        if (!json) {
+            throw "events.json not loaded";
+        }
+
+        return json;
     }
 }
