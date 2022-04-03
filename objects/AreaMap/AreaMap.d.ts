@@ -1,3 +1,4 @@
+import { Resources } from "../GlobalDataStore";
 import { CellBiome } from "../WorldMap/shared";
 import { AreaSpriteSheet } from "./AreaSpriteSheet";
 export declare enum CellState {
@@ -5,6 +6,11 @@ export declare enum CellState {
     Filled = 1,
     Wall = 2,
     Resource = 3
+}
+interface AreaCell {
+    state: CellState;
+    resource?: keyof Resources;
+    rotation?: number;
 }
 /** Generates a connected "cave" with cellular automata */
 export declare class AreaMap {
@@ -16,7 +22,7 @@ export declare class AreaMap {
     private readonly requiredNeighborsForLife;
     private readonly requiredNeighborsForBirth;
     private readonly iterations;
-    get map(): CellState[][];
+    get map(): AreaCell[][];
     get size(): {
         width: number;
         height: number;
@@ -27,7 +33,12 @@ export declare class AreaMap {
     };
     constructor(width: number, height: number, type: CellBiome);
     /** Tile map expects this backwards from how we're rendering it */
-    toTilemap(sheet: AreaSpriteSheet): CellState[][];
+    toTilemap(sheet: AreaSpriteSheet): AreaCell[][];
+    getResources(): {
+        resource: keyof Resources;
+        x: number;
+        y: number;
+    }[];
     /** Completely generates a cave */
     private generateMap;
     /** Initializes a map with seed cells placed */
@@ -38,7 +49,8 @@ export declare class AreaMap {
     private runSimulationStep;
     /** Mark all the cavern walls in place, placing resources on them if able */
     private markWallsAndPlaceResources;
-    /** Finds an open space near the bottom middle of the map for the player to spawn */
+    /** Finds an open space near the middle of the map for the player to spawn */
     private findSuitableStartLocation;
     DEBUG_displayMap(): void;
 }
+export {};

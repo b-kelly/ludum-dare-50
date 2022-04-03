@@ -7,6 +7,7 @@ export declare const GeneralAssets: {
     readonly baseBackgroundNight: "baseBackgroundNight";
     readonly worldPlayer: "worldPlayer";
     readonly areaPlayer: "areaPlayer";
+    readonly resources: "resources";
 };
 export declare const TILE_WIDTH = 64;
 export declare function DEBUG_isDebugBuild(): boolean;

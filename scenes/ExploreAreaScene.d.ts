@@ -10,6 +10,7 @@ export declare class ExploreAreaScene extends CustomScene {
     preload(): void;
     create(): void;
     update(): void;
+    private spawnResources;
     private leaveArea;
     private translateCoord;
     private createAnimations;
