@@ -1,3 +1,4 @@
+import { CustomScene } from "./CustomScene";
 import { GameEvent } from "./EventManager";
 import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
@@ -52,6 +53,7 @@ interface CurrentDay {
     events: GameEvent[];
     tilesVisited: number;
     tilesExplored: number;
+    dailyEvent: GameEvent;
 }
 
 interface CampaignStats {
@@ -63,7 +65,7 @@ interface CampaignStats {
 
 /** Handy wrapper around our shared data */
 export class GlobalDataStore {
-    constructor(private scene: Phaser.Scene) {}
+    constructor(private scene: CustomScene) {}
 
     get resources(): Readonly<Resources> {
         return this.getOrCreate<Resources>(
@@ -106,7 +108,14 @@ export class GlobalDataStore {
             events: [],
             tilesExplored: 0,
             tilesVisited: 0,
+            dailyEvent: null,
         }));
+    }
+
+    setDailyEvent(event: GameEvent) {
+        const curr = this.currentDay;
+        curr.dailyEvent = event;
+        this.scene.registry.set("currentDay", curr);
     }
 
     logEvent(event: GameEvent) {
@@ -133,6 +142,10 @@ export class GlobalDataStore {
     }
 
     adjustHaul(delta: Partial<Resources>) {
+        if (!delta) {
+            return;
+        }
+
         const curr = this.currentDay;
 
         Object.keys(delta).forEach((k: keyof Resources) => {
@@ -140,6 +153,10 @@ export class GlobalDataStore {
         });
 
         this.scene.registry.set("currentDay", curr);
+    }
+
+    startDay(): GameEvent {
+        return this.scene.eventManager.chooseAndSetDailyEvent();
     }
 
     /** @returns true if a gameover was triggered */
@@ -181,6 +198,7 @@ export class GlobalDataStore {
             events: curr.events,
             tilesExplored: 0,
             tilesVisited: 0,
+            dailyEvent: null,
         });
 
         this.scene.registry.set("campaignStats", stats);

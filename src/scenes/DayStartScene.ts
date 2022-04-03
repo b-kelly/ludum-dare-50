@@ -1,5 +1,4 @@
 import { CustomScene } from "../objects/CustomScene";
-import { EventOutcome } from "../objects/EventManager";
 import { Resources } from "../objects/GlobalDataStore";
 import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
@@ -8,14 +7,14 @@ import { StatusUiScene } from "./StatusUiScene";
 
 export class DayStartScene extends CustomScene {
     static readonly KEY = "DayStartScene";
-    private eventOutcome: EventOutcome;
 
     constructor() {
         super({ key: DayStartScene.KEY });
     }
 
-    init(data: { eventOutcome: EventOutcome }) {
-        this.eventOutcome = data.eventOutcome;
+    init() {
+        // TODO is this safe here? It won't run too many times?
+        this.global.startDay();
     }
 
     preload() {
@@ -57,28 +56,22 @@ export class DayStartScene extends CustomScene {
         const startXPos = width * 0.25;
         let startYPos = height * 0.125;
 
-        if (this.eventOutcome?.message) {
-            this.add.text(startXPos, startYPos, this.eventOutcome.message);
+        const dailyEvent = this.global.currentDay.dailyEvent;
+
+        if (dailyEvent?.morningMessage) {
+            this.add.text(startXPos, startYPos, dailyEvent.morningMessage);
             startYPos += textHeight;
         }
 
         const currentResources = this.global.resources;
-        const startingResources =
-            this.eventOutcome?.resourcesPrior || currentResources;
+        const startingResources = currentResources;
         const stat = this.global.baseStatus;
         Object.entries(startingResources).forEach(
             (kv: [keyof Resources, number], i) => {
                 const key = kv[0];
-                let message = `${key}: ${String(kv[1])} (+${
+                const message = `${key}: ${String(kv[1])} (+${
                     stat.dailyReplenish[key]
-                })`;
-
-                const modifier = this.eventOutcome?.resourceDelta?.[key];
-                if (modifier) {
-                    message += ` ${modifier}`;
-                }
-
-                message += ` = ${currentResources[key]} / ${stat.maxStorage[key]}`;
+                }) / ${stat.maxStorage[key]}`;
 
                 this.add.text(
                     startXPos,

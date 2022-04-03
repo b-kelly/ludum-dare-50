@@ -54,6 +54,25 @@ export interface EventOutcome {
 export class EventManager {
     constructor(private scene: CustomScene) {}
 
+    chooseAndSetDailyEvent() {
+        const event = this.chooseEvent("daily");
+        this.scene.global.setDailyEvent(event);
+        return event;
+    }
+
+    completeDailyEvent(): EventOutcome {
+        const dailyEvent = this.scene.global.currentDay.dailyEvent;
+        const resources = this.scene.global.resources;
+        this.applyEvent(dailyEvent);
+
+        return {
+            message: dailyEvent.message,
+            resourceDelta: dailyEvent.resourceDelta,
+            resourcesPrior: resources,
+            gameOver: false,
+        };
+    }
+
     spawnDailyEvent(): EventOutcome {
         return this.spawnEvent("daily");
     }
@@ -126,7 +145,7 @@ export class EventManager {
 
         if (type === "daily") {
             const currentDay = stats.dayCount;
-            let event = events.colony.find(
+            let event = events.onDay.find(
                 (e) => e.conditions?.onDay === currentDay
             );
 
@@ -147,12 +166,11 @@ export class EventManager {
             }
 
             // general random daily event
-            if (event) {
-                // TODO SUPPORT UNIQUE
-                event = events.random.find(
-                    (e) => e.type === "daily" || e.type === "none"
-                );
-            }
+            // TODO SUPPORT UNIQUE
+            // TODO CHECK CONDITIONS
+            event = events.random.find(
+                (e) => e.type === "daily" || e.type === "none"
+            );
 
             // yeah, this shouldn't happen if the json is filled
             if (!event) {
@@ -164,8 +182,9 @@ export class EventManager {
 
         if (type === "map") {
             // TODO SUPPORT UNIQUE
+            // TODO CHECK CONDITIONS
             const event = events.random.find(
-                (e) => e.type === "daily" || e.type === "none"
+                (e) => e.type === "map" || e.type === "none"
             );
 
             // yeah, this shouldn't happen if the json is filled
