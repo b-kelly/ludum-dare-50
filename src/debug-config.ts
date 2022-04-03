@@ -1,7 +1,7 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
 import { CellType } from "./objects/WorldMap/shared";
-import { BaseScene } from "./scenes/BaseScene";
+import { DayStartScene } from "./scenes/DayStartScene";
 import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { OverworldScene } from "./scenes/OverworldScene";
 
@@ -26,7 +26,7 @@ function debugGenerateText() {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onComplete(this: Phaser.Scene) {
-    this.scene.start(BaseScene.KEY, {});
+    this.scene.start(DayStartScene.KEY, {});
 }
 
 export const debugConfig: DebugConfig = {

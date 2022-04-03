@@ -1,12 +1,13 @@
 import "./styles.css";
 import * as Phaser from "phaser";
-import { BaseScene } from "./scenes/BaseScene";
+import { DayStartScene } from "./scenes/DayStartScene";
 import { LogScene } from "./scenes/LogScene";
 import { OverworldScene } from "./scenes/OverworldScene";
 import { StartMenuScene } from "./scenes/StartMenuScene";
 import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { DEBUG_isDebugBuild } from "./shared";
 import { StatusUiScene } from "./scenes/StatusUiScene";
+import { DayReviewScene } from "./scenes/DayReviewScene";
 
 export const game = new Phaser.Game({
     title: "Sample",
@@ -34,9 +35,10 @@ export const game = new Phaser.Game({
     scene: [
         StartMenuScene,
         LogScene,
-        BaseScene,
+        DayStartScene,
         OverworldScene,
         ExploreAreaScene,
+        DayReviewScene,
         StatusUiScene,
     ],
 });

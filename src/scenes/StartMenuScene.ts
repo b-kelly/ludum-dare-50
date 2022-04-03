@@ -1,7 +1,7 @@
 import { debugConfig } from "../debug-config";
 import { DEBUG_isDebugBuild, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
-import { BaseScene } from "./BaseScene";
+import { DayStartScene } from "./DayStartScene";
 import { LogScene } from "./LogScene";
 
 export class StartMenuScene extends Phaser.Scene {
@@ -43,7 +43,7 @@ export class StartMenuScene extends Phaser.Scene {
         this.scene.start(LogScene.KEY, {
             text: text,
             onComplete(this: Phaser.Scene) {
-                this.scene.start(BaseScene.KEY);
+                this.scene.start(DayStartScene.KEY);
             },
         });
     }

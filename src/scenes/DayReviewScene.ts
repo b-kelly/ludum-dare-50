@@ -1,22 +1,23 @@
 import { CustomScene } from "../objects/CustomScene";
+import { Resources } from "../objects/GlobalDataStore";
 import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
-import { OverworldScene } from "./OverworldScene";
+import { DayStartScene } from "./DayStartScene";
+import { StatusUiScene } from "./StatusUiScene";
 
-export class BaseScene extends CustomScene {
-    static readonly KEY = "BaseScene";
-    private isDay: boolean;
+export class DayReviewScene extends CustomScene {
+    static readonly KEY = "DayReviewScene";
+    private dailyHaul: Resources;
 
     constructor() {
-        super({ key: BaseScene.KEY });
+        super({ key: DayReviewScene.KEY });
     }
 
-    init(data: { isDay: boolean }) {
-        this.isDay = data.isDay;
+    init(data: { dailyHaul: Resources }) {
+        this.dailyHaul = data.dailyHaul;
     }
 
     preload() {
-        this.load.image(GeneralAssets.baseBackgroundDay, "assets/base-bg.png");
         this.load.image(
             GeneralAssets.baseBackgroundNight,
             "assets/base-bg-night.png"
@@ -25,22 +26,29 @@ export class BaseScene extends CustomScene {
 
     create() {
         // add background
-        this.add
-            .image(
-                0,
-                0,
-                this.isDay
-                    ? GeneralAssets.baseBackgroundDay
-                    : GeneralAssets.baseBackgroundNight
-            )
-            .setOrigin(0, 0);
+        this.add.image(0, 0, GeneralAssets.baseBackgroundNight).setOrigin(0, 0);
         this.createResourcesDisplay();
         new Button(this, {
             x: 0,
             y: 0,
-            text: "Next",
-            onClick: () => {
-                this.scene.start(OverworldScene.KEY, {});
+            text: "Sleep",
+            onClick: () => this.sleepAndStartNextDay(),
+        });
+
+        if (this.scene.isActive(StatusUiScene.KEY)) {
+            this.scene.stop(StatusUiScene.KEY);
+        }
+    }
+
+    private sleepAndStartNextDay() {
+        // TODO EVENT! Break stuff, whatever
+        this.scene.start(DayStartScene.KEY, {
+            eventMessage:
+                "Here's all the crud that broke while you were out.\nAlso, there was a fire (lol).",
+            eventModifiers: {
+                filters: -1,
+                parts: -2,
+                food: -5,
             },
         });
     }
@@ -58,7 +66,7 @@ export class BaseScene extends CustomScene {
             0.5
         );
 
-        const resources = this.global.resources;
+        const resources = this.dailyHaul;
         Object.entries(resources).forEach((kv, i) => {
             const textHeight = 50; // TODO HOW TO GET THIS
             this.add.text(

@@ -4,6 +4,8 @@ import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
 import { GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
+import { DayReviewScene } from "./DayReviewScene";
+import { DayStartScene } from "./DayStartScene";
 import { ExploreAreaScene } from "./ExploreAreaScene";
 import { StatusUiScene } from "./StatusUiScene";
 
@@ -48,6 +50,13 @@ export class OverworldScene extends CustomScene {
             onClick: () => this.exploreCell(),
         }).setScrollFactor(0, 0);
 
+        new Button(this, {
+            x: 0,
+            y: 100,
+            text: "End day",
+            onClick: () => this.returnToCamp(),
+        }).setScrollFactor(0, 0);
+
         this.global.worldMap.DEBUG_displayMap();
 
         if (!this.scene.isActive(StatusUiScene.KEY)) {
@@ -78,6 +87,12 @@ export class OverworldScene extends CustomScene {
     private exploreCell() {
         this.scene.start(ExploreAreaScene.KEY, {
             ...this.global.worldMap.getPlayerCell(),
+        });
+    }
+
+    private returnToCamp() {
+        this.scene.start(DayReviewScene.KEY, {
+            dailyHaul: this.global.currentDay,
         });
     }
 
