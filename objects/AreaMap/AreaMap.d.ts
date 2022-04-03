@@ -1,13 +1,17 @@
+import { CellType } from "../WorldMap/shared";
+import { AreaSpriteSheet } from "./AreaSpriteSheet";
 export declare enum CellState {
     Open = 0,
     Filled = 1,
-    Wall = 2
+    Wall = 2,
+    Resource = 3
 }
 /** Generates a connected "cave" with cellular automata */
 export declare class AreaMap {
     private _map;
     private readonly _size;
     private readonly _startLocation;
+    private readonly _cellType;
     private readonly chanceToStartOpen;
     private readonly requiredNeighborsForLife;
     private readonly requiredNeighborsForBirth;
@@ -21,9 +25,9 @@ export declare class AreaMap {
         x: number;
         y: number;
     };
-    constructor(width: number, height: number);
+    constructor(width: number, height: number, type: CellType);
     /** Tile map expects this backwards from how we're rendering it */
-    toTilemap(): CellState[][];
+    toTilemap(sheet: AreaSpriteSheet): CellState[][];
     /** Completely generates a cave */
     private generateMap;
     /** Initializes a map with seed cells placed */

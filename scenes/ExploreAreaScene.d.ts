@@ -3,9 +3,10 @@ export declare class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
     private map;
     private tileMap;
+    private currentCell;
     private player;
     constructor();
-    init(data: object): void;
+    init(data: ExploreAreaScene["currentCell"]): void;
     preload(): void;
     create(): void;
     update(): void;

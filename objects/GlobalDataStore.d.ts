@@ -1,5 +1,5 @@
 import { WorldMap } from "./WorldMap/WorldMap";
-interface Resources {
+export interface Resources {
     fuel: number;
     food: number;
     water: number;
