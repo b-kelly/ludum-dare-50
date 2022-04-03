@@ -7,6 +7,7 @@ import { CellBiome } from "./WorldMap/shared";
  * map - only happens as a random map event
  */
 declare type EventType = "none" | "daily" | "map" | "colony";
+declare type EventCharacter = "none" | "kiran" | "adzo" | "shreya" | "kamal" | "lufti" | "rupert" | "harish" | "annika" | "gaston" | "martin" | "britt" | "girish" | "sachin" | "chip" | "dora" | "marcel";
 export interface JsonSchema {
     colony: GameEvent[];
     onDay: GameEvent[];
@@ -18,12 +19,14 @@ export interface GameEvent {
     shortDescriptor: string;
     /** general use message - evening/success message for split/condition events */
     message: string;
-    /** event can only be called once */
-    unique?: boolean;
     /** morning message for split events */
     morningMessage?: string;
     /** fail message for condition events */
     failMessage?: string;
+    /** event can only be called once */
+    unique?: boolean;
+    /** the specific character that is speaking */
+    character?: EventCharacter;
     resourceDelta?: Partial<Resources>;
     upgrades?: unknown;
     conditions?: {
@@ -34,6 +37,7 @@ export interface GameEvent {
             type: keyof Resources;
             trigger: "few" | "many";
         };
+        tilesVisited?: number;
     };
 }
 export interface EventOutcome {
