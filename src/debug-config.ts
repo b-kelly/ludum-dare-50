@@ -30,8 +30,8 @@ function onComplete(this: Phaser.Scene) {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: OverworldScene.KEY,
+    sceneKey: ExploreAreaScene.KEY,
     data: {
-        //type: CellType.Forest,
+        biome: "desert",
     },
 };

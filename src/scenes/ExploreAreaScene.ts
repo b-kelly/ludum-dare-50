@@ -75,6 +75,10 @@ export class ExploreAreaScene extends CustomScene {
             this.map.startLocation.y
         );
 
+        const { width, height } = layer;
+        this.physics.world.setBounds(0, 0, width, height);
+        this.physics.world.setBoundsCollision();
+
         this.player = new AreaPlayer(this, coords.x, coords.y);
 
         this.physics.add.collider(this.player, layer);

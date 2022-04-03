@@ -27,6 +27,8 @@ export class AreaPlayer extends Phaser.GameObjects.Sprite {
         this.body.setBounce(0, 0);
         this.body.setSize(TILE_WIDTH - 4, TILE_WIDTH - 4, true);
 
+        this.body.setCollideWorldBounds(true, 0, 0);
+
         this.controls = {
             Up: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
             Right: scene.input.keyboard.addKey(
