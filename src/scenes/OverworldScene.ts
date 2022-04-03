@@ -6,7 +6,7 @@ import { GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayReviewScene } from "./DayReviewScene";
 import { ExploreAreaScene } from "./ExploreAreaScene";
-import { StatusUiScene } from "./StatusUiScene";
+import { StatusUiScene, STATUS_UI_HEIGHT } from "./StatusUiScene";
 
 export class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
@@ -47,7 +47,7 @@ export class OverworldScene extends CustomScene {
 
         this.exploreButton = new Button(this, {
             x: 0,
-            y: 50,
+            y: STATUS_UI_HEIGHT,
             text: "Explore",
             onClick: () => this.exploreCell(),
             disabled: playerCell.type === "explorable",
@@ -55,7 +55,7 @@ export class OverworldScene extends CustomScene {
 
         new Button(this, {
             x: 0,
-            y: 100,
+            y: STATUS_UI_HEIGHT + 100,
             text: "End day",
             onClick: () => this.returnToCamp(),
         }).setScrollFactor(0, 0);

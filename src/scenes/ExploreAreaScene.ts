@@ -7,7 +7,7 @@ import { Cell } from "../objects/WorldMap/shared";
 import { GeneralAssets, TILE_WIDTH } from "../shared";
 import { Button } from "../UI/Button";
 import { OverworldScene } from "./OverworldScene";
-import { StatusUiScene } from "./StatusUiScene";
+import { StatusUiScene, STATUS_UI_HEIGHT } from "./StatusUiScene";
 
 export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
@@ -95,7 +95,7 @@ export class ExploreAreaScene extends CustomScene {
 
         new Button(this, {
             x: 0,
-            y: 50,
+            y: STATUS_UI_HEIGHT,
             text: "Leave",
             onClick: () => this.leaveArea(),
         }).setScrollFactor(0, 0);

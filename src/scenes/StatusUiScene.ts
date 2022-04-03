@@ -3,6 +3,8 @@ import { CustomScene } from "../objects/CustomScene";
 import { Resources } from "../objects/GlobalDataStore";
 import { baseTextOptions, GeneralAssets, TILE_WIDTH } from "../shared";
 
+export const STATUS_UI_HEIGHT = TILE_WIDTH;
+
 class Indicator {
     private type: keyof Resources;
     private scene: CustomScene;
@@ -31,6 +33,8 @@ class Indicator {
         scene.add.group([icon, this.text], {});
 
         this.updateText();
+
+        // TODO Show potential/realized losses/gains when applicable?
 
         this.scene.registry.events.on("changedata", () => this.updateText());
     }
@@ -63,7 +67,7 @@ export class StatusUiScene extends CustomScene {
 
     create() {
         this.add
-            .rectangle(0, 0, this.bounds.width, 50, 0x0000ff)
+            .rectangle(0, 0, this.bounds.width, STATUS_UI_HEIGHT, 0x0000ff)
             .setOrigin(0, 0);
 
         this.text = {
