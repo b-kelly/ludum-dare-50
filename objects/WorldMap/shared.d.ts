@@ -8,4 +8,4 @@ export interface Cell {
     playerHasExplored: boolean;
     randomSpriteFrame: number;
 }
-export declare const TILES_SHEET_WIDTH = 3;
+export declare const TILES_SHEET_WIDTH = 5;
