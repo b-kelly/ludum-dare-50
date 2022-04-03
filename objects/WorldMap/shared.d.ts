@@ -5,6 +5,7 @@ export interface Cell {
     biome: CellBiome;
     clearedFogOfWar: boolean;
     playerHasVisited: boolean;
+    playerHasExplored: boolean;
     randomSpriteFrame: number;
 }
 export declare const TILES_SHEET_WIDTH = 3;

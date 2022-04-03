@@ -11,11 +11,12 @@ export declare class OverworldScene extends CustomScene {
     update(): void;
     private exploreCell;
     private returnToCamp;
+    private selectSquare;
     private drawHexMap;
-    private updateMap;
+    private movePlayerAndUpdateCells;
     private movePlayerToCoord;
     private updatePlayerAdjacentCells;
     private getCell;
-    private selectSquare;
+    private canExploreCell;
     private createAnimations;
 }

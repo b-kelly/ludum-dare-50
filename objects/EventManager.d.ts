@@ -5,12 +5,13 @@ import { Resources } from "./GlobalDataStore";
  * daily - only happens on daily review
  * map - only happens as a random map event
  */
-declare type EventType = "none" | "daily" | "map";
+declare type EventType = "none" | "daily" | "map" | "colony";
 export interface GameEvent {
     type: EventType;
     shortDescriptor: string;
     message: string;
     resourceDelta: Partial<Resources>;
+    upgrades?: unknown;
 }
 export interface EventOutcome {
     message: string;
@@ -23,6 +24,7 @@ export declare class EventManager {
     constructor(scene: CustomScene);
     spawnDailyEvent(): EventOutcome;
     spawnMapEvent(): EventOutcome;
+    spawnColonyEvent(): EventOutcome;
     private spawnEvent;
     private applyEvent;
     private chooseEvent;
