@@ -34,6 +34,7 @@ export class OverworldScene extends CustomScene {
     }
 
     create() {
+        this.createAnimations();
         this.drawHexMap();
         this.updateMap(null, null);
         this.global.worldMap.DEBUG_displayMap();
@@ -113,5 +114,17 @@ export class OverworldScene extends CustomScene {
         }
 
         this.updateMap(x, y);
+    }
+
+    private createAnimations() {
+        this.anims.create({
+            key: "cursor_blink",
+            frameRate: 2,
+            frames: this.anims.generateFrameNumbers(WorldAssets.tiles, {
+                start: 16,
+                end: 17,
+            }),
+            repeat: -1,
+        });
     }
 }

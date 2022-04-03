@@ -10,8 +10,7 @@ const TILES_SHEET_WIDTH = 3;
 export class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay: Phaser.GameObjects.Sprite;
     private hasFogOfWar: boolean;
-    private currentState: Parameters<WorldCell["setOverlayState"]>[0];
-    private prevState: Parameters<WorldCell["setOverlayState"]>[0];
+    private isVisitable: boolean;
 
     constructor(
         scene: CustomScene,
@@ -42,17 +41,18 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             WorldCell.getRandomSpriteFrame(cell.type)
         );
 
+        // set the name so we can easily find a specific object later
         this.name = WorldCell.genName(xIndex, yIndex);
 
-        this.setOrigin(0, 0); //.setStrokeStyle(1, 0x000000);
+        this.setOrigin(0, 0);
         this.scene.add.existing(this);
 
         // TODO looks like the overlay needs to be one "pixel" both wider and longer
         // prettier-ignore
         this.overlay = scene.add.sprite(x, y, WorldAssets.tiles, WorldAssets.tilesData.Overlay * TILES_SHEET_WIDTH).setOrigin(0, 0);
 
-        this.setOverlayState(cell.clearedFogOfWar ? null : "fog");
         this.hasFogOfWar = !cell.clearedFogOfWar;
+        this.setOverlayState(cell.clearedFogOfWar ? null : "fog");
 
         this.initEventListeners();
 
@@ -75,25 +75,27 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             this.hasFogOfWar = false;
             this.setOverlayState(null);
         }
-        if (state.isVisitable) {
-            this.setOverlayState("visitable");
+
+        if ("isVisitable" in state) {
+            this.isVisitable = state.isVisitable;
         }
     }
 
-    private setOverlayState(state: "fog" | "hover" | "visitable" | null) {
-        this.prevState = this.currentState;
-
+    private setOverlayState(state: "fog" | "hover" | null) {
         this.overlay.setVisible(!!state);
 
         if (state === "fog") {
+            this.overlay.stop();
             this.overlay.setTint(0x000000).setAlpha(0.9);
         } else if (state === "hover") {
-            this.overlay.setTint(0xffffff).setAlpha(0.5);
-        } else if (state === "visitable") {
-            this.overlay.setTint(0x0000ff).setAlpha(0.3);
+            this.overlay.play("cursor_blink", true);
+            this.overlay.setTint(0xffffff);
+            if (this.isVisitable) {
+                this.overlay.setTint(0x0000ff);
+            }
+        } else {
+            this.overlay.stop();
         }
-
-        this.currentState = state;
     }
 
     private initEventListeners() {
@@ -108,7 +110,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             return;
         }
 
-        this.setOverlayState(hasEntered ? "hover" : this.prevState);
+        this.setOverlayState(hasEntered ? "hover" : null);
     }
 
     static genName(x: number, y: number) {
