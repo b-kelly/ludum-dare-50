@@ -234,11 +234,15 @@ export class WorldMap {
             const rx = Phaser.Math.RND.integerInRange(0, MAP_WIDTH - 1);
             const ry = Phaser.Math.RND.integerInRange(0, MAP_HEIGHT - 1);
 
-            map[ry][rx].type = "colony";
+            const cell = map[ry][rx];
+            cell.type = "colony";
+            this.assignBiomeType(cell, cell.biome, cell.type);
         }
 
         // set the player home to a colony tile as well
-        map[this.playerHomeCoords.y][this.playerHomeCoords.x].type = "colony";
+        const cell = map[this.playerHomeCoords.y][this.playerHomeCoords.x];
+        cell.type = "colony";
+        this.assignBiomeType(cell, cell.biome, cell.type);
 
         return map;
     }
