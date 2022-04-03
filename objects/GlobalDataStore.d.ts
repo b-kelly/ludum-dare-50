@@ -7,9 +7,9 @@ interface Resources {
 export declare class GlobalDataStore {
     private scene;
     constructor(scene: Phaser.Scene);
-    get resources(): Resources;
+    get resources(): Readonly<Resources>;
     get worldMap(): WorldMap;
-    expendMoveResources(): boolean;
+    expendMoveResources(amtToExpend: number): boolean;
     private getOrCreate;
 }
 export {};

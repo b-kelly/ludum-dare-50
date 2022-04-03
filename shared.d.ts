@@ -5,6 +5,7 @@ export declare const GeneralAssets: {
     readonly logBackground: "logBackground";
     readonly baseBackgroundDay: "baseBackgroundDay";
     readonly baseBackgroundNight: "baseBackgroundNight";
+    readonly worldPlayer: "worldPlayer";
 };
 export declare const TILE_WIDTH = 64;
 export declare function DEBUG_isDebugBuild(): boolean;

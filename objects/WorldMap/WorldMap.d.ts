@@ -19,6 +19,7 @@ export declare class WorldMap {
     get cells(): ReadonlyArray<ReadonlyArray<Readonly<Cell>>>;
     get playerCoords(): Readonly<WorldMap["currentPlayerCoords"]>;
     constructor();
+    getCell(x: number, y: number): Readonly<Cell>;
     getAdjacentCells(px: number, py: number): {
         x: number;
         y: number;
