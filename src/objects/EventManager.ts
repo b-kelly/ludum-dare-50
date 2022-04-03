@@ -12,10 +12,14 @@ type EventType = "none" | "daily" | "map" | "colony";
 export interface GameEvent {
     type: EventType;
     shortDescriptor: string;
+    /** general use message - evening/success message for split/condition events */
     message: string;
     /** event can only be called once */
     unique?: boolean;
+    /** morning message for split events */
     morningMessage?: string;
+    /** fail message for condition events */
+    failMessage?: string;
     resourceDelta?: Partial<Resources>;
     upgrades?: unknown; // TODO
     conditions?: {

@@ -52,6 +52,9 @@
                 "morningMessage": {
                     "type": "string"
                 },
+                "failMessage": {
+                    "type": "string"
+                },
                 "resourceDelta": {
                     "type": "object",
                     "properties": {

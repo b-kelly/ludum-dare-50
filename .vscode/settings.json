@@ -3,7 +3,7 @@
     "json.schemas": [
         {
             "fileMatch": ["/assets/events.json"],
-            "url": "./events_schema.json"
+            "url": "./schemas/events_schema.json"
         }
     ]
 }
