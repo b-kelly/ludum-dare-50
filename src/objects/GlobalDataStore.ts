@@ -106,6 +106,7 @@ export class GlobalDataStore {
         });
 
         this.scene.registry.set("campaignStats", stats);
+        this.scene.registry.remove("currentDay");
     }
 
     expendMoveResources(amtToExpend: number) {

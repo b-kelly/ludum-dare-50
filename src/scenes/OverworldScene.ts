@@ -91,7 +91,7 @@ export class OverworldScene extends CustomScene {
 
     private returnToCamp() {
         this.scene.start(DayReviewScene.KEY, {
-            dailyHaul: this.global.currentDay,
+            dailyHaul: this.global.currentDay.haul,
         });
     }
 

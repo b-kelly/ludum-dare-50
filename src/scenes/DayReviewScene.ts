@@ -65,7 +65,7 @@ export class DayReviewScene extends CustomScene {
             0.5
         );
 
-        const resources = this.dailyHaul;
+        const resources = this.dailyHaul || {};
         Object.entries(resources).forEach((kv, i) => {
             const textHeight = 50; // TODO HOW TO GET THIS
             this.add.text(

@@ -34,6 +34,10 @@ export class StatusUiScene extends CustomScene {
     }
 
     private updateHud() {
+        if (!this.scene.isActive(StatusUiScene.KEY)) {
+            return;
+        }
+
         this.fuelText.text = this.getFuelText();
     }
 
