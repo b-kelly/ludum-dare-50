@@ -92,8 +92,9 @@ export class EventManager {
 
     private chooseEvent(type: EventType): GameEvent {
         // TODO I want to get real crazy choosing events here
-        // for instance, low on air filters? Mold starts growing in the vents
-        // for now, just check on the type
+        // For instance, low on air filters? Mold starts growing in the vents.
+        // Have too much food? Vermin.
+        // For now, just check against the type
 
         return Phaser.Math.RND.pick(
             EVENTS.filter((e) => e.type === type || e.type === "none")

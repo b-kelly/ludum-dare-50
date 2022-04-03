@@ -9,6 +9,20 @@ const startingValues = {
         parts: 10,
         filters: 10,
     },
+    maxStorage: {
+        fuel: 10,
+        food: 15,
+        water: 15,
+        parts: 10,
+        filters: 10,
+    },
+    dailyReplenish: {
+        fuel: 10,
+        food: 1,
+        water: 1,
+        parts: 0,
+        filters: 0,
+    },
 } as const;
 
 export interface Resources {
@@ -17,6 +31,11 @@ export interface Resources {
     water: number;
     parts: number;
     filters: number;
+}
+
+interface BaseStatus {
+    maxStorage: Resources;
+    dailyReplenish: Resources;
 }
 
 interface CurrentDay {
@@ -41,10 +60,14 @@ export class GlobalDataStore {
     }
 
     get worldMap(): WorldMap {
-        return this.getOrCreate("worldMap", () => {
-            console.log("creating new WorldMap");
-            return new WorldMap();
-        });
+        return this.getOrCreate("worldMap", () => new WorldMap());
+    }
+
+    get baseStatus(): BaseStatus {
+        return this.getOrCreate("baseStatus", () => ({
+            maxStorage: startingValues.maxStorage,
+            dailyReplenish: startingValues.dailyReplenish,
+        }));
     }
 
     get campaignStats() {
@@ -88,14 +111,29 @@ export class GlobalDataStore {
         const curr = this.currentDay;
         const haul = curr.haul;
         const res = this.resources;
+        const stat = this.baseStatus;
 
-        // TODO replenish daily fuel here or after showing stats?
         this.updateResources({
-            food: haul.food + res.food,
-            fuel: haul.fuel + res.fuel,
-            water: haul.water + res.water,
-            parts: haul.parts + res.parts,
-            filters: haul.filters + res.filters,
+            food: Math.min(
+                haul.food + res.food + stat.dailyReplenish.food,
+                stat.maxStorage.food
+            ),
+            fuel: Math.min(
+                haul.fuel + res.fuel + stat.dailyReplenish.fuel,
+                stat.maxStorage.fuel
+            ),
+            water: Math.min(
+                haul.water + res.water + stat.dailyReplenish.water,
+                stat.maxStorage.water
+            ),
+            parts: Math.min(
+                haul.parts + res.parts + stat.dailyReplenish.parts,
+                stat.maxStorage.parts
+            ),
+            filters: Math.min(
+                haul.filters + res.filters + stat.dailyReplenish.filters,
+                stat.maxStorage.filters
+            ),
         });
 
         const stats = this.campaignStats;

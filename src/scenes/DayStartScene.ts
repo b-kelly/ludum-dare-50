@@ -65,14 +65,20 @@ export class DayStartScene extends CustomScene {
         const currentResources = this.global.resources;
         const startingResources =
             this.eventOutcome?.resourcesPrior || currentResources;
+        const stat = this.global.baseStatus;
         Object.entries(startingResources).forEach(
             (kv: [keyof Resources, number], i) => {
-                let message = `${kv[0]}: ${String(kv[1])}`;
+                const key = kv[0];
+                let message = `${key}: ${String(kv[1])} (+${
+                    stat.dailyReplenish[key]
+                })`;
 
-                const modifier = this.eventOutcome?.resourceDelta?.[kv[0]];
+                const modifier = this.eventOutcome?.resourceDelta?.[key];
                 if (modifier) {
-                    message += ` ${modifier} = ${currentResources[kv[0]]}`;
+                    message += ` ${modifier}`;
                 }
+
+                message += ` = ${currentResources[key]} / ${stat.maxStorage[key]}`;
 
                 this.add.text(
                     startXPos,
