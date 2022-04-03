@@ -8,7 +8,8 @@ export const STATUS_UI_HEIGHT = TILE_WIDTH;
 class Indicator {
     private type: keyof Resources;
     private scene: CustomScene;
-    private text: Phaser.GameObjects.Text;
+    private haulText: Phaser.GameObjects.Text;
+    private stashText: Phaser.GameObjects.Text;
 
     constructor(
         scene: CustomScene,
@@ -27,21 +28,38 @@ class Indicator {
                 AreaResource.getGenericResourceSpriteFrame(type)
             )
             .setOrigin(0, 0);
-        this.text = scene.add
-            .text(x + icon.width, y + icon.height / 2, "", baseTextOptions)
+        this.stashText = scene.add
+            .text(x + icon.width, y + icon.height / 2, "999", baseTextOptions)
             .setOrigin(0, 0.5);
-        scene.add.group([icon, this.text], {});
+        this.haulText = scene.add
+            .text(
+                x + icon.width + this.stashText.width,
+                y + icon.height / 2,
+                "999",
+                baseTextOptions
+            )
+            .setOrigin(0, 0.5);
+        scene.add.group([icon, this.haulText], {});
 
-        this.updateText();
+        this.updateText(true);
 
         // TODO Show potential/realized losses/gains when applicable?
 
-        this.scene.registry.events.on("changedata", () => this.updateText());
+        this.scene.registry.events.on("changedata", () =>
+            this.updateText(false)
+        );
     }
 
-    private updateText() {
-        const resourceCount = this.scene.global.currentDay.haul[this.type];
-        this.text.text = `${resourceCount}`;
+    private updateText(force: boolean) {
+        if (!force && !this.scene.scene.isActive(StatusUiScene.KEY)) {
+            return;
+        }
+
+        const haulCount = this.scene.global.currentDay.haul[this.type];
+        this.haulText.text = `(${haulCount > 0 ? "+" : ""}${haulCount})`;
+
+        const stashText = this.scene.global.resources[this.type];
+        this.stashText.text = `${stashText}`;
     }
 }
 
@@ -79,7 +97,7 @@ export class StatusUiScene extends CustomScene {
         };
 
         Object.keys(this.text).forEach((k: keyof Resources, i) => {
-            this.text[k] = new Indicator(this, i * 150, 0, k);
+            this.text[k] = new Indicator(this, i * 200, 0, k);
         });
     }
 }
