@@ -1,4 +1,5 @@
 import { CustomScene } from "../objects/CustomScene";
+import { Cell } from "../objects/WorldMap/shared";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
@@ -41,7 +42,7 @@ export class OverworldScene extends CustomScene {
     create() {
         this.createAnimations();
         this.drawHexMap();
-        this.updateMap(null, null);
+        this.movePlayerAndUpdateCells(null, null);
 
         const playerCell = this.global.worldMap.getPlayerCell();
 
@@ -50,7 +51,7 @@ export class OverworldScene extends CustomScene {
             y: STATUS_UI_HEIGHT,
             text: "Explore",
             onClick: () => this.exploreCell(),
-            disabled: playerCell.type === "explorable",
+            disabled: this.canExploreCell(playerCell),
         }).setScrollFactor(0, 0);
 
         new Button(this, {
@@ -88,8 +89,11 @@ export class OverworldScene extends CustomScene {
     }
 
     private exploreCell() {
+        const playerCell = this.global.worldMap.getPlayerCell();
+        this.global.worldMap.markCellExplored(playerCell.x, playerCell.y);
+        this.global.logTileExploration();
         this.scene.start(ExploreAreaScene.KEY, {
-            ...this.global.worldMap.getPlayerCell(),
+            ...playerCell,
         });
     }
 
@@ -97,6 +101,23 @@ export class OverworldScene extends CustomScene {
         this.scene.start(DayReviewScene.KEY, {
             dailyHaul: this.global.currentDay.haul,
         });
+    }
+
+    private selectSquare(x: number, y: number) {
+        if (this.movingTowardsCoords) {
+            return false;
+        }
+
+        // TODO don't hardcode
+        const cost = this.global.worldMap.cells[y][x].playerHasVisited ? 1 : 2;
+
+        // TODO if there are not enough resources to move
+        if (!this.global.expendMoveResources(cost)) {
+            console.log("TODO CANNOT MOVE");
+            return false;
+        }
+
+        this.movePlayerAndUpdateCells(x, y);
     }
 
     private drawHexMap() {
@@ -120,15 +141,40 @@ export class OverworldScene extends CustomScene {
         this.cameras.main.startFollow(this.player);
     }
 
-    private updateMap(newPX: number | null, newPY: number | null) {
+    private movePlayerAndUpdateCells(
+        newPX: number | null,
+        newPY: number | null
+    ) {
         // don't try to move during init
         if (newPX !== null && newPY !== null) {
+            const cellWasVisited = this.global.worldMap.getCell(
+                newPX,
+                newPY
+            ).playerHasVisited;
+
             this.updatePlayerAdjacentCells(true);
             this.movePlayerToCoord(newPX, newPY);
-
             const playerCell = this.global.worldMap.getPlayerCell();
-            this.exploreButton?.setDisabled(playerCell.type !== "explorable");
+
+            if (!cellWasVisited) {
+                // fire off events
+                if (playerCell.type === "event") {
+                    const event = this.eventManager.spawnMapEvent();
+                    // TODO show on UI
+                    console.log(event);
+                } else if (playerCell.type === "colony") {
+                    const event = this.eventManager.spawnColonyEvent();
+                    // TODO show on UI
+                    console.log(event);
+                }
+
+                this.global.logTileVisit(playerCell.type);
+            }
+
+            // update UI
+            this.exploreButton?.setDisabled(!this.canExploreCell(playerCell));
         }
+
         // TODO clear fog of war in wider area?
 
         this.updatePlayerAdjacentCells(false);
@@ -168,21 +214,8 @@ export class OverworldScene extends CustomScene {
         return this.children.getByName(WorldCell.genName(x, y)) as WorldCell;
     }
 
-    private selectSquare(x: number, y: number) {
-        if (this.movingTowardsCoords) {
-            return false;
-        }
-
-        // TODO don't hardcode
-        const cost = this.global.worldMap.cells[y][x].playerHasVisited ? 1 : 2;
-
-        // TODO if there are not enough resources to move
-        if (!this.global.expendMoveResources(cost)) {
-            console.log("TODO CANNOT MOVE");
-            return false;
-        }
-
-        this.updateMap(x, y);
+    private canExploreCell(cell: Cell) {
+        return !cell.playerHasExplored && cell.type === "explorable";
     }
 
     private createAnimations() {

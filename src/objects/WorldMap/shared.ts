@@ -7,6 +7,7 @@ export interface Cell {
     biome: CellBiome;
     clearedFogOfWar: boolean;
     playerHasVisited: boolean;
+    playerHasExplored: boolean;
     randomSpriteFrame: number;
 }
 

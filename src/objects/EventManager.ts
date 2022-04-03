@@ -6,13 +6,14 @@ import { Resources } from "./GlobalDataStore";
  * daily - only happens on daily review
  * map - only happens as a random map event
  */
-type EventType = "none" | "daily" | "map";
+type EventType = "none" | "daily" | "map" | "colony";
 
 export interface GameEvent {
     type: EventType;
     shortDescriptor: string;
     message: string;
     resourceDelta: Partial<Resources>;
+    upgrades?: unknown; // TODO
     // TODO more stuff that helps to choose an event based on current progress
 }
 
@@ -69,6 +70,10 @@ export class EventManager {
         return this.spawnEvent("map");
     }
 
+    spawnColonyEvent() {
+        return this.spawnEvent("colony");
+    }
+
     private spawnEvent(type: EventType): EventOutcome {
         const event = this.chooseEvent(type);
 
@@ -91,6 +96,11 @@ export class EventManager {
         this.scene.global.logEvent(event);
         // go ahead and let resources drop below zero here - we only game over when a day ends
         this.scene.global.adjustHaul(event.resourceDelta);
+
+        // apply upgrades and bonuses from colonies
+        if (event.type === "colony") {
+            // TODO apply upgrades
+        }
     }
 
     private chooseEvent(type: EventType): GameEvent {

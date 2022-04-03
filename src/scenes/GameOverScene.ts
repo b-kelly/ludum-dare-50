@@ -28,8 +28,11 @@ export class GameOverScene extends CustomScene {
             `Game Over (${this.type})
 Days survived: ${stats.dayCount}
 Events: ${stats.dailyProgress
-                .map((d) => d.events.map((e) => e.shortDescriptor))
-                .flat()
+                .map(
+                    (d) =>
+                        `visited: ${d.tilesVisited}, explored: ${d.tilesExplored}, colonies: ${d.colonyCount}, events: ` +
+                        d.events.map((e) => `${e.shortDescriptor}`).join(",")
+                )
                 .join("\n")}
         `,
             baseTextOptions

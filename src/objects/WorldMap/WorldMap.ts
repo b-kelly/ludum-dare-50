@@ -164,6 +164,27 @@ export class WorldMap {
         this.getCell(x, y).playerHasVisited = true;
     }
 
+    markCellExplored(x: number, y: number) {
+        this.getCell(x, y).playerHasExplored = true;
+    }
+
+    getPlayerCellStats() {
+        const ret = {
+            visited: 0,
+            explored: 0,
+        };
+
+        for (let y = 0; y < MAP_HEIGHT; y++) {
+            for (let x = 0; x < MAP_WIDTH; x++) {
+                const cell = this._cells[y][x];
+                ret.visited += Number(cell.playerHasVisited);
+                ret.explored += Number(cell.playerHasExplored);
+            }
+        }
+
+        return ret;
+    }
+
     private generateMap() {
         const map: GenCell[][] = [];
 
@@ -180,6 +201,7 @@ export class WorldMap {
                     type: cellType,
                     clearedFogOfWar: false,
                     playerHasVisited: false,
+                    playerHasExplored: false,
                     randomSpriteFrame: 0, // assigned below
                 };
 

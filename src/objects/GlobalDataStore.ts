@@ -1,7 +1,9 @@
 import { GameEvent } from "./EventManager";
+import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
 
-export type GameOverType = "resource" | "time" | null;
+export type GameOverType = "resource" | "tiles" | null;
+const GAME_OVER_TILES_COUNT = 50; //TODO this needs a value...
 
 const startingValues = {
     resources: {
@@ -41,17 +43,18 @@ interface BaseStatus {
 }
 
 interface CurrentDay {
+    colonyCount: number;
     haul: Resources;
     events: GameEvent[];
-
-    // TODO TRACK TILES COUNT (visited, explored)
+    tilesVisited: number;
+    tilesExplored: number;
 }
 
 interface CampaignStats {
     dayCount: number;
+    colonyCount: number;
     dailyProgress: CurrentDay[];
-
-    // TODO TRACK TILES COUNT (visited, explored)
+    /* NOTE: we don't keep track of total tiles visited/explored as those are better calculated from the map itself */
 }
 
 /** Handy wrapper around our shared data */
@@ -79,12 +82,14 @@ export class GlobalDataStore {
     get campaignStats() {
         return this.getOrCreate<CampaignStats>("campainStats", () => ({
             dayCount: 0,
+            colonyCount: 0,
             dailyProgress: [],
         }));
     }
 
     get currentDay(): CurrentDay {
         return this.getOrCreate<CurrentDay>("currentDay", () => ({
+            colonyCount: 0,
             haul: {
                 fuel: 0,
                 food: 0,
@@ -93,6 +98,8 @@ export class GlobalDataStore {
                 filters: 0,
             },
             events: [],
+            tilesExplored: 0,
+            tilesVisited: 0,
         }));
     }
 
@@ -100,6 +107,22 @@ export class GlobalDataStore {
         const curr = this.currentDay;
         curr.events.push(event);
 
+        this.scene.registry.set("currentDay", curr);
+    }
+
+    logTileVisit(type: CellType) {
+        const curr = this.currentDay;
+        if (type === "colony") {
+            curr.colonyCount += 1;
+        } else {
+            curr.tilesVisited += 1;
+        }
+        this.scene.registry.set("currentDay", curr);
+    }
+
+    logTileExploration() {
+        const curr = this.currentDay;
+        curr.tilesExplored += 1;
         this.scene.registry.set("currentDay", curr);
     }
 
@@ -145,9 +168,13 @@ export class GlobalDataStore {
 
         const stats = this.campaignStats;
         stats.dayCount += 1;
+        stats.colonyCount += curr.colonyCount;
         stats.dailyProgress.push({
+            colonyCount: curr.colonyCount,
             haul: haul,
             events: curr.events,
+            tilesExplored: 0,
+            tilesVisited: 0,
         });
 
         this.scene.registry.set("campaignStats", stats);
@@ -162,7 +189,11 @@ export class GlobalDataStore {
             }
         }
 
-        // TODO check for gameover due to success
+        // check for gameover due to visiting lots of tiles
+        const tileStats = this.worldMap.getPlayerCellStats();
+        if (tileStats.visited >= GAME_OVER_TILES_COUNT) {
+            return "tiles";
+        }
 
         return null;
     }
