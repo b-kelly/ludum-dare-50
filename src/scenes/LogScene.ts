@@ -22,7 +22,10 @@ export class LogScene extends CustomScene {
     }
 
     preload() {
-        this.load.image(GeneralAssets.logBackground, "assets/introLogBg.gif");
+        this.load.image(
+            GeneralAssets.logBackground,
+            "assets/bg.intro-log-bg.gif"
+        );
     }
 
     create() {

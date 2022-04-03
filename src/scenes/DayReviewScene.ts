@@ -27,7 +27,7 @@ export class DayReviewScene extends CustomScene {
     preload() {
         this.load.image(
             GeneralAssets.baseBackgroundNight,
-            "assets/base-bg-night.png"
+            "assets/bg/base-bg-night.png"
         );
     }
 
