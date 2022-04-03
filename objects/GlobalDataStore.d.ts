@@ -1,5 +1,6 @@
 import { GameEvent } from "./EventManager";
 import { WorldMap } from "./WorldMap/WorldMap";
+export declare type GameOverType = "resource" | "time" | null;
 export interface Resources {
     fuel: number;
     food: number;
@@ -30,7 +31,8 @@ export declare class GlobalDataStore {
     get currentDay(): CurrentDay;
     logEvent(event: GameEvent): void;
     adjustHaul(delta: Partial<Resources>): void;
-    endDay(): void;
+    /** @returns true if a gameover was triggered */
+    endDay(): GameOverType;
     expendMoveResources(amtToExpend: number): boolean;
     private updateResources;
     private getOrCreate;

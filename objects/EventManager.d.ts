@@ -16,6 +16,7 @@ export interface EventOutcome {
     message: string;
     resourceDelta: Partial<Resources>;
     resourcesPrior: Resources;
+    gameOver: boolean;
 }
 export declare class EventManager {
     private scene;
