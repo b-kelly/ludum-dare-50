@@ -9,6 +9,12 @@ export enum CellState {
     Resource,
 }
 
+interface AreaCell {
+    state: CellState;
+    resource?: keyof Resources;
+    rotation?: number;
+}
+
 const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
     default: null,
     desert: {
@@ -36,7 +42,7 @@ const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
 
 /** Generates a connected "cave" with cellular automata */
 export class AreaMap {
-    private _map: CellState[][] = [];
+    private _map: AreaCell[][] = [];
     private readonly _size: { width: number; height: number };
     private readonly _startLocation: { x: number; y: number };
     private readonly _cellType: CellBiome;
@@ -47,7 +53,7 @@ export class AreaMap {
     private readonly requiredNeighborsForBirth = 3;
     private readonly iterations = 4;
 
-    get map(): CellState[][] {
+    get map(): AreaCell[][] {
         return this._map;
     }
 
@@ -67,15 +73,16 @@ export class AreaMap {
     }
 
     /** Tile map expects this backwards from how we're rendering it */
-    toTilemap(sheet: AreaSpriteSheet): CellState[][] {
+    toTilemap(sheet: AreaSpriteSheet): AreaCell[][] {
         const tilemap = [];
         for (let i = 0; i < this._size.width; i++) {
             tilemap[i] = [];
             for (let j = 0; j < this._size.height; j++) {
                 const currentCell = this._map[j][i];
                 // TODO re-randomizes the tile sprites every time the scene launches
-                const randomSpriteFrame =
-                    sheet.getRandomFrameByType(currentCell);
+                const randomSpriteFrame = sheet.getRandomFrameByType(
+                    currentCell.state
+                );
 
                 tilemap[i][j] = randomSpriteFrame;
             }
@@ -99,15 +106,17 @@ export class AreaMap {
 
     /** Initializes a map with seed cells placed */
     private initializeMap() {
-        const map: CellState[][] = [];
+        const map: AreaCell[][] = [];
         // init an empty map with random cells burrowed out
         for (let i = 0; i < this._size.width; i++) {
             map[i] = [];
             for (let j = 0; j < this._size.height; j++) {
-                map[i][j] =
-                    Math.random() < this.chanceToStartOpen
-                        ? CellState.Open
-                        : CellState.Filled;
+                map[i][j] = {
+                    state:
+                        Math.random() < this.chanceToStartOpen
+                            ? CellState.Open
+                            : CellState.Filled,
+                };
             }
         }
 
@@ -115,7 +124,7 @@ export class AreaMap {
     }
 
     /** Get the count of open neighbors around a given cell */
-    private getOpenNeighbors(map: CellState[][], x: number, y: number) {
+    private getOpenNeighbors(map: AreaCell[][], x: number, y: number) {
         let openNeighbors = 0;
         for (let i = -1; i < 2; i++) {
             for (let j = -1; j < 2; j++) {
@@ -136,7 +145,7 @@ export class AreaMap {
                 }
 
                 // if this neighbor is open, increment the count
-                else if (map[xNeighbor][yNeighbor] === CellState.Open) {
+                else if (map[xNeighbor][yNeighbor].state === CellState.Open) {
                     openNeighbors += 1;
                 }
             }
@@ -145,8 +154,8 @@ export class AreaMap {
     }
 
     /** Runs a single cellular automata simulation step on a map */
-    private runSimulationStep(currentMap: CellState[][]) {
-        const newMap: CellState[][] = [];
+    private runSimulationStep(currentMap: AreaCell[][]) {
+        const newMap: AreaCell[][] = [];
         for (let i = 0; i < this._size.width; i++) {
             newMap[i] = [];
             for (let j = 0; j < this._size.height; j++) {
@@ -154,17 +163,21 @@ export class AreaMap {
                 const openNeighbors = this.getOpenNeighbors(currentMap, i, j);
 
                 // live cells stay alive if they have enough neighbors
-                if (currentMap[i][j] === CellState.Open) {
-                    newMap[i][j] =
-                        openNeighbors >= this.requiredNeighborsForLife
-                            ? CellState.Open
-                            : CellState.Filled;
+                if (currentMap[i][j].state === CellState.Open) {
+                    newMap[i][j] = {
+                        state:
+                            openNeighbors >= this.requiredNeighborsForLife
+                                ? CellState.Open
+                                : CellState.Filled,
+                    };
                 } else {
                     // dead cells come alive if they have enough neighbors
-                    newMap[i][j] =
-                        openNeighbors > this.requiredNeighborsForBirth
-                            ? CellState.Open
-                            : CellState.Filled;
+                    newMap[i][j] = {
+                        state:
+                            openNeighbors > this.requiredNeighborsForBirth
+                                ? CellState.Open
+                                : CellState.Filled,
+                    };
                 }
             }
         }
@@ -173,7 +186,7 @@ export class AreaMap {
     }
 
     /** Mark all the cavern walls in place, placing resources on them if able */
-    private markWallsAndPlaceResources(map: CellState[][]) {
+    private markWallsAndPlaceResources(map: AreaCell[][]) {
         const spawnRates = resourceSpawnRate[this._cellType] || {};
         const entries = Object.entries(spawnRates);
 
@@ -182,14 +195,16 @@ export class AreaMap {
             for (let j = 0; j < this._size.height; j++) {
                 const cell = map[i][j];
                 if (
-                    cell === CellState.Filled &&
+                    cell.state === CellState.Filled &&
                     this.getOpenNeighbors(map, i, j) > 0
                 ) {
-                    map[i][j] = CellState.Wall;
-                } else if (cell === CellState.Open) {
+                    map[i][j] = {
+                        state: CellState.Wall,
+                    };
+                } else if (cell.state === CellState.Open) {
                     entries.forEach((kv) => {
                         if (Phaser.Math.RND.frac() <= kv[1]) {
-                            map[i][j] = CellState.Resource; // TODO SPECIFIC RESOURCE
+                            map[i][j].resource = kv[0] as keyof Resources;
                             return false;
                         }
                     });
@@ -199,7 +214,7 @@ export class AreaMap {
     }
 
     /** Finds an open space near the bottom middle of the map for the player to spawn */
-    private findSuitableStartLocation(map: CellState[][]) {
+    private findSuitableStartLocation(map: AreaCell[][]) {
         const middle = Math.floor(this._size.width / 2);
         for (let i = this._size.height - 1; i >= 0; i--) {
             for (let j = 0, len = this.size.width / 2; j < len; j++) {
@@ -207,13 +222,13 @@ export class AreaMap {
                 const left = middle - j;
                 const right = middle + j;
 
-                if (left >= 0 && map[left][i] === CellState.Open) {
+                if (left >= 0 && map[left][i].state === CellState.Open) {
                     return { x: left, y: i };
                 }
 
                 if (
                     right < this._size.width &&
-                    map[right][i] === CellState.Open
+                    map[right][i].state === CellState.Open
                 ) {
                     return { x: right, y: i };
                 }
@@ -240,18 +255,35 @@ export class AreaMap {
         for (let i = 0; i < map.length; i++) {
             for (let j = 0; j < map[i].length; j++) {
                 const cell = map[i][j];
-                switch (cell) {
+                switch (cell.state) {
                     case CellState.Open:
                         ctx.fillStyle = "white";
                         break;
                     case CellState.Wall:
                         ctx.fillStyle = "grey";
                         break;
-                    // case CellState.Resource:
-                    //     ctx.fillStyle = "red";
-                    //     break;
                     default:
                         ctx.fillStyle = "black";
+                }
+
+                if (cell.resource) {
+                    switch (cell.resource) {
+                        case "food":
+                            ctx.fillStyle = "red";
+                            break;
+                        case "water":
+                            ctx.fillStyle = "blue";
+                            break;
+                        case "filters":
+                            ctx.fillStyle = "green";
+                            break;
+                        case "parts":
+                            ctx.fillStyle = "gold";
+                            break;
+                        case "fuel":
+                        default:
+                            ctx.fillStyle = "purple";
+                    }
                 }
 
                 ctx.fillRect(i * width, j * width, width, width);
@@ -259,13 +291,12 @@ export class AreaMap {
         }
 
         // draw the player start pos
-        ctx.fillStyle = "green";
-        const playerWidth = width / 2; // show some of the square behind the player for debugging
+        ctx.fillStyle = "hotpink";
         ctx.fillRect(
-            this.startLocation.x * width + playerWidth / 2,
-            this.startLocation.y * width + playerWidth / 2,
-            playerWidth,
-            playerWidth
+            this.startLocation.x * width,
+            this.startLocation.y * width,
+            width,
+            width
         );
     }
 }
