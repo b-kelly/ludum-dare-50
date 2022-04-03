@@ -1,0 +1,12 @@
+[
+    {
+        "type": "daily",
+        "shortDescriptor": "fire in the greenhouse",
+        "message": "Here's all the crud that broke while you were out.\nAlso, there was a fire (lol).",
+        "resourceDelta": {
+            "filters": -1,
+            "parts": -2,
+            "food": -5
+        }
+    }
+]
