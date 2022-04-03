@@ -40,6 +40,14 @@
     "random": [
         {
             "type": "map",
+            "shortDescriptor": "remnants of 2nd colony",
+            "message": "You chance upon a small bound book made from large leaves and vine-weave binding. The last page reads: “Whichever idiot politician's son designed the dome supports should be killed. Our base is falling apart, but luckily C3 is not too far. They are not answering our messages but they are our only hope.",
+            "conditions": {
+                "coloniesFound": 1
+            }
+        },
+        {
+            "type": "map",
             "message": "You spot what looks like an old abandoned cache from one of the other colonies. Inside, you find a feast's worth of toughskin tail that probably hasn't gone off yet.",
             "shortDescriptor": "found food cache",
             "resourceDelta": {

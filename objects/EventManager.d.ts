@@ -7,6 +7,12 @@ import { CellBiome } from "./WorldMap/shared";
  * map - only happens as a random map event
  */
 declare type EventType = "none" | "daily" | "map" | "colony";
+export interface JsonSchema {
+    colony: GameEvent[];
+    onDay: GameEvent[];
+    resource: GameEvent[];
+    random: GameEvent[];
+}
 export interface GameEvent {
     type: EventType;
     shortDescriptor: string;
@@ -48,5 +54,7 @@ export declare class EventManager {
     private spawnEvent;
     private applyEvent;
     private chooseEvent;
+    private checkResourceCondition;
+    private events;
 }
 export {};
