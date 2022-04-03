@@ -7,6 +7,10 @@ export interface Resources {
     parts: number;
     filters: number;
 }
+interface BaseStatus {
+    maxStorage: Resources;
+    dailyReplenish: Resources;
+}
 interface CurrentDay {
     haul: Resources;
     events: GameEvent[];
@@ -21,6 +25,7 @@ export declare class GlobalDataStore {
     constructor(scene: Phaser.Scene);
     get resources(): Readonly<Resources>;
     get worldMap(): WorldMap;
+    get baseStatus(): BaseStatus;
     get campaignStats(): CampaignStats;
     get currentDay(): CurrentDay;
     logEvent(event: GameEvent): void;
