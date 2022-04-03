@@ -3,7 +3,7 @@ import { CustomScene } from "../CustomScene";
 import { Cell, CellType } from "./shared";
 import { WorldAssets } from "./WorldMap";
 
-const SHOW_DEBUG = true;
+const SHOW_DEBUG = false;
 
 const TILES_SHEET_WIDTH = 3;
 

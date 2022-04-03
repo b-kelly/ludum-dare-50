@@ -10,6 +10,7 @@ import { StatusUiScene } from "./StatusUiScene";
 export class OverworldScene extends CustomScene {
     static readonly KEY = "OverworldScene";
     private player: WorldPlayer;
+    private movingTowardsCoords: { x: number; y: number };
 
     constructor() {
         super({ key: OverworldScene.KEY });
@@ -51,6 +52,26 @@ export class OverworldScene extends CustomScene {
 
         if (!this.scene.isActive(StatusUiScene.KEY)) {
             this.scene.launch(StatusUiScene.KEY);
+        }
+    }
+
+    update() {
+        // because of how timing works, the player may not reach the exact point, so check within a threshold
+        if (
+            this.movingTowardsCoords &&
+            Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                this.movingTowardsCoords.x,
+                this.movingTowardsCoords.y
+            ) < 2
+        ) {
+            this.player.body.setVelocity(0);
+            this.player.setPosition(
+                this.movingTowardsCoords.x,
+                this.movingTowardsCoords.y
+            );
+            this.movingTowardsCoords = null;
         }
     }
 
@@ -96,7 +117,9 @@ export class OverworldScene extends CustomScene {
         const map = this.global.worldMap;
         map.setPlayerPosition(x, y);
         const { x: px, y: py } = this.getCell(x, y).getCenter();
-        this.player.setPosition(px, py);
+
+        this.physics.moveTo(this.player, px, py, 0, 350);
+        this.movingTowardsCoords = { x: px, y: py };
     }
 
     private updatePlayerAdjacentCells(disable: boolean) {
@@ -125,6 +148,10 @@ export class OverworldScene extends CustomScene {
     }
 
     private selectSquare(x: number, y: number) {
+        if (this.movingTowardsCoords) {
+            return false;
+        }
+
         // TODO don't hardcode
         const cost = this.global.worldMap.cells[y][x].playerHasVisited ? 1 : 2;
 
