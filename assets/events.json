@@ -18,7 +18,7 @@
             "morningMessage": "You've been foraging close to base since you arrived one month prior, but Engineering Specialist Luan has just finished fixing the Kepler Excursion Vehicle (KEV), which was damaged upon your arrival. As resources are scarce, today you begin foraging further afield. Comms Specialist Villalobos still can’t pick up any signals at all, so we’re not sure where the other colonies have landed, but perhaps you can find them.\n\nYour fuel cells aren't fully charged, you're running low on pretty much everything, and everyone is counting on you.",
             "message": "Your first day in the field went well, and the crew takes a rare moment to get together and toast to your success. You only stick around for a few minutes before getting some sleep… tomorrow's work is looming",
             "conditions": {
-                "onDay": 1
+                "onDay": 0
             }
         }
     ],
@@ -38,6 +38,11 @@
         }
     ],
     "random": [
+        {
+            "type": "none",
+            "shortDescriptor": "devs took pity on you",
+            "message": "This is a placeholder event so the event choosing never fails"
+        },
         {
             "type": "map",
             "shortDescriptor": "remnants of 2nd colony",

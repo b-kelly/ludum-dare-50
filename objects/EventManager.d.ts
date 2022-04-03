@@ -48,6 +48,8 @@ export interface EventOutcome {
 export declare class EventManager {
     private scene;
     constructor(scene: CustomScene);
+    chooseAndSetDailyEvent(): GameEvent;
+    completeDailyEvent(): EventOutcome;
     spawnDailyEvent(): EventOutcome;
     spawnMapEvent(): EventOutcome;
     spawnColonyEvent(): EventOutcome;
