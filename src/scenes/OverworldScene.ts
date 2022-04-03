@@ -49,7 +49,9 @@ export class OverworldScene extends CustomScene {
 
         this.global.worldMap.DEBUG_displayMap();
 
-        this.scene.launch(StatusUiScene.KEY);
+        if (!this.scene.isActive(StatusUiScene.KEY)) {
+            this.scene.launch(StatusUiScene.KEY);
+        }
     }
 
     private exploreCell() {

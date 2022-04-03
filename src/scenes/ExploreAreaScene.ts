@@ -2,9 +2,10 @@ import { AreaMap } from "../objects/AreaMap/AreaMap";
 import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
-import { TILE_WIDTH } from "../shared";
+import { GeneralAssets, TILE_WIDTH } from "../shared";
 import { Button } from "../UI/Button";
 import { OverworldScene } from "./OverworldScene";
+import { StatusUiScene } from "./StatusUiScene";
 
 export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
@@ -30,9 +31,19 @@ export class ExploreAreaScene extends CustomScene {
                 frameHeight: TILE_WIDTH,
             }
         );
+
+        this.load.spritesheet(
+            GeneralAssets.areaPlayer,
+            "assets/exl-topdown.png",
+            {
+                frameWidth: TILE_WIDTH,
+                frameHeight: TILE_WIDTH,
+            }
+        );
     }
 
     create() {
+        this.createAnimations();
         this.map = new AreaMap(50, 50);
         this.tileMap = new Phaser.Tilemaps.Tilemap(
             this,
@@ -71,6 +82,10 @@ export class ExploreAreaScene extends CustomScene {
         }).setScrollFactor(0, 0);
 
         this.map.DEBUG_displayMap();
+
+        if (!this.scene.isActive(StatusUiScene.KEY)) {
+            this.scene.launch(StatusUiScene.KEY);
+        }
     }
 
     update() {
@@ -86,5 +101,16 @@ export class ExploreAreaScene extends CustomScene {
             x: xIndex * TILE_WIDTH,
             y: yIndex * TILE_WIDTH,
         };
+    }
+
+    private createAnimations() {
+        this.anims.create({
+            key: "player_walk",
+            frameRate: 5,
+            frames: this.anims.generateFrameNumbers(GeneralAssets.areaPlayer, {
+                frames: [0, 1, 0, 2],
+            }),
+            repeat: -1,
+        });
     }
 }

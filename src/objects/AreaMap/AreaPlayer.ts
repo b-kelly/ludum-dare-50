@@ -1,4 +1,4 @@
-import { TILE_WIDTH } from "../../shared";
+import { GeneralAssets, TILE_WIDTH } from "../../shared";
 
 interface Controls {
     Up: Phaser.Input.Keyboard.Key;
@@ -7,14 +7,19 @@ interface Controls {
     Left: Phaser.Input.Keyboard.Key;
 }
 
-export class AreaPlayer extends Phaser.GameObjects.Rectangle {
+export class AreaPlayer extends Phaser.GameObjects.Sprite {
     declare body: Phaser.Physics.Arcade.Body;
     private controls: Controls;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, TILE_WIDTH, TILE_WIDTH, 0xff0000);
+        super(
+            scene,
+            x + TILE_WIDTH / 2,
+            y + TILE_WIDTH / 2,
+            GeneralAssets.areaPlayer,
+            0
+        );
 
-        this.setOrigin(0, 0);
         scene.add.existing(this);
         scene.physics.add.existing(this);
         scene.cameras.main.startFollow(this);
@@ -49,6 +54,40 @@ export class AreaPlayer extends Phaser.GameObjects.Rectangle {
             xVelocity = playerSpeed;
         }
 
+        if (xVelocity && yVelocity) {
+            xVelocity *= 0.75;
+            yVelocity *= 0.75;
+        }
+
         this.body.setVelocity(xVelocity, yVelocity);
+
+        if (xVelocity !== 0 || yVelocity !== 0) {
+            this.play("player_walk", true);
+        } else {
+            this.stop();
+            this.setFrame(0);
+        }
+
+        let rotation = this.angle;
+
+        if (!xVelocity && yVelocity < 0) {
+            rotation = 0;
+        } else if (xVelocity > 0 && yVelocity < 0) {
+            rotation = 45;
+        } else if (xVelocity > 0 && !yVelocity) {
+            rotation = 90;
+        } else if (xVelocity > 0 && yVelocity > 0) {
+            rotation = 135;
+        } else if (!xVelocity && yVelocity > 0) {
+            rotation = 180;
+        } else if (xVelocity < 0 && yVelocity > 0) {
+            rotation = 225;
+        } else if (xVelocity < 0 && !yVelocity) {
+            rotation = 270;
+        } else if (xVelocity < 0 && yVelocity < 0) {
+            rotation = 315;
+        }
+
+        this.setAngle(rotation);
     }
 }

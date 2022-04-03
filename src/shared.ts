@@ -10,6 +10,7 @@ export const GeneralAssets = {
     baseBackgroundDay: "baseBackgroundDay",
     baseBackgroundNight: "baseBackgroundNight",
     worldPlayer: "worldPlayer",
+    areaPlayer: "areaPlayer",
 } as const;
 
 // tiles are 64x64 px
