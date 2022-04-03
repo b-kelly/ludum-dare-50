@@ -27,6 +27,10 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] tutorial / popup support
 -   [ ] hover tooltip support
 -   [ ] select A vs B in popup
+-   [ ] paginate intro pages
+-   [ ] update font
+-   [ ] new topbar - no images, text only
+-   [ ] include fuel and health in topbar
 
 ### Events
 
@@ -47,3 +51,11 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] event upgrade support
 -   [ ] area map wall/corner rotation
 -   [ ] overworld scene loads slowly
+-   [ ] add toast and sound when you pick up an item
+-   [ ] don't spawn resources on walls
+-   [ ] create and implement unique home base tile
+-   [ ] fix line artifacts in exploration areas
+-   [ ] rotate tiles in exploration areas properly
+-   [ ] add statement pieces to exploration areas
+-   [ ] implement special map event sound
+-   [ ] implement portraits and textboxes for crew requests
