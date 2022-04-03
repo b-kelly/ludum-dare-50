@@ -367,31 +367,18 @@ export class WorldMap {
         return ret;
     }
 
+    /*
+     * Legend [Empty], [C]olony, [Random]
+     * Sprite sheet looks like:
+     * ECRRR
+     * ECRRR
+     * ECRRR
+     * xxx
+     * Row 0 forest, row 1 wetlands, row 2 desert
+     */
     private getRandomSpriteFrame(biome: CellBiome, type: CellType) {
-        // there's one empty sprite per biome - use that exact sprite
-        if (biome !== "default" && type === "empty") {
-            let spriteIndex = WorldAssets.tilesData.Empty * TILES_SHEET_WIDTH;
-            // forest = 0, wetland = 1, desert = 2
-            if (biome === "wetland") {
-                spriteIndex += 1;
-            } else if (biome === "desert") {
-                spriteIndex += 2;
-            }
-
-            return spriteIndex;
-        }
-
-        // ditto for colony
-        if (biome !== "default" && type === "colony") {
-            let spriteIndex = WorldAssets.tilesData.Colony * TILES_SHEET_WIDTH;
-            // forest = 0, wetland = 1, desert = 2
-            if (biome === "wetland") {
-                spriteIndex += 1;
-            } else if (biome === "desert") {
-                spriteIndex += 2;
-            }
-
-            return spriteIndex;
+        if (biome === "default") {
+            return 0; // TODO this can get called during initial map creation
         }
 
         let row = 0;
@@ -402,20 +389,24 @@ export class WorldMap {
             row = 1;
         } else if (biome === "desert") {
             row = 2;
-        } else if (biome === "default") {
-            row = 5;
         }
 
         const startIndex = row * TILES_SHEET_WIDTH;
 
-        // TODO don't have sprites for default yet, so just use the white overlay ¯\_(ツ)_/¯
-        if (biome === "default") {
+        // there's one empty sprite per biome - use that exact sprite
+        if (type === "empty") {
             return startIndex;
         }
 
-        const rng = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH - 1);
+        // ditto for colony
+        if (type === "colony") {
+            return startIndex + 1;
+        }
 
-        return startIndex + rng;
+        // three random tiles to choose from
+        const rng = Phaser.Math.RND.integerInRange(0, 2);
+
+        return startIndex + 2 + rng;
     }
 
     private assignBiomeType(cell: Cell, biome: CellBiome, type: CellType) {

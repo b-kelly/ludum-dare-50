@@ -66,8 +66,8 @@ export class EventManager {
         this.applyEvent(dailyEvent);
 
         return {
-            message: dailyEvent.message,
-            resourceDelta: dailyEvent.resourceDelta,
+            message: dailyEvent?.message,
+            resourceDelta: dailyEvent?.resourceDelta,
             resourcesPrior: resources,
             gameOver: false,
         };
@@ -106,10 +106,10 @@ export class EventManager {
     private applyEvent(event: GameEvent) {
         this.scene.global.logEvent(event);
         // go ahead and let resources drop below zero here - we only game over when a day ends
-        this.scene.global.adjustHaul(event.resourceDelta);
+        this.scene.global.adjustHaul(event?.resourceDelta);
 
         // apply upgrades and bonuses from colonies
-        if (event.type === "colony") {
+        if (event?.type === "colony") {
             // TODO apply upgrades
         }
     }

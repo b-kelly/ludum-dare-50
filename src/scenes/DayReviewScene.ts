@@ -75,8 +75,9 @@ export class DayReviewScene extends CustomScene {
         );
         let message = `${this.dailyEventOutcome.message}`;
 
+        // TODO SHOW DELTA
         const resources = this.dailyHaul || {};
-        Object.entries(resources).forEach((kv, i) => {
+        Object.entries(resources).forEach((kv) => {
             message += `\n${kv[0]}: ${String(kv[1])}`;
         });
 
