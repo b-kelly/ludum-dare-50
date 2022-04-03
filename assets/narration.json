@@ -1,0 +1,27 @@
+{
+    "intro": [
+        [
+            "The year is 3568. Humanity has, of course, long since rendered Earth uninhabitable.\n",
+            "In our last dying breaths, we shot thirteen ships into space, aimed towards the most likely planet to sustain human life: Kepler-22b.\n",
+            "As the Exploration Lieutenant (EXL), you're a crucial part of the last group of humans to land on the planet known amongst the crew as Kepple-B. Especially since the atmosphere here is much less hospitable to carbon-based lifeforms than previously thought.\n"
+        ],
+        [
+            "In the month since you've landed and established your base, all of your equipment has been breaking down. \n",
+            "The harsh acidic atmosphere eats away at the polymers that form your dome shelters. \n",
+            "The fine, staticky dust swirling around the planet clumps up in your air filters, making fresh breaths of air harder to come by.\n",
+            "The lunar energy emanating from the moon orbiting Kepple-B is difficult to harness because the twin suns in this star system reduce nighttime hours dramatically.\n",
+            "The integrated recycling systems are fighting an uphill battle to keep poisonous particulates out of your drinking water.\n",
+            "The farm in the Central Dome isn't producing as much food as expected.\n",
+            "All in all, the last gasps of civilization are labored and raspy.\n"
+        ],
+        [
+            "You, as the EXL, must do what you can to keep the other New Kepplians alive. Can you find resources out in the alien wilds to sustain the colony? Can you make contact with any of the other 12 colonies?\n",
+            "Will humanity survive?\n"
+        ]
+    ],
+    "tutorial1": [
+        "13th Colony - Kepler-22b - Month 2, Day 1\n",
+        "You've been foraging close to base since you arrived one month prior, but Luan has just finished fixing the Kepler Excursion Vehicle (KEV), which was damaged upon your arrival. As resources are scarce, today you begin foraging further afield.\n",
+        "Your fuel cells aren't fully charged, you're running low on pretty much everything, and everyone is counting on you.\n"
+    ]
+}
