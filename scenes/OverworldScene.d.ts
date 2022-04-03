@@ -5,7 +5,6 @@ export declare class OverworldScene extends CustomScene {
     private movingTowardsCoords;
     private exploreButton;
     constructor();
-    init(): void;
     preload(): void;
     create(): void;
     update(): void;

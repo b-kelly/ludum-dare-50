@@ -13,7 +13,6 @@ export declare const WorldAssets: {
         readonly Empty: 3;
         readonly Colony: 4;
         readonly Overlay: 5;
-        readonly default: 5;
     };
 };
 export declare class WorldMap {

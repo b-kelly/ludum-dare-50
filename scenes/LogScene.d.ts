@@ -12,7 +12,6 @@ export declare class LogScene extends CustomScene {
     }): void;
     preload(): void;
     create(): void;
-    update(): void;
     private scrollDown;
     private showNext;
 }

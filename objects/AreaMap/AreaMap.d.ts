@@ -4,8 +4,7 @@ import { AreaSpriteSheet } from "./AreaSpriteSheet";
 export declare enum CellState {
     Open = 0,
     Filled = 1,
-    Wall = 2,
-    Resource = 3
+    Wall = 2
 }
 interface AreaCell {
     state: CellState;

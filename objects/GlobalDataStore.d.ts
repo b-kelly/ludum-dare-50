@@ -12,6 +12,8 @@ export interface Resources {
 interface BaseStatus {
     maxStorage: Resources;
     dailyReplenish: Resources;
+    fuelCostVisitedTile: number;
+    fuelCostUnvisitedTile: number;
 }
 interface CurrentDay {
     colonyCount: number;
