@@ -17,6 +17,7 @@ export class StartMenuScene extends Phaser.Scene {
             "assets/title-screen.png"
         );
         this.load.json(GeneralAssets.narration, "assets/narration.json");
+        this.load.json(GeneralAssets.events, "assets/events.json");
     }
 
     create() {

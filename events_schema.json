@@ -1,0 +1,122 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/JsonSchema",
+    "definitions": {
+        "JsonSchema": {
+            "type": "object",
+            "properties": {
+                "colony": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameEvent"
+                    }
+                },
+                "onDay": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameEvent"
+                    }
+                },
+                "resource": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameEvent"
+                    }
+                },
+                "random": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GameEvent"
+                    }
+                }
+            },
+            "required": ["colony", "onDay", "resource", "random"],
+            "additionalProperties": false
+        },
+        "GameEvent": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["none", "daily", "map", "colony"]
+                },
+                "shortDescriptor": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "unique": {
+                    "type": "boolean"
+                },
+                "morningMessage": {
+                    "type": "string"
+                },
+                "resourceDelta": {
+                    "type": "object",
+                    "properties": {
+                        "fuel": {
+                            "type": "number"
+                        },
+                        "food": {
+                            "type": "number"
+                        },
+                        "water": {
+                            "type": "number"
+                        },
+                        "parts": {
+                            "type": "number"
+                        },
+                        "filters": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "upgrades": {},
+                "conditions": {
+                    "type": "object",
+                    "properties": {
+                        "coloniesFound": {
+                            "type": "number"
+                        },
+                        "biome": {
+                            "$ref": "#/definitions/CellBiome"
+                        },
+                        "onDay": {
+                            "type": "number"
+                        },
+                        "resource": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "fuel",
+                                        "food",
+                                        "water",
+                                        "parts",
+                                        "filters"
+                                    ]
+                                },
+                                "trigger": {
+                                    "type": "string",
+                                    "enum": ["few", "many"]
+                                }
+                            },
+                            "required": ["type", "trigger"],
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "required": ["type", "shortDescriptor", "message"],
+            "additionalProperties": false
+        },
+        "CellBiome": {
+            "type": "string",
+            "enum": ["default", "forest", "wetland", "desert"]
+        }
+    }
+}

@@ -5,6 +5,7 @@ export const baseTextOptions: Phaser.Types.GameObjects.Text.TextStyle = {
 
 export const GeneralAssets = {
     narration: "narration",
+    events: "events",
     startBackground: "startBackground",
     logBackground: "logBackground",
     baseBackgroundDay: "baseBackgroundDay",

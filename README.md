@@ -30,7 +30,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 ### Events
 
--   [ ] load events.json
+-   [x] load events.json
 -   [ ] biome specific event filters
 -   [ ] colony progress based event filters
 -   [ ] specific event for specific day

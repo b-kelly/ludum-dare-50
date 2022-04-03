@@ -1,5 +1,6 @@
 import { CustomScene } from "./CustomScene";
 import { Resources } from "./GlobalDataStore";
+import { CellBiome } from "./WorldMap/shared";
 
 /**
  * none - can happen any time
@@ -12,16 +13,30 @@ export interface GameEvent {
     type: EventType;
     shortDescriptor: string;
     message: string;
-    resourceDelta: Partial<Resources>;
+    /** event can only be called once */
+    unique?: boolean;
+    morningMessage?: string;
+    resourceDelta?: Partial<Resources>;
     upgrades?: unknown; // TODO
-    // TODO more stuff that helps to choose an event based on current progress
+    conditions?: {
+        coloniesFound?: number;
+        biome?: CellBiome;
+        onDay?: number;
+        resource?: {
+            type: keyof Resources;
+            trigger: "few" | "many";
+        };
+    };
 }
 
 export interface EventOutcome {
     message: string;
     resourceDelta: Partial<Resources>;
     resourcesPrior: Resources;
+    /** event caused a game over */
     gameOver: boolean;
+    /** two part event was a success? */
+    eventPassed?: boolean;
 }
 
 // TODO MOVE TO JSON FILE
