@@ -1,12 +1,108 @@
-[
-    {
-        "type": "daily",
-        "shortDescriptor": "fire in the greenhouse",
-        "message": "Here's all the crud that broke while you were out.\nAlso, there was a fire (lol).",
-        "resourceDelta": {
-            "filters": -1,
-            "parts": -2,
-            "food": -5
+{
+    "colony": [
+        {
+            "type": "colony",
+            "shortDescriptor": "found colony 2",
+            "message": "Colony 2 - Established 3561: abandoned ancient ruins\nYou approach the central dome in your KEV. “Second Mission of Humanity to Kepler-22b” is engraved on the front hatch, just like “Thirteenth” is engraved on yours. These colonists only landed about seven years ago, as far as you know, but their base might as well be an ancient ruin. The stiff plastic polymer that comprises the dome’s membrane is all but disintegrated, and the structure itself is pock-marked and brittle. The materials seem to be of lower quality than the ones that make up your base. There's no sign of any crew members.",
+            "unique": true,
+            "upgrades": "TODO",
+            "conditions": {
+                "coloniesFound": 1
+            }
         }
-    }
-]
+    ],
+    "onDay": [
+        {
+            "type": "daily",
+            "shortDescriptor": "day 1 event",
+            "morningMessage": "You've been foraging close to base since you arrived one month prior, but Engineering Specialist Luan has just finished fixing the Kepler Excursion Vehicle (KEV), which was damaged upon your arrival. As resources are scarce, today you begin foraging further afield. Comms Specialist Villalobos still can’t pick up any signals at all, so we’re not sure where the other colonies have landed, but perhaps you can find them.\n\nYour fuel cells aren't fully charged, you're running low on pretty much everything, and everyone is counting on you.",
+            "message": "Your first day in the field went well, and the crew takes a rare moment to get together and toast to your success. You only stick around for a few minutes before getting some sleep… tomorrow's work is looming",
+            "conditions": {
+                "onDay": 1
+            }
+        }
+    ],
+    "resource": [
+        {
+            "type": "daily",
+            "shortDescriptor": "low on fuel cells",
+            "morningMessage": "EXL, our lunar panels are not producing very much and we’re running low. Can you focus on finding additional reflective material today? Our future expeditions rely on a consistent energy source.",
+            "message": "Excellent work - we've ensured that our future expeditions will have more than enough fuel. That'll be all.",
+            "failMessage": "We really needed that material to make more lunar panels. I hope we have enough to make it through the week.",
+            "conditions": {
+                "resource": {
+                    "type": "fuel",
+                    "trigger": "few"
+                }
+            }
+        }
+    ],
+    "random": [
+        {
+            "type": "map",
+            "message": "You spot what looks like an old abandoned cache from one of the other colonies. Inside, you find a feast's worth of toughskin tail that probably hasn't gone off yet.",
+            "shortDescriptor": "found food cache",
+            "resourceDelta": {
+                "food": 1
+            },
+            "conditions": {
+                "biome": "wetland"
+            }
+        },
+        {
+            "type": "map",
+            "message": "Suddenly, the area behind you erupts with a loud squelching noise. You see a horde of hexaslugs sliming towards you at top speed (which isn't that fast, but still). You drop some food to distract them and make your escape.",
+            "shortDescriptor": "chased by hexaslugs",
+            "resourceDelta": {
+                "food": -1
+            },
+            "conditions": {
+                "biome": "wetland"
+            }
+        },
+        {
+            "type": "map",
+            "message": "A tree near you starts shaking, and a toughskin jumps out. He scurries away, but his leap has knocked many nut pods from its branches.",
+            "shortDescriptor": "gathered nut pods",
+            "resourceDelta": {
+                "food": 1
+            },
+            "conditions": {
+                "biome": "forest"
+            }
+        },
+        {
+            "type": "map",
+            "message": "You get turned around in the seemingly endless forest and end up staying longer than you planned. You get really hungry.",
+            "shortDescriptor": "got lost in a forest",
+            "resourceDelta": {
+                "food": -1
+            },
+            "conditions": {
+                "biome": "forest"
+            }
+        },
+        {
+            "type": "map",
+            "message": "Driving past a spineplant, you notice something off about it. When you check, you realize it's hollowed out and filled with some creature's food stash.",
+            "shortDescriptor": "found an animal's food stash",
+            "resourceDelta": {
+                "food": 1
+            },
+            "conditions": {
+                "biome": "desert"
+            }
+        },
+        {
+            "type": "map",
+            "message": "You're cornered by a few toughskins who are hungry and have nothing to lose. You, however, have plenty to lose.",
+            "shortDescriptor": "attacked by toughskins",
+            "resourceDelta": {
+                "food": -1
+            },
+            "conditions": {
+                "biome": "desert"
+            }
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 export declare const baseTextOptions: Phaser.Types.GameObjects.Text.TextStyle;
 export declare const GeneralAssets: {
     readonly narration: "narration";
+    readonly events: "events";
     readonly startBackground: "startBackground";
     readonly logBackground: "logBackground";
     readonly baseBackgroundDay: "baseBackgroundDay";
