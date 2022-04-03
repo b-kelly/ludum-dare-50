@@ -59,3 +59,4 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] add statement pieces to exploration areas
 -   [ ] implement special map event sound
 -   [ ] implement portraits and textboxes for crew requests
+-   [ ] add transitions between scenes to slow it down a bit and make it feel more polished
