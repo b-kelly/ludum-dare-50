@@ -1,6 +1,8 @@
 import { GameEvent } from "./EventManager";
 import { WorldMap } from "./WorldMap/WorldMap";
 
+export type GameOverType = "resource" | "time" | null;
+
 const startingValues = {
     resources: {
         fuel: 10,
@@ -41,11 +43,15 @@ interface BaseStatus {
 interface CurrentDay {
     haul: Resources;
     events: GameEvent[];
+
+    // TODO TRACK TILES COUNT (visited, explored)
 }
 
 interface CampaignStats {
     dayCount: number;
     dailyProgress: CurrentDay[];
+
+    // TODO TRACK TILES COUNT (visited, explored)
 }
 
 /** Handy wrapper around our shared data */
@@ -107,7 +113,8 @@ export class GlobalDataStore {
         this.scene.registry.set("currentDay", curr);
     }
 
-    endDay() {
+    /** @returns true if a gameover was triggered */
+    endDay(): GameOverType {
         const curr = this.currentDay;
         const haul = curr.haul;
         const res = this.resources;
@@ -145,6 +152,19 @@ export class GlobalDataStore {
 
         this.scene.registry.set("campaignStats", stats);
         this.scene.registry.remove("currentDay");
+
+        // check if any resource dropped below zero
+        const resources = this.resources;
+        for (const k of Object.keys(resources)) {
+            const val = resources[k as keyof Resources];
+            if (val <= 0) {
+                return "resource";
+            }
+        }
+
+        // TODO check for gameover due to success
+
+        return null;
     }
 
     expendMoveResources(amtToExpend: number) {

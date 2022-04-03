@@ -20,6 +20,7 @@ export interface EventOutcome {
     message: string;
     resourceDelta: Partial<Resources>;
     resourcesPrior: Resources;
+    gameOver: boolean;
 }
 
 // TODO MOVE TO JSON FILE
@@ -82,11 +83,13 @@ export class EventManager {
             message: event.message,
             resourceDelta: event.resourceDelta,
             resourcesPrior: resources,
+            gameOver: false,
         };
     }
 
     private applyEvent(event: GameEvent) {
         this.scene.global.logEvent(event);
+        // go ahead and let resources drop below zero here - we only game over when a day ends
         this.scene.global.adjustHaul(event.resourceDelta);
     }
 

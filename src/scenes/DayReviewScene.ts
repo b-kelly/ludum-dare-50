@@ -3,6 +3,7 @@ import { Resources } from "../objects/GlobalDataStore";
 import { baseTextOptions, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayStartScene } from "./DayStartScene";
+import { GameOverScene } from "./GameOverScene";
 import { StatusUiScene } from "./StatusUiScene";
 
 export class DayReviewScene extends CustomScene {
@@ -45,10 +46,17 @@ export class DayReviewScene extends CustomScene {
         const outcome = this.eventManager.spawnDailyEvent();
 
         // end and finalize the day's results
-        this.global.endDay();
+        const gameOver = this.global.endDay();
 
-        this.scene.start(DayStartScene.KEY, {
-            eventOutcome: outcome,
+        if (gameOver === null) {
+            this.scene.start(DayStartScene.KEY, {
+                eventOutcome: outcome,
+            });
+            return;
+        }
+
+        this.scene.start(GameOverScene.KEY, {
+            type: gameOver,
         });
     }
 
