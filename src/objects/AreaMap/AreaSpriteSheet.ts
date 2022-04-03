@@ -23,15 +23,15 @@ export class AreaSpriteSheet {
 
     constructor(type: CellBiome) {
         switch (type) {
-            case CellBiome.Desert:
+            case "desert":
                 // starts on row 9
                 this.startingIndex = 9 * TILES_SHEET_WIDTH;
                 break;
-            case CellBiome.Wetland:
+            case "wetland":
                 // starts on row 18
                 this.startingIndex = 18 * TILES_SHEET_WIDTH;
                 break;
-            case CellBiome.Forest:
+            case "forest":
             default:
                 this.startingIndex = 0;
                 break;

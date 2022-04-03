@@ -10,23 +10,22 @@ export enum CellState {
 }
 
 const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
-    [CellBiome.Colony]: null,
-    [CellBiome.Empty]: null,
-    [CellBiome.Desert]: {
+    default: null,
+    desert: {
         fuel: 0.01,
         food: 0.01,
         water: 0.01,
         filters: 0.01,
         parts: 0.01,
     },
-    [CellBiome.Forest]: {
+    forest: {
         fuel: 0.01,
         food: 0.01,
         water: 0.01,
         filters: 0.01,
         parts: 0.01,
     },
-    [CellBiome.Wetland]: {
+    wetland: {
         fuel: 0.01,
         food: 0.01,
         water: 0.01,

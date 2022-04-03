@@ -1,17 +1,14 @@
 import { DEBUG_isDebugBuild } from "../../shared";
 import { CustomScene } from "../CustomScene";
-import { Cell, CellBiome } from "./shared";
+import { Cell, TILES_SHEET_WIDTH } from "./shared";
 import { WorldAssets } from "./WorldMap";
 
-const SHOW_DEBUG = false;
-
-const TILES_SHEET_WIDTH = 3;
+const SHOW_DEBUG = true;
 
 export class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay: Phaser.GameObjects.Sprite;
     private hasFogOfWar: boolean;
     private isVisitable: boolean;
-    private cellType: CellBiome;
 
     constructor(
         scene: CustomScene,
@@ -33,11 +30,8 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         if (xIndex % 2) {
             y += h2;
         }
-        const randomSpriteFrame = WorldCell.getRandomSpriteFrame(cell.biome);
 
-        super(scene, x, y, WorldAssets.tiles, randomSpriteFrame);
-
-        this.cellType = cell.biome;
+        super(scene, x, y, WorldAssets.tiles, cell.randomSpriteFrame);
 
         // set the name so we can easily find a specific object later
         this.name = WorldCell.genName(xIndex, yIndex);
@@ -61,13 +55,18 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
 
         // TODO DEBUG
         if (DEBUG_isDebugBuild() && SHOW_DEBUG) {
+            const typeStr = cell.type.slice(0, 3).toUpperCase();
+            const biomeStr = cell.biome.slice(0, 3).toUpperCase();
             this.scene.add
                 .text(
                     x + h2,
                     y + h2,
-                    `x${xIndex}y${yIndex}, f${randomSpriteFrame} ${this.cellType}`
+                    `x${xIndex}y${yIndex}f${cell.randomSpriteFrame}\n${biomeStr},${typeStr}`,
+                    {
+                        color: cell.biome === "default" ? "black" : "white",
+                    }
                 )
-                .setOrigin(0.5, 0.5);
+                .setOrigin(0.25, 0.5);
         }
     }
 
@@ -116,19 +115,5 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
 
     static genName(x: number, y: number) {
         return `worldcell-x${x}-y${y}`;
-    }
-
-    private static getRandomSpriteFrame(type: CellBiome) {
-        const row = WorldAssets.tilesData[type];
-        const startIndex = row * TILES_SHEET_WIDTH;
-
-        // TODO empty has one sprite for each biome, but this is very confusing!
-        if (type === CellBiome.Empty) {
-            return startIndex;
-        }
-
-        const rng = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH - 1);
-
-        return startIndex + rng;
     }
 }

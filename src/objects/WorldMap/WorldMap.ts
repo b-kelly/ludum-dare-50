@@ -1,9 +1,9 @@
-import { CellBiome, Cell } from "./shared";
+import { CellBiome, Cell, CellType, TILES_SHEET_WIDTH } from "./shared";
 
 export const MAP_WIDTH = 31;
 export const MAP_HEIGHT = 31;
 
-const cellTypeSpawnData: Record<
+const cellBiomeSpawnData: Record<
     CellBiome,
     {
         spawnRate: number;
@@ -11,35 +11,42 @@ const cellTypeSpawnData: Record<
         clusterSizeLower: number;
     }
 > = {
-    [CellBiome.Empty]: null,
-    [CellBiome.Colony]: null,
-    [CellBiome.Forest]: {
+    default: null,
+    forest: {
         spawnRate: 0.025,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
-    [CellBiome.Desert]: {
+    desert: {
         spawnRate: 0.025,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
-    [CellBiome.Wetland]: {
+    wetland: {
         spawnRate: 0.025,
         clusterSizeUpper: 3,
         clusterSizeLower: 1,
     },
 } as const;
 
+const cellTypeSpawnData: Record<CellType, number> = {
+    empty: null,
+    event: 0.1,
+    explorable: 0.45,
+    colony: null,
+} as const;
+
 export const WorldAssets = {
     tiles: "tiles",
     // which row each tileset is on
     tilesData: {
-        [CellBiome.Forest]: 0,
-        [CellBiome.Wetland]: 1,
-        [CellBiome.Desert]: 2,
-        [CellBiome.Empty]: 3,
-        [CellBiome.Colony]: 4,
+        forest: 0,
+        wetland: 1,
+        desert: 2,
+        Empty: 3,
+        Colony: 4,
         Overlay: 5,
+        default: 5, //TODO need sprites for these
     },
 } as const;
 
@@ -147,14 +154,21 @@ export class WorldMap {
         for (let y = 0; y < MAP_HEIGHT; y++) {
             map[y] = [];
             for (let x = 0; x < MAP_WIDTH; x++) {
+                // randomly distribute seeds and special cells
+                const cellBiome = this.pickCellBiome();
                 const cellType = this.pickCellType();
+                const spriteFrame = this.getRandomSpriteFrame(
+                    cellBiome,
+                    cellType
+                );
+
                 map[y][x] = {
-                    _visited: cellType !== CellBiome.Empty,
-                    // randomly distribute seeds
-                    biome: cellType,
+                    _visited: cellBiome !== "default",
+                    biome: cellBiome,
                     clearedFogOfWar: false,
                     playerHasVisited: false,
-                    // TODO pickEvent
+                    type: cellType,
+                    randomSpriteFrame: spriteFrame,
                 };
             }
         }
@@ -164,8 +178,8 @@ export class WorldMap {
             for (let x = 0; x < MAP_WIDTH; x++) {
                 const cell = map[y][x];
 
-                if (cell.biome !== CellBiome.Empty) {
-                    const meta = cellTypeSpawnData[cell.biome];
+                if (cell.biome !== "default") {
+                    const meta = cellBiomeSpawnData[cell.biome];
                     const count = Phaser.Math.RND.integerInRange(
                         meta.clusterSizeLower,
                         meta.clusterSizeUpper
@@ -182,6 +196,11 @@ export class WorldMap {
 
                             if (neighbor && !neighbor._visited) {
                                 neighbor.biome = cell.biome;
+                                neighbor.randomSpriteFrame =
+                                    this.getRandomSpriteFrame(
+                                        neighbor.biome,
+                                        neighbor.type
+                                    );
                                 neighbor._visited = true;
                             }
                         }
@@ -196,12 +215,11 @@ export class WorldMap {
             const rx = Phaser.Math.RND.integerInRange(0, MAP_WIDTH - 1);
             const ry = Phaser.Math.RND.integerInRange(0, MAP_HEIGHT - 1);
 
-            map[ry][rx].biome = CellBiome.Colony;
+            map[ry][rx].type = "colony";
         }
 
         // set the player home to a colony tile as well
-        map[this.playerHomeCoords.y][this.playerHomeCoords.x].biome =
-            CellBiome.Colony;
+        map[this.playerHomeCoords.y][this.playerHomeCoords.x].type = "colony";
 
         return map;
     }
@@ -220,8 +238,25 @@ export class WorldMap {
         return map[newY][newX];
     }
 
+    private pickCellBiome() {
+        let ret: CellBiome = "default";
+
+        for (const [key, data] of Object.entries(cellBiomeSpawnData)) {
+            if (!data) {
+                continue;
+            }
+
+            const rng = Phaser.Math.RND.frac();
+            if (rng <= data.spawnRate) {
+                ret = key as CellBiome;
+                break;
+            }
+        }
+        return ret;
+    }
+
     private pickCellType() {
-        let ret: CellBiome = CellBiome.Empty;
+        let ret: CellType = "empty";
 
         Object.entries(cellTypeSpawnData).forEach(([key, data]) => {
             if (!data) {
@@ -229,8 +264,8 @@ export class WorldMap {
             }
 
             const rng = Phaser.Math.RND.frac();
-            if (rng <= data.spawnRate) {
-                ret = +key;
+            if (rng <= data) {
+                ret = key as CellType;
                 return false;
             }
 
@@ -239,6 +274,57 @@ export class WorldMap {
         });
 
         return ret;
+    }
+
+    private getRandomSpriteFrame(biome: CellBiome, type: CellType) {
+        // there's one empty sprite per biome - use that exact sprite
+        if (biome !== "default" && type === "empty") {
+            let spriteIndex = WorldAssets.tilesData.Empty * TILES_SHEET_WIDTH;
+            // forest = 0, wetland = 1, desert = 2
+            if (biome === "wetland") {
+                spriteIndex += 1;
+            } else if (biome === "desert") {
+                spriteIndex += 2;
+            }
+
+            return spriteIndex;
+        }
+
+        // ditto for colony
+        if (biome !== "default" && type === "colony") {
+            let spriteIndex = WorldAssets.tilesData.Colony * TILES_SHEET_WIDTH;
+            // forest = 0, wetland = 1, desert = 2
+            if (biome === "wetland") {
+                spriteIndex += 1;
+            } else if (biome === "desert") {
+                spriteIndex += 2;
+            }
+
+            return spriteIndex;
+        }
+
+        let row = 0;
+
+        if (biome === "forest") {
+            row = 0;
+        } else if (biome === "wetland") {
+            row = 1;
+        } else if (biome === "desert") {
+            row = 2;
+        } else if (biome === "default") {
+            row = 5;
+        }
+
+        const startIndex = row * TILES_SHEET_WIDTH;
+
+        // TODO don't have sprites for default yet, so just use the white overlay ¯\_(ツ)_/¯
+        if (biome === "default") {
+            return startIndex;
+        }
+
+        const rng = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH - 1);
+
+        return startIndex + rng;
     }
 
     public DEBUG_displayMap(): void {
@@ -259,26 +345,34 @@ export class WorldMap {
             for (let j = 0; j < map[i].length; j++) {
                 const cell = map[i][j];
                 switch (cell.biome) {
-                    case CellBiome.Empty:
-                        ctx.fillStyle = "white";
+                    // case "Colony":
+                    //     ctx.fillStyle = "black";
+                    //     break;
+                    case "desert":
+                        ctx.fillStyle = "brown";
                         break;
-                    case CellBiome.Colony:
-                        ctx.fillStyle = "black";
-                        break;
-                    case CellBiome.Desert:
-                        ctx.fillStyle = "yellow";
-                        break;
-                    case CellBiome.Forest:
+                    case "forest":
                         ctx.fillStyle = "green";
                         break;
-                    case CellBiome.Wetland:
+                    case "wetland":
                         ctx.fillStyle = "blue";
                         break;
+                    case "default":
                     default:
-                        ctx.fillStyle = "black";
+                        ctx.fillStyle = "white";
                 }
 
                 ctx.fillRect(i * width, j * width, width, width);
+
+                if (cell.type !== "empty") {
+                    ctx.fillStyle = cell.type === "event" ? "gold" : "silver";
+                    ctx.fillRect(
+                        i * width + width / 4,
+                        j * width + width / 4,
+                        width / 2,
+                        width / 2
+                    );
+                }
             }
         }
 

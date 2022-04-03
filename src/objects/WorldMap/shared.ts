@@ -1,13 +1,13 @@
-export enum CellBiome {
-    Empty = 0,
-    Colony = 1,
-    Forest = 2,
-    Desert = 3,
-    Wetland = 4,
-}
+export type CellBiome = "default" | "forest" | "wetland" | "desert";
+
+export type CellType = "empty" | "event" | "explorable" | "colony";
 
 export interface Cell {
+    type: CellType;
     biome: CellBiome;
     clearedFogOfWar: boolean;
     playerHasVisited: boolean;
+    randomSpriteFrame: number;
 }
+
+export const TILES_SHEET_WIDTH = 3;
