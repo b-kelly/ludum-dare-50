@@ -59,6 +59,7 @@ export interface GameEvent {
             type: keyof Resources;
             trigger: "few" | "many";
         };
+        tilesVisited?: number;
     };
 }
 
