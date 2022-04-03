@@ -50,6 +50,14 @@ export const game = new Phaser.Game({
     ],
 });
 
+// fire up an alert when an exception happens (so at the very least users aren't scratching their heads)
+window.onerror = function (message: string) {
+    alert(
+        "There was an unavoidable exception :(\nPlease report this to the devs:\n\n" +
+            message
+    );
+};
+
 // set the game object on window.instance for easy debugging
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error

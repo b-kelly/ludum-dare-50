@@ -3,7 +3,7 @@ import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
 
 export type GameOverType = "resource" | "tiles" | null;
-const GAME_OVER_TILES_COUNT = 50; //TODO this needs a value...
+const GAME_OVER_TILES_COUNT = 50; // How many visited tiles it takes to get a "game success"
 
 const startingValues = {
     resources: {

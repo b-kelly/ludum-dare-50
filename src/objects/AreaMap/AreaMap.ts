@@ -283,7 +283,7 @@ export class AreaMap {
             }
         }
 
-        // TODO no empty cells found?
+        // no empty cells found? just crash as this should never happen
         throw "Cannot spawn player - no empty cells found";
     }
 
