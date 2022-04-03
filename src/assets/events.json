@@ -401,6 +401,7 @@
         {
             "type": "daily",
             "shortDescriptor": "found colony 11",
+            "character": "annika",
             "morningMessage": "“If only the good folks of the 11th Mission had waited… But if they chose to go out on foot, then they were surely desperate already.”",
             "message": "TODO",
             "failMessage": "TODO",
@@ -410,15 +411,12 @@
         },
         {
             "type": "daily",
-            "shortDescriptor": "overstocked parts",
-            "morningMessage": "TODO",
+            "shortDescriptor": "found colony 8",
+            "morningMessage": "“So you found the 8th Mission? Well, this place just gets worse and worse, doesn’t it? Taking out that signal jammer might open up comms with other colonies though.”",
             "message": "TODO",
             "failMessage": "TODO",
             "conditions": {
-                "resource": {
-                    "type": "parts",
-                    "trigger": "few"
-                }
+                "coloniesFound": 2
             }
         }
     ],
