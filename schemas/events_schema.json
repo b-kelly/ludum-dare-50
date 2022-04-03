@@ -30,7 +30,12 @@
                     }
                 }
             },
-            "required": ["colony", "onDay", "resource", "random"],
+            "required": [
+                "colony",
+                "onDay",
+                "resource",
+                "random"
+            ],
             "additionalProperties": false
         },
         "GameEvent": {
@@ -38,10 +43,36 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["none", "daily", "map", "colony"]
+                    "enum": [
+                        "none",
+                        "daily",
+                        "map",
+                        "colony"
+                    ]
                 },
                 "shortDescriptor": {
                     "type": "string"
+                },
+                "character": {
+                    "type": "string",
+                    "enum": [
+                        "kiran",
+                        "adzo",
+                        "shreya",
+                        "kamal",
+                        "lufti",
+                        "rupert",
+                        "harish",
+                        "annika",
+                        "gaston",
+                        "martin",
+                        "britt",
+                        "girish",
+                        "sachin",
+                        "chip",
+                        "dora",
+                        "marcel"
+                    ]
                 },
                 "message": {
                     "type": "string"
@@ -104,22 +135,37 @@
                                 },
                                 "trigger": {
                                     "type": "string",
-                                    "enum": ["few", "many"]
+                                    "enum": [
+                                        "few",
+                                        "many"
+                                    ]
                                 }
                             },
-                            "required": ["type", "trigger"],
+                            "required": [
+                                "type",
+                                "trigger"
+                            ],
                             "additionalProperties": false
                         }
                     },
                     "additionalProperties": false
                 }
             },
-            "required": ["type", "shortDescriptor", "message"],
+            "required": [
+                "type",
+                "shortDescriptor",
+                "message"
+            ],
             "additionalProperties": false
         },
         "CellBiome": {
             "type": "string",
-            "enum": ["default", "forest", "wetland", "desert"]
+            "enum": [
+                "default",
+                "forest",
+                "wetland",
+                "desert"
+            ]
         }
     }
 }
