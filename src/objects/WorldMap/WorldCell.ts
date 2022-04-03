@@ -11,6 +11,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay: Phaser.GameObjects.Sprite;
     private hasFogOfWar: boolean;
     private isVisitable: boolean;
+    private cellType: CellType;
 
     constructor(
         scene: CustomScene,
@@ -32,14 +33,11 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         if (xIndex % 2) {
             y += h2;
         }
+        const randomSpriteFrame = WorldCell.getRandomSpriteFrame(cell.type);
 
-        super(
-            scene,
-            x,
-            y,
-            WorldAssets.tiles,
-            WorldCell.getRandomSpriteFrame(cell.type)
-        );
+        super(scene, x, y, WorldAssets.tiles, randomSpriteFrame);
+
+        this.cellType = cell.type;
 
         // set the name so we can easily find a specific object later
         this.name = WorldCell.genName(xIndex, yIndex);
@@ -47,9 +45,14 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         this.setOrigin(0, 0);
         this.scene.add.existing(this);
 
-        // TODO looks like the overlay needs to be one "pixel" both wider and longer
-        // prettier-ignore
-        this.overlay = scene.add.sprite(x, y, WorldAssets.tiles, WorldAssets.tilesData.Overlay * TILES_SHEET_WIDTH).setOrigin(0, 0);
+        this.overlay = scene.add
+            .sprite(
+                x,
+                y,
+                WorldAssets.tiles,
+                WorldAssets.tilesData.Overlay * TILES_SHEET_WIDTH
+            )
+            .setOrigin(0, 0);
 
         this.hasFogOfWar = !cell.clearedFogOfWar;
         this.setOverlayState(cell.clearedFogOfWar ? null : "fog");
@@ -62,9 +65,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
                 .text(
                     x + h2,
                     y + h2,
-                    `${xIndex},${yIndex} ${CellType[
-                        cell.type
-                    ][0].toUpperCase()}`
+                    `x${xIndex}y${yIndex}, f${randomSpriteFrame} ${this.cellType}`
                 )
                 .setOrigin(0.5, 0.5);
         }
@@ -114,13 +115,19 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     }
 
     static genName(x: number, y: number) {
-        return `worldcell-${x}-${y}`;
+        return `worldcell-x${x}-y${y}`;
     }
 
     private static getRandomSpriteFrame(type: CellType) {
         const row = WorldAssets.tilesData[type];
         const startIndex = row * TILES_SHEET_WIDTH;
-        const rng = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH);
+
+        // TODO empty has one sprite for each biome, but this is very confusing!
+        if (type === CellType.Empty) {
+            return startIndex;
+        }
+
+        const rng = Phaser.Math.RND.integerInRange(0, TILES_SHEET_WIDTH - 1);
 
         return startIndex + rng;
     }

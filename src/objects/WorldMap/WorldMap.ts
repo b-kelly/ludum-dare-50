@@ -71,7 +71,7 @@ export class WorldMap {
     }
 
     getCell(x: number, y: number) {
-        return this.cells[y][x];
+        return this._cells[y][x];
     }
 
     getPlayerCell(): Cell & { x: number; y: number } {
@@ -137,7 +137,7 @@ export class WorldMap {
 
     setPlayerPosition(x: number, y: number) {
         this.currentPlayerCoords = { x, y };
-        this._cells[y][x].playerHasVisited = true;
+        this.getCell(x, y).playerHasVisited = true;
     }
 
     private generateMap() {
@@ -221,7 +221,7 @@ export class WorldMap {
     }
 
     private pickCellType() {
-        let ret = CellType.Empty;
+        let ret: CellType = CellType.Empty;
 
         Object.entries(cellTypeSpawnData).forEach(([key, data]) => {
             if (!data) {

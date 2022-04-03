@@ -15,8 +15,8 @@ export class OverworldScene extends CustomScene {
         super({ key: OverworldScene.KEY });
     }
 
-    init(data: object) {
-        console.log(OverworldScene.KEY, data);
+    init() {
+        // TODO
     }
 
     preload() {
@@ -63,19 +63,22 @@ export class OverworldScene extends CustomScene {
     private drawHexMap() {
         const map = this.global.worldMap;
         const playerCoords = map.playerCoords;
+        let playerCell: WorldCell;
 
         map.cells.forEach((row, y) => {
             row.forEach((cell, x) => {
                 const wc = new WorldCell(this, x, y, cell);
-                const { x: cx, y: cy } = wc.getCenter();
 
                 if (x === playerCoords.x && y === playerCoords.y) {
-                    this.player = new WorldPlayer(this, cx, cy);
                     wc.setCellState({ clearFogOfWar: true });
-                    this.cameras.main.startFollow(this.player);
+                    playerCell = wc;
                 }
             });
         });
+
+        const { x, y } = playerCell.getCenter();
+        this.player = new WorldPlayer(this, x, y);
+        this.cameras.main.startFollow(this.player);
     }
 
     private updateMap(newPX: number | null, newPY: number | null) {
