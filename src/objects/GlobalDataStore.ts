@@ -30,6 +30,7 @@ const startingValues = {
     },
     fuelCostVisitedTile: 1,
     fuelCostUnvisitedTile: 2,
+    fuelCostPerScan: 2,
 } as const;
 
 export interface Resources {
@@ -45,6 +46,7 @@ export interface BaseStatus {
     dailyReplenish: Resources;
     fuelCostVisitedTile: number;
     fuelCostUnvisitedTile: number;
+    fuelCostPerScan: number;
 }
 
 interface CurrentDay {
@@ -84,6 +86,7 @@ export class GlobalDataStore {
             dailyReplenish: startingValues.dailyReplenish,
             fuelCostUnvisitedTile: startingValues.fuelCostUnvisitedTile,
             fuelCostVisitedTile: startingValues.fuelCostVisitedTile,
+            fuelCostPerScan: startingValues.fuelCostPerScan,
         }));
     }
 
@@ -231,6 +234,22 @@ export class GlobalDataStore {
         this.updateResources({
             ...res,
             fuel: res.fuel - amtToExpend,
+        });
+
+        return true;
+    }
+
+    expendScanResources() {
+        const res = this.resources;
+        const cost = this.baseStatus.fuelCostPerScan;
+
+        if (res.fuel - cost < 0) {
+            return false;
+        }
+
+        this.updateResources({
+            ...res,
+            fuel: res.fuel - cost,
         });
 
         return true;

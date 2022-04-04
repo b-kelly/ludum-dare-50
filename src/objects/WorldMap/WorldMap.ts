@@ -167,6 +167,10 @@ export class WorldMap {
         this.getCell(x, y).playerHasExplored = true;
     }
 
+    clearFogOfWar(x: number, y: number) {
+        this.getCell(x, y).clearedFogOfWar = true;
+    }
+
     getPlayerCellStats() {
         const ret = {
             visited: 0,

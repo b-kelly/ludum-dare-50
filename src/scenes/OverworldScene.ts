@@ -61,11 +61,26 @@ export class OverworldScene extends CustomScene {
             .setScrollFactor(0, 0, true)
             .setOrigin(1, 0);
 
-        new Button(this, {
+        const endDayBtn = new Button(this, {
             x: this.bounds.width - padding,
-            y: STATUS_UI_HEIGHT + this.exploreButton.height + padding,
+            y: this.exploreButton.y + this.exploreButton.height + padding,
             text: "End day",
             onClick: () => this.returnToCamp(),
+        })
+            .setScrollFactor(0, 0, true)
+            .setOrigin(1, 0);
+
+        new Button(this, {
+            x: this.bounds.width - padding,
+            y: endDayBtn.y + endDayBtn.height + padding,
+            text: "Scan",
+            onClick: () => {
+                if (!this.global.expendScanResources()) {
+                    this.showNotice(["CANNOT SCAN"]);
+                } else {
+                    this.scanSurroundings();
+                }
+            },
         })
             .setScrollFactor(0, 0, true)
             .setOrigin(1, 0);
@@ -290,8 +305,6 @@ export class OverworldScene extends CustomScene {
             this.exploreButton?.setDisabled(!this.canExploreCell(playerCell));
         }
 
-        // TODO clear fog of war in wider area?
-
         this.updatePlayerAdjacentCells(false);
     }
 
@@ -320,8 +333,34 @@ export class OverworldScene extends CustomScene {
                 wc.on("pointerup", () => this.selectSquare(c.x, c.y));
             }
 
+            this.global.worldMap.clearFogOfWar(c.x, c.y);
             wc.setCellState({ isVisitable: !disable, clearFogOfWar: true });
         });
+    }
+
+    private scanSurroundings() {
+        // uncover fog of war two squares out
+        const adjacentCells =
+            this.global.worldMap.getPlayerAdjacentCellCoords();
+        adjacentCells.forEach((c) => {
+            // get all adjacent cells of this cell
+            const furtherCells = this.global.worldMap.getAdjacentCellCoords(
+                c.x,
+                c.y
+            );
+            furtherCells.forEach((f) => {
+                const wc = this.getCell(f.x, f.y);
+
+                if (!wc) {
+                    return;
+                }
+
+                this.global.worldMap.clearFogOfWar(f.x, f.y);
+                wc.setCellState({ clearFogOfWar: true });
+            });
+        });
+
+        // TODO perhaps tint event/explore/colony tiles?
     }
 
     private showEventNotice(event: EventOutcome) {
