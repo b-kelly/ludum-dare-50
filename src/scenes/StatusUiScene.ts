@@ -14,8 +14,8 @@ const PADDING = 16;
 
 class Indicator extends Phaser.GameObjects.Container {
     private resourceType: keyof Resources;
-    private iconWidth = 0;
-    private iconHeight = 0;
+    private iconWidth = 64;
+    private iconHeight = 64;
     private resourceText: Phaser.GameObjects.Text;
     private customScene: CustomScene;
 
@@ -144,7 +144,7 @@ export class StatusUiScene extends CustomScene {
             this.bounds.width,
             0,
             "fuel",
-            false
+            true
         ).setOrigin(1, 0);
 
         this.registry.events.on("changedata", () => {
