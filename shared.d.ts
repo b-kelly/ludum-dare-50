@@ -8,6 +8,7 @@ export declare const GeneralAssets: {
     readonly baseBackgroundNight: "baseBackgroundNight";
     readonly worldPlayer: "worldPlayer";
     readonly areaPlayer: "areaPlayer";
+    readonly areaEnemies: "areaEnemies";
     readonly resources: "resources";
 };
 export declare const UiAssets: {

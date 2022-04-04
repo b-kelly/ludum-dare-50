@@ -8,7 +8,7 @@ export declare enum CellState {
 }
 interface AreaCell {
     state: CellState;
-    resource?: keyof Resources;
+    resource?: keyof Resources | "enemy";
     rotation?: number;
 }
 /** Generates a connected "cave" with cellular automata */
@@ -36,7 +36,7 @@ export declare class AreaMap {
     /** Tile map expects this backwards from how we're rendering it */
     toTilemap(sheet: AreaSpriteSheet): AreaCell[][];
     getResources(): {
-        resource: keyof Resources;
+        resource: keyof Resources | "enemy";
         x: number;
         y: number;
     }[];
