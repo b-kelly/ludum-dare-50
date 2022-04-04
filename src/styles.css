@@ -26,8 +26,10 @@ body {
     font-size: large;
     font-weight: bold;
     margin: 0 auto;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
     width:90%;
+    text-align: center;
 }
 
 .more-info {
