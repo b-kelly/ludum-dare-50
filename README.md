@@ -30,7 +30,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [x] paginate intro pages
 -   [x] update font
 -   [x] new topbar - no images, text only
--   [ ] include fuel and health in topbar
+-   [x] include fuel and health in topbar
 -   [ ] button hover/active/disabled states
 
 ### Events
@@ -45,7 +45,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 ### Mechanics
 
--   [ ] enemies + health/damage
+-   [x] enemies + health/damage
 -   [x] overworld scan
 
 ### Other
@@ -57,7 +57,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] add toast and sound when you pick up an item
 -   [x] don't spawn resources on walls
 -   [ ] create and implement unique home base tile
--   [ ] fix line artifacts in exploration areas
+-   [x] fix line artifacts in exploration areas
 -   [ ] rotate tiles in exploration areas properly
 -   [ ] add statement pieces to exploration areas
 -   [ ] implement special map event sound

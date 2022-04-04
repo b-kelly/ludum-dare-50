@@ -28,6 +28,7 @@ export class AreaPlayer extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
         scene.cameras.main.startFollow(this);
+        scene.cameras.main.roundPixels = true;
 
         this.body.setBounce(0, 0);
         this.body.setSize(TILE_WIDTH - 4, TILE_WIDTH - 4, true);
