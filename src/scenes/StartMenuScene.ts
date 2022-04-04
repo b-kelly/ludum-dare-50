@@ -38,7 +38,11 @@ export class StartMenuScene extends CustomScene {
         this.load.image(UiAssets.tutorialPane, "assets/ui/tutorial-pane.png");
 
         // audio/sfx
-        // TODO BG MUSIC
+
+        this.load.audio(
+            SfxAssets.bgIntroOverworld.key,
+            "assets/sfx/bg-intro-overworld.mp3"
+        );
         this.load.audio(SfxAssets.click.key, "assets/sfx/click.mp3");
 
         // json data
@@ -48,6 +52,8 @@ export class StartMenuScene extends CustomScene {
 
     create() {
         this.DEBUG_ACTIONS();
+
+        this.sound.play(SfxAssets.bgIntroOverworld.key);
 
         this.add.image(0, 0, GeneralAssets.startBackground).setOrigin(0, 0);
 
@@ -63,12 +69,16 @@ export class StartMenuScene extends CustomScene {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const text = this.cache.json.get(GeneralAssets.narration)
             .intro as string[];
-        this.fadeToScene(LogScene.KEY, {
-            text: text,
-            onComplete(this: CustomScene) {
-                this.fadeToScene(DayStartScene.KEY);
+        this.fadeToScene(
+            LogScene.KEY,
+            {
+                text: text,
+                onComplete(this: CustomScene) {
+                    this.fadeToScene(DayStartScene.KEY, null);
+                },
             },
-        });
+            true
+        );
     }
 
     private DEBUG_ACTIONS() {

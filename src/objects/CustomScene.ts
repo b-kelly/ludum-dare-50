@@ -21,10 +21,15 @@ export class CustomScene extends Phaser.Scene {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    init(_: unknown) {
+    init(data: object) {
         this.events.on("transitionout", () => {
-            // TODO fade bg tracks?
-            this.sound.stopAll();
+            // TODO DOESN'T WORK YET
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            if (!data?.keepAudioPlaying) {
+                // TODO fade bg tracks?
+                this.sound.stopAll();
+            }
             this.cameras.main.fadeOut(500, 0, 0, 0);
         });
         this.events.on("transitionstart", () => {
@@ -34,10 +39,13 @@ export class CustomScene extends Phaser.Scene {
         });
     }
 
-    fadeToScene(target: string, data?: object) {
+    fadeToScene(target: string, data?: object, keepAudioPlaying = false) {
         this.scene.transition({
             target,
-            data,
+            data: {
+                keepAudioPlaying,
+                ...data,
+            },
             duration: 500,
         });
     }
