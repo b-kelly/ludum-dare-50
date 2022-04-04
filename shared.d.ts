@@ -43,6 +43,7 @@ export declare const SfxAssets: {
     readonly engine: "engine";
     readonly grabResource: "grabResource";
     readonly mapEvent: "mapEvent";
+    readonly mapScan: "mapScan";
 };
 export declare const TILE_WIDTH = 64;
 export declare function DEBUG_isDebugBuild(): boolean;
