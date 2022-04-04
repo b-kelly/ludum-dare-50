@@ -49,40 +49,46 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [x] overworld scan
 
 ### Other
+-   [ ] (HIGH) hit targets are wrong for buttons
+-   [ ] (HIGH) when you hit explore on the central tile it ends the day
+-   [ ] (HIGH) Music doesn’t continue once you click “Start” on main page
+-   [ ] (HIGH) implement portraits and textboxes for crew requests
+-   [ ] (HIGH) update overlay’s layout
+-   [ ] (HIGH) tutorials should have new UI elements and should be centered on the page so they have to read before they can interact. (i know, i changed my mind on this)
+-   [ ] (HIGH) Implement all gameover states
+-   [ ] (HIGH) desert music isn’t playing properly at all
 
--   [x] event upgrade support
--   [ ] area map wall/corner rotation
+
+-   [ ] (MID) rotate tiles in exploration areas properly
+-   [ ] (MID) add statement pieces to exploration areas
+-   [ ] (MID) implement unique home base tile
+-   [ ] (MID) fade in base-bg, and then wait a second before fading in the text overlay. otherwise they will never see the base bg.
+-   [ ] (MID) top bar should have new UI applied
+-   [ ] (MID) “explore” shouldn’t show up on first tile
+-   [ ] (MID) “end day” should be at bottom right
+-   [ ] (MID) sometimes biome bg doesn’t match tile biome
+-   [ ] (MID) music doesn’t restart when we go back to the overworld
+-   [ ] (MID) nighttime needs to have the same transitioning that morning has
+
+
+-   [ ] (LOW) Music doesn’t start on main page until you click the canvas
+-   [ ] (LOW) Text in intro page 1 should be vertically centered.
+-   [ ] (LOW) Text in intro page 3, “Will humanity survive” needs to be bigger font and centered
+-   [ ] (LOW) Intro page 3, button should say “BEGIN” instead of “NEXT” and button should be centered below “will humanity survive”
+-   [ ] (LOW) “scan” shouldn’t be available on home tile
+-   [ ] (LOW) home tile should always be forest if possible (since bg is forest)
+-   [ ] (LOW) wetlands biome resource spawning is too high
+-   [ ] (LOW) in exploration “Leave” should be bottom right
+-   [ ] (LOW) can we blink the number once n the top bar when we add an item to it?
+
+
+-   [x] hover overlays on tiles (the blue outline) should be at about 75% transparency
+-   [x] fix line artifacts in exploration areas
+-   [x] implement special map event sound
+-   [x] add transitions between scenes to slow it down a bit and make it feel more polished
 -   [x] connect caverns in area map
 -   [x] overworld scene loads slowly - only happens when debug info is on (apparently text very renders slowly when wrapped)
 -   [-] add toast and sound when you pick up an item
 -   [x] don't spawn resources on walls
--   [ ] create and implement unique home base tile
--   [x] fix line artifacts in exploration areas
--   [ ] rotate tiles in exploration areas properly
--   [ ] add statement pieces to exploration areas
--   [x] implement special map event sound
--   [ ] implement portraits and textboxes for crew requests
--   [x] add transitions between scenes to slow it down a bit and make it feel more polished
--   [ ] hit targets are wrong for buttons
--   [ ] when you hit explore on the central tile it ends the day
--   [ ] Music doesn’t start on main page until you click the canvas
--   [ ] Music doesn’t continue once you click “Start” on main page
--   [ ] Text in intro page 1 should be vertically centered.
--   [ ] Text in intro page 3, “Will humanity survive” needs to be bigger font and centered
--   [ ] Intro page 3, button should say “BEGIN” instead of “NEXT” and button should be centered below “will humanity survive”
--   [ ] fade in base-bg, and then wait a second before fading in the text overlay. otherwise they will never see the base bg.
--   [ ] update overlay’s layout
--   [ ] tutorials should have new UI elements and should be centered on the page so they have to read before they can interact. (i know, i changed my mind on this)
--   [ ] top bar should have new UI applied
--   [ ] “explore” shouldn’t show up on first tile
--   [ ] “end day” should be at bottom right
--   [ ] “scan” shouldn’t be available on home tile
--   [ ] home tile should always be forest if possible (since bg is forest)
--   [x] hover overlays on tiles (the blue outline) should be at about 75% transparency
--   [ ] sometimes biome bg doesn’t match tile biome
--   [ ] wetlands biome resource spawning is too high
--   [ ] in exploration “Leave” should be bottom right
--   [ ] desert music isn’t playing properly at all
--   [ ] can we blink the number once n the top bar when we add an item to it?
--   [ ] music doesn’t restart when we go back to the overworld
--   [ ] nighttime needs to have the same transitioning that morning has
+-   [x] event upgrade support
+-   [ ] (WONTFIX) area map wall/corner rotation
