@@ -1,4 +1,5 @@
-export declare class StartMenuScene extends Phaser.Scene {
+import { CustomScene } from "../objects/CustomScene";
+export declare class StartMenuScene extends CustomScene {
     static readonly KEY = "StartMenuScene";
     constructor();
     preload(): void;

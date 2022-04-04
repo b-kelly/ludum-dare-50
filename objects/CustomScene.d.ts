@@ -9,4 +9,6 @@ export declare class CustomScene extends Phaser.Scene {
         height: number;
     };
     constructor(config: string | Phaser.Types.Scenes.SettingsConfig);
+    init(_: unknown): void;
+    fadeToScene(target: string, data?: object): void;
 }
