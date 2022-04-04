@@ -19,6 +19,8 @@ export declare const UiAssets: {
     readonly arrowRight: "arrowRight";
     readonly tutorialPane: "tutorialPane";
     readonly briefingPane: "briefingPane";
+    readonly kevIcon: "kev";
+    readonly storageIcon: "storage";
 };
 export declare const SfxAssets: {
     readonly bgDesert: "bgDesert";
