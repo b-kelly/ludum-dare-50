@@ -35,6 +35,7 @@ export class AreaCreature extends Phaser.GameObjects.Sprite {
         // TODO RANDOMIZE?
         // change direction every so often
         const shouldChangeDirection =
+            !this.body.blocked.none ||
             !this.lastDirectionChange ||
             time - this.lastDirectionChange >= AreaCreature.MOVE_DURATION_MS;
 

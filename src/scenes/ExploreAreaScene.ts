@@ -116,9 +116,12 @@ export class ExploreAreaScene extends CustomScene {
             this.map.startLocation.y
         );
 
+        this.creatures = this.add.group();
+
         this.player = new AreaPlayer(this, coords.x, coords.y);
 
         this.physics.add.collider(this.player, layer);
+        this.physics.add.collider(this.creatures, layer);
 
         const padding = 8;
         new Button(this, {
@@ -146,7 +149,6 @@ export class ExploreAreaScene extends CustomScene {
 
     private spawnResources() {
         const resources = this.map.getResources();
-        const creatures: AreaCreature[] = [];
 
         resources.forEach((r) => {
             const coord = this.translateCoord(r.x, r.y);
@@ -158,7 +160,7 @@ export class ExploreAreaScene extends CustomScene {
                     coord.y,
                     this.biome
                 );
-                creatures.push(creature);
+                this.creatures.add(creature);
 
                 this.physics.add.collider(
                     this.player,
@@ -199,8 +201,6 @@ export class ExploreAreaScene extends CustomScene {
                 );
             }
         });
-
-        this.creatures = this.add.group(creatures);
     }
 
     private leaveArea() {
