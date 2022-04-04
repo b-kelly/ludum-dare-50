@@ -46,7 +46,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 ### Mechanics
 
 -   [ ] enemies + health/damage
--   [ ] overworld scan
+-   [x] overworld scan
 
 ### Other
 

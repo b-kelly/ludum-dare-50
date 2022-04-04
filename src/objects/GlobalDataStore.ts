@@ -222,6 +222,9 @@ export class GlobalDataStore {
             return "tiles";
         }
 
+        // finally, reset player position
+        this.worldMap.resetPlayerPosition();
+
         return null;
     }
 

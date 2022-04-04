@@ -163,6 +163,10 @@ export class WorldMap {
         this.getCell(x, y).playerHasVisited = true;
     }
 
+    resetPlayerPosition() {
+        this.currentPlayerCoords = { ...this.playerHomeCoords };
+    }
+
     markCellExplored(x: number, y: number) {
         this.getCell(x, y).playerHasExplored = true;
     }
