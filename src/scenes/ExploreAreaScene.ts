@@ -156,11 +156,20 @@ export class ExploreAreaScene extends CustomScene {
                     this.biome
                 );
                 this.physics.add.collider(
-                    res,
                     this.player,
-                    (res: AreaCreature) => {
-                        this.sound.play(SfxAssets.enemyHit);
-                        // TODO DO DAMAGE
+                    res,
+                    (player: AreaPlayer) => {
+                        if (player.damage(this.time.now)) {
+                            this.sound.play(SfxAssets.enemyHit);
+
+                            if (
+                                this.global.damagePlayer(
+                                    AreaCreature.DAMAGE_AMOUNT
+                                )
+                            ) {
+                                // TODO DEAD
+                            }
+                        }
                     }
                 );
             } else {

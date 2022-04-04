@@ -1,5 +1,8 @@
 import { GeneralAssets, TILE_WIDTH } from "../../shared";
 
+// number of MS the player is invulnerable after being damaged
+const INVULN_LENGTH_MS = 1000;
+
 interface Controls {
     Up: Phaser.Input.Keyboard.Key;
     Right: Phaser.Input.Keyboard.Key;
@@ -10,6 +13,8 @@ interface Controls {
 export class AreaPlayer extends Phaser.GameObjects.Sprite {
     declare body: Phaser.Physics.Arcade.Body;
     private controls: Controls;
+
+    private damagedAt: number;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(
@@ -95,5 +100,15 @@ export class AreaPlayer extends Phaser.GameObjects.Sprite {
         }
 
         this.setAngle(rotation);
+    }
+
+    damage(time: number) {
+        if (this.damagedAt > 0 && time - this.damagedAt < INVULN_LENGTH_MS) {
+            return false;
+        }
+
+        this.damagedAt = time;
+
+        return true;
     }
 }

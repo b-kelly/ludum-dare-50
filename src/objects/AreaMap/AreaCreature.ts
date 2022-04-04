@@ -4,6 +4,7 @@ import { CellBiome } from "../WorldMap/shared";
 const GENERIC_CONVERSION_RATE = 0.3;
 
 export class AreaCreature extends Phaser.GameObjects.Sprite {
+    static readonly DAMAGE_AMOUNT = 1;
     declare body: Phaser.Physics.Arcade.Body;
 
     constructor(scene: Phaser.Scene, x: number, y: number, biome: CellBiome) {

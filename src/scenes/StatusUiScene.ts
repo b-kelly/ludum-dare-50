@@ -13,17 +13,29 @@ export const STATUS_UI_HEIGHT = 80;
 const PADDING = 16;
 
 class Indicator extends Phaser.GameObjects.Container {
-    private resourceType: keyof Resources;
+    private resourceType: keyof Resources | "playerHp";
     private iconWidth = 64;
     private iconHeight = 64;
     private resourceText: Phaser.GameObjects.Text;
     private customScene: CustomScene;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    get height() {
+        return this.iconHeight + this.resourceText.height + PADDING;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    get width() {
+        return this.iconWidth + this.resourceText.width + PADDING;
+    }
+
     constructor(
         scene: CustomScene,
         x: number,
         y: number,
-        type: keyof Resources,
+        type: keyof Resources | "playerHp",
         hideIcon: boolean
     ) {
         super(scene, x, y);
@@ -38,7 +50,9 @@ class Indicator extends Phaser.GameObjects.Container {
                     x: PADDING,
                     y: PADDING,
                     key: GeneralAssets.resources,
-                    frame: AreaResource.getGenericResourceSpriteFrame(type),
+                    frame: AreaResource.getGenericResourceSpriteFrame(
+                        type as keyof Resources
+                    ),
                 })
                 .setOrigin(0, 0)
                 .setScale(0.5);
@@ -72,9 +86,8 @@ class Indicator extends Phaser.GameObjects.Container {
     }
 
     setOrigin(x: number, y: number) {
-        const totalWidth = this.iconWidth + this.resourceText.width + PADDING;
-        const totalHeight =
-            this.iconHeight + this.resourceText.height + PADDING;
+        const totalWidth = this.height;
+        const totalHeight = this.width;
 
         const newX = this.x - totalWidth * x;
         const newY = this.y - totalHeight * y;
@@ -84,22 +97,27 @@ class Indicator extends Phaser.GameObjects.Container {
     }
 
     private updateText() {
-        const resourceName = this.resourceType.replace(/^./, (c) =>
-            c.toUpperCase()
-        );
-        const haulCount =
-            this.customScene.global.currentDay.haul[this.resourceType];
-        const stashText = this.customScene.global.resources[this.resourceType];
-        this.resourceText.text = `${resourceName}\n${stashText} (${
-            haulCount > 0 ? "+" : ""
-        }${haulCount})`;
+        if (this.resourceType === "playerHp") {
+            this.resourceText.text = `HP\n${this.customScene.global.playerHp}`;
+        } else {
+            const resourceName = this.resourceType.replace(/^./, (c) =>
+                c.toUpperCase()
+            );
+            const haulCount =
+                this.customScene.global.currentDay.haul[this.resourceType];
+            const stashText =
+                this.customScene.global.resources[this.resourceType];
+            this.resourceText.text = `${resourceName}\n${stashText} (${
+                haulCount > 0 ? "+" : ""
+            }${haulCount})`;
+        }
     }
 }
 
 export class StatusUiScene extends CustomScene {
     static readonly KEY = "StatusUiScene";
 
-    private text: Record<keyof Resources, Indicator>;
+    private text: Record<keyof Resources | "playerHp", Indicator>;
 
     constructor() {
         super({ key: StatusUiScene.KEY });
@@ -129,11 +147,12 @@ export class StatusUiScene extends CustomScene {
             panels: null,
             parts: null,
             water: null,
+            playerHp: null,
         };
 
         Object.keys(this.text)
             .sort()
-            .filter((k) => k !== "fuel") // fuel has its own indicator
+            .filter((k) => k !== "fuel" && k !== "playerHp") // fuel/hp has their own indicators
             .forEach((k: keyof Resources, i) => {
                 // TODO hardcoded width
                 this.text[k] = new Indicator(this, i * 150, 0, k, false);
@@ -144,6 +163,14 @@ export class StatusUiScene extends CustomScene {
             this.bounds.width,
             0,
             "fuel",
+            true
+        ).setOrigin(1, 0);
+
+        this.text["playerHp"] = new Indicator(
+            this,
+            this.bounds.width - this.text["fuel"].width,
+            0,
+            "playerHp",
             true
         ).setOrigin(1, 0);
 

@@ -34,6 +34,7 @@ const startingValues = {
     fuelCostVisitedTile: 1,
     fuelCostUnvisitedTile: 2,
     fuelCostPerScan: 2,
+    playerHp: 5,
 } as const;
 
 export interface Resources {
@@ -71,7 +72,7 @@ export interface CampaignStats {
 
 /** Handy wrapper around our shared data */
 export class GlobalDataStore {
-    constructor(private scene: CustomScene) { }
+    constructor(private scene: CustomScene) {}
 
     get resources(): Readonly<Resources> {
         return this.getOrCreate<Resources>(
@@ -118,6 +119,25 @@ export class GlobalDataStore {
             tilesVisited: 0,
             dailyEvent: null,
         }));
+    }
+
+    get playerHp() {
+        return this.getOrCreate<number>(
+            "playerHp",
+            () => startingValues.playerHp
+        );
+    }
+
+    damagePlayer(value: number) {
+        let hp = this.playerHp;
+
+        hp -= value;
+
+        this.scene.registry.set("playerHp", hp);
+
+        // TODO bounce back and flash
+
+        return hp <= 0;
     }
 
     setDailyEvent(event: GameEvent) {
