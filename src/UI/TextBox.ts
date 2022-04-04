@@ -16,23 +16,27 @@ export class TextBox extends Phaser.GameObjects.Container {
         config: {
             x: number;
             y: number;
-            backgroundAssetKey: string;
+            backgroundAsset: Phaser.GameObjects.GameObject &
+                Phaser.GameObjects.Components.Origin &
+                Phaser.GameObjects.Components.GetBounds;
             pages: PagedText;
             padding: number;
+            buttonAlign?: "right" | "left" | "center";
+            buttonText?: string;
         }
     ) {
         super(scene, config.x, config.y);
         this.pages = config.pages;
 
         // background
-        const img = this.scene.add
-            .image(0, 0, config.backgroundAssetKey)
-            .setOrigin(0, 0);
+        const img = config.backgroundAsset.setOrigin(0, 0);
         this.add(img);
+
+        const { width, height } = img.getBounds();
 
         // back button
         this.prevPageBtn = this.scene.add
-            .sprite(0, img.height, UiAssets.arrowLeft)
+            .sprite(config.padding, height - config.padding, UiAssets.arrowLeft)
             .setOrigin(0, 1);
         this.add(this.prevPageBtn);
 
@@ -42,7 +46,11 @@ export class TextBox extends Phaser.GameObjects.Container {
 
         // next button
         this.nextPageBtn = this.scene.add
-            .sprite(img.width, img.height, UiAssets.arrowRight)
+            .sprite(
+                width - config.padding,
+                height - config.padding,
+                UiAssets.arrowRight
+            )
             .setOrigin(1, 1);
         this.add(this.nextPageBtn);
 
@@ -50,23 +58,38 @@ export class TextBox extends Phaser.GameObjects.Container {
             this.goToPage(this.currentPage + 1);
         });
 
-        // TODO HARDCODED BUTTON DIMENSIONS
+        let buttonX: number;
+        let origin: [number, number];
+
+        const buttonAlign = config.buttonAlign || "right";
+
+        if (buttonAlign === "right") {
+            buttonX = width - config.padding;
+            origin = [1, 1];
+        } else if (buttonAlign === "left") {
+            buttonX = config.padding;
+            origin = [0, 1];
+        } else {
+            buttonX = width / 2;
+            origin = [0.5, 1];
+        }
+
         // proceed button
         this.proceedBtn = new Button(this.scene, {
-            x: img.width,
-            y: img.height,
+            x: buttonX,
+            y: height - config.padding,
             onClick: () => {
                 this.emit("proceedclick");
             },
-            text: "Next",
-        }).setOrigin(1, 1);
+            text: config.buttonText || "Next",
+        }).setOrigin(...origin);
 
         this.add(this.proceedBtn);
 
         this.text = this.scene.add.text(config.padding, config.padding, "", {
             ...baseTextOptions,
             wordWrap: {
-                width: img.width - config.padding * 2,
+                width: width - config.padding * 2,
             },
         });
         this.add(this.text);

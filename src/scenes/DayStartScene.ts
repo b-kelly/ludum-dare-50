@@ -1,7 +1,7 @@
 import { CustomScene } from "../objects/CustomScene";
 import { Resources } from "../objects/GlobalDataStore";
-import { baseTextOptions, GeneralAssets } from "../shared";
-import { Button } from "../UI/Button";
+import { GeneralAssets, UiAssets } from "../shared";
+import { TextBox } from "../UI/TextBox";
 import { OverworldScene } from "./OverworldScene";
 import { StatusUiScene } from "./StatusUiScene";
 
@@ -26,15 +26,29 @@ export class DayStartScene extends CustomScene {
 
     create() {
         // add background
-        this.add.image(0, 0, GeneralAssets.baseBackgroundDay).setOrigin(0, 0);
-        this.createResourcesDisplay();
-        new Button(this, {
-            x: 0,
-            y: 0,
-            text: "Explore",
-            onClick: () => {
-                this.scene.start(OverworldScene.KEY, {});
-            },
+        const img = this.add
+            .image(0, 0, GeneralAssets.baseBackgroundDay)
+            .setOrigin(0, 0);
+
+        const textBox = new TextBox(this, {
+            x: img.width * 0.125,
+            y: img.height * 0.1,
+            pages: [this.getDisplayText()],
+            padding: 16,
+            backgroundAsset: this.add.rectangle(
+                0,
+                0,
+                img.width * 0.75,
+                img.height * 0.8,
+                0x000000,
+                0.5
+            ),
+            buttonAlign: "center",
+            buttonText: "Explore",
+        });
+
+        textBox.on("proceedclick", () => {
+            this.scene.start(OverworldScene.KEY, {});
         });
 
         if (this.scene.isActive(StatusUiScene.KEY)) {
@@ -42,47 +56,32 @@ export class DayStartScene extends CustomScene {
         }
     }
 
-    private createResourcesDisplay() {
-        const { width, height } = this.bounds;
-
-        // resource box TODO HARDCODED COORDS - better way?
-        this.add.rectangle(
-            width * 0.5,
-            height * 0.5,
-            width * 0.5,
-            height * 0.75,
-            0x000000,
-            0.5
-        );
-        const textHeight = 50; // TODO HOW TO GET THIS
-
-        const startXPos = width * 0.25;
-        let startYPos = height * 0.125;
+    private getDisplayText() {
+        const ret: string[] = [];
 
         const dailyEvent = this.global.currentDay.dailyEvent;
 
         if (dailyEvent?.morningMessage) {
-            this.add.text(startXPos, startYPos, dailyEvent.morningMessage);
-            startYPos += textHeight;
+            ret.push(dailyEvent.morningMessage + "\n");
         }
 
         const currentResources = this.global.resources;
         const startingResources = currentResources;
         const stat = this.global.baseStatus;
-        Object.entries(startingResources).forEach(
-            (kv: [keyof Resources, number], i) => {
-                const key = kv[0];
-                const message = `${key}: ${String(kv[1])} (+${
-                    stat.dailyReplenish[key]
-                }) / ${stat.maxStorage[key]}`;
 
-                this.add.text(
-                    startXPos,
-                    startYPos + i * textHeight,
-                    message,
-                    baseTextOptions
-                );
-            }
+        ret.push(
+            ...Object.entries(startingResources).map(
+                (kv: [keyof Resources, number], i) => {
+                    const key = kv[0];
+                    const message = `${key}: ${String(kv[1])} (+${
+                        stat.dailyReplenish[key]
+                    }) / ${stat.maxStorage[key]}`;
+
+                    return message;
+                }
+            )
         );
+
+        return ret;
     }
 }

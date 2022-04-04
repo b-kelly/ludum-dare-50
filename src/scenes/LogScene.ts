@@ -29,7 +29,9 @@ export class LogScene extends CustomScene {
         const textBox = new TextBox(this, {
             x: 0,
             y: 0,
-            backgroundAssetKey: GeneralAssets.logBackground,
+            backgroundAsset: this.add
+                .image(0, 0, GeneralAssets.logBackground)
+                .setOrigin(0, 0),
             pages: this.content,
             padding: 64,
         });
