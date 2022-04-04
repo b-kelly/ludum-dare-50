@@ -24,7 +24,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 ### New UI
 
--   [ ] tutorial / popup support
+-   [x] tutorial / popup support
 -   [ ] hover tooltip support
 -   [ ] select A vs B in popup
 -   [x] paginate intro pages
@@ -36,11 +36,11 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 ### Events
 
 -   [x] load events.json
--   [ ] biome specific event filters
--   [ ] colony progress based event filters
+-   [x] biome specific event filters
+-   [x] colony progress based event filters
 -   [x] specific event for specific day
 -   [x] split daily events morning/night message
--   [ ] resource condition event filters
+-   [x] resource condition event filters
 -   [ ] daily event pass/fail support
 
 ### Mechanics

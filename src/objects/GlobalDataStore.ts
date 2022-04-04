@@ -40,7 +40,7 @@ export interface Resources {
     filters: number;
 }
 
-interface BaseStatus {
+export interface BaseStatus {
     maxStorage: Resources;
     dailyReplenish: Resources;
     fuelCostVisitedTile: number;
@@ -56,7 +56,7 @@ interface CurrentDay {
     dailyEvent: GameEvent;
 }
 
-interface CampaignStats {
+export interface CampaignStats {
     dayCount: number;
     colonyCount: number;
     dailyProgress: CurrentDay[];

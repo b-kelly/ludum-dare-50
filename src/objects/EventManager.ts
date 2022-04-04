@@ -1,6 +1,6 @@
 import { GeneralAssets } from "../shared";
 import { CustomScene } from "./CustomScene";
-import { Resources } from "./GlobalDataStore";
+import { BaseStatus, CampaignStats, Resources } from "./GlobalDataStore";
 import { CellBiome } from "./WorldMap/shared";
 
 /**
@@ -178,8 +178,9 @@ export class EventManager {
 
             // check for random resource event
             const currentStash = this.scene.global.resources;
+            const baseStatus = this.scene.global.baseStatus;
             event = events.resource.find((e) =>
-                this.checkResourceCondition(e, currentStash)
+                this.checkResourceCondition(e, currentStash, baseStatus)
             );
 
             // no event? no worries - random will come through for us
@@ -187,11 +188,25 @@ export class EventManager {
                 return event;
             }
 
+            const tilesVisited =
+                this.scene.global.worldMap.getPlayerCellStats().visited;
+            const biome = this.scene.global.worldMap.getPlayerCell().biome;
+
             // general random daily event
             // TODO SUPPORT UNIQUE
             // TODO CHECK CONDITIONS
-            event = events.random.find(
-                (e) => e.type === "daily" || e.type === "none"
+            event = Phaser.Math.RND.pick(
+                events.random.filter((e) =>
+                    this.checkMiscConditions(
+                        e,
+                        "daily",
+                        currentStash,
+                        baseStatus,
+                        stats,
+                        biome,
+                        tilesVisited
+                    )
+                )
             );
 
             // yeah, this shouldn't happen if the json is filled
@@ -203,10 +218,25 @@ export class EventManager {
         }
 
         if (type === "map") {
+            const currentStash = this.scene.global.resources;
+            const baseStatus = this.scene.global.baseStatus;
+            const tilesVisited =
+                this.scene.global.worldMap.getPlayerCellStats().visited;
+            const biome = this.scene.global.worldMap.getPlayerCell().biome;
             // TODO SUPPORT UNIQUE
             // TODO CHECK CONDITIONS
-            const event = events.random.find(
-                (e) => e.type === "map" || e.type === "none"
+            const event = Phaser.Math.RND.pick(
+                events.random.filter((e) =>
+                    this.checkMiscConditions(
+                        e,
+                        "map",
+                        currentStash,
+                        baseStatus,
+                        stats,
+                        biome,
+                        tilesVisited
+                    )
+                )
             );
 
             // yeah, this shouldn't happen if the json is filled
@@ -220,10 +250,87 @@ export class EventManager {
 
     private checkResourceCondition(
         event: GameEvent,
-        currentResources: Resources
+        currentResources: Resources,
+        baseStats: BaseStatus
     ) {
-        // TODO
+        if (!event?.conditions?.resource?.type) {
+            return false;
+        }
+
+        // trigger if the resource is:
+        // if "few" < max / 2
+        // if "many" > max * 0.75
+
+        const currentCount = currentResources[event.conditions.resource.type];
+        const maxStorage = baseStats.maxStorage[event.conditions.resource.type];
+        if (
+            event.conditions.resource.trigger === "many" &&
+            currentCount >= maxStorage * 0.75
+        ) {
+            return true;
+        } else if (
+            event.conditions.resource.trigger === "few" &&
+            currentCount <= maxStorage / 2
+        ) {
+            return true;
+        }
+
         return false;
+    }
+
+    /**
+     * 
+     * @param event    conditions?: {
+        coloniesFound?: number;
+        biome?: CellBiome;
+        onDay?: number;
+        resource?: {
+            type: keyof Resources;
+            trigger: "few" | "many";
+        };
+        tilesVisited?: number;
+    };
+     */
+
+    private checkMiscConditions(
+        event: GameEvent,
+        type: EventType,
+        currentResources: Resources,
+        baseStatus: BaseStatus,
+        stats: CampaignStats,
+        biome: CellBiome,
+        tilesVisited: number
+    ) {
+        if (event.type !== type && event.type !== "none") {
+            return false;
+        }
+
+        if (!event.conditions) {
+            return true;
+        }
+
+        let satisfies = true;
+        if ("coloniesFound" in event.conditions) {
+            satisfies &&= event.conditions.coloniesFound <= stats.colonyCount;
+        }
+
+        if ("biome" in event.conditions) {
+            satisfies &&= event.conditions.biome === biome;
+        }
+
+        if ("resource" in event.conditions) {
+            satisfies &&= this.checkResourceCondition(
+                event,
+                currentResources,
+                baseStatus
+            );
+        }
+
+        if ("tilesVisited" in event.conditions) {
+            satisfies &&= event.conditions.tilesVisited <= tilesVisited;
+        }
+
+        return satisfies;
     }
 
     private events() {
