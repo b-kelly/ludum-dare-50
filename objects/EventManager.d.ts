@@ -61,6 +61,20 @@ export declare class EventManager {
     private applyEvent;
     private chooseEvent;
     private checkResourceCondition;
+    /**
+     *
+     * @param event    conditions?: {
+        coloniesFound?: number;
+        biome?: CellBiome;
+        onDay?: number;
+        resource?: {
+            type: keyof Resources;
+            trigger: "few" | "many";
+        };
+        tilesVisited?: number;
+    };
+     */
+    private checkMiscConditions;
     private events;
 }
 export {};
