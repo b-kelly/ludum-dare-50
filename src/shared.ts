@@ -15,8 +15,7 @@ export const GeneralAssets = {
     areaPlayer: "areaPlayer",
     areaEnemies: "areaEnemies",
     resources: "resources",
-    characterPortraits: "characterPortraits",
-    characterInfo: "characterInfo"
+    characterPortraits: "characterPortraits"
 } as const;
 
 export const UiAssets = {

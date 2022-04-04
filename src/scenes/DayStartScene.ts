@@ -30,10 +30,14 @@ export class DayStartScene extends CustomScene {
             UiAssets.portraitPane,
             "assets/ui/portrait-text.png"
         );
-        this.load.image(
+        this.load.spritesheet(
             GeneralAssets.characterPortraits,
-            "assets/sprites/portrait-spritesheet.png"
-        )
+            "assets/sprites/portrait-spritesheet.png",
+            {
+                frameWidth: 200,
+                frameHeight: 200
+            }
+        );
     }
 
     create() {
@@ -50,15 +54,9 @@ export class DayStartScene extends CustomScene {
 
         const portrait = this.add.image(
             pane.x - pane.width / 2 + PADDING + ELPADDING,
-            pane.y - pane.width / 2 + (PADDING * 2) - ELPADDING / 2,
+            pane.y - pane.width / 2 + (PADDING * 3) - ELPADDING / 2,
             UiAssets.portraitPane
         ).setOrigin(0, 0);
-
-        // const character = this.add.image(
-        //     portrait.x,
-        //     portrait.y,
-        //     GeneralAssets.characterPortraits
-        // )
 
         const paneX = PADDING + pane.x - pane.width / 2;
         const paneY = PADDING + pane.y - pane.height / 2;
@@ -78,12 +76,90 @@ export class DayStartScene extends CustomScene {
 
         const dailyEvent = this.global.currentDay.dailyEvent;
 
-        const character = dailyEvent.character;
+        const character = dailyEvent.character || "kiran";
+        let characterNum = 0;
+        let characterText = "Commanding Officer Kiran Adam";
+
+        switch (character) {
+            case "kiran":
+                characterNum = 0;
+                characterText = "Commanding Officer Kiran Adam";
+                break;
+            case "adzo":
+                characterNum = 1;
+                characterText = "Agricultural Officer Adzo Loman";
+                break;
+            case "shreya":
+                characterNum = 2;
+                characterText = "Agricultural Specialist Shira Loman";
+                break;
+            case "kamal":
+                characterNum = 5;
+                characterText = "Philosophy Specialist Kamal Marion";
+                break;
+            case "lufti":
+                characterNum = 3;
+                characterText = "Kepler-22b Expert Lufti Andela";
+                break;
+            case "harish":
+                characterNum = 7;
+                characterText = "Medical Officer Harish Kuroda";
+                break;
+            case "annika":
+                characterNum = 6;
+                characterText = "Comms Specialist Annika Villalobos";
+                break;
+            case "gaston":
+                characterNum = 8;
+                characterText = "Logistics Specialist Gaston Fisher";
+                break;
+            case "martin":
+                characterNum = 9;
+                characterText = "Logistics Specialist Martin Fisher";
+                break;
+            case "britt":
+                characterNum = 10;
+                characterText = "Botanist Britt Saarinen";
+                break;
+            case "girish":
+                characterNum = 11;
+                characterText = "Botanist Girish Martell";
+                break;
+            case "sachin":
+                characterNum = 13;
+                characterText = "Medical Assistant Sachin Traves";
+                break;
+            case "chip":
+                characterNum = 12;
+                characterText = "Engineer Chip O'Dell";
+                break;
+            case "dora":
+                characterNum = 14;
+                characterText = "Engineer Dora Hintzen";
+                break;
+            case "marcel":
+                characterNum = 15;
+                characterText = "Artist Marcel Kralij";
+                break;
+            case "rupert":
+                characterNum = 4;
+                characterText = "Engineering Specialist Rupert Luan";
+                break;
+            default:
+                break;
+        }
+
+        const characterPortrait = this.add.image(
+            portrait.x + 114,
+            portrait.y + 116,
+            GeneralAssets.characterPortraits,
+            characterNum
+        );
 
         const dialogue = this.add.text(
             paneX + portrait.width + PADDING - ELPADDING,
             title.y + title.height + ELPADDING,
-            dailyEvent?.morningMessage,
+            characterText + ": ”" + dailyEvent?.morningMessage + "”",
             {
                 ...baseTextOptions,
                 fontSize: "14pt",
@@ -93,10 +169,14 @@ export class DayStartScene extends CustomScene {
             }
         );
 
+        let sectionStartHeight = dialogue.y + dialogue.height + ELPADDING;
+        if ((portrait.y + portrait.height + ELPADDING) > sectionStartHeight) {
+            sectionStartHeight = portrait.y + portrait.height + ELPADDING;
+        }
         const sectionTitle = this.add
             .text(
                 paneX + paneWidth / 2,
-                dialogue.y + dialogue.height + ELPADDING,
+                sectionStartHeight,
                 `Supplies`,
                 {
                     ...baseTextOptions,
