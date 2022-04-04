@@ -19,5 +19,16 @@ export declare const UiAssets: {
     tutorialPane: string;
     briefingPane: string;
 };
+export declare const SfxAssets: {
+    bgDesert: string;
+    bgForest: string;
+    bgIntoOverworld: string;
+    bgWetland: string;
+    click: string;
+    enemyHit: string;
+    engine: string;
+    grabResource: string;
+    mapEvent: string;
+};
 export declare const TILE_WIDTH = 64;
 export declare function DEBUG_isDebugBuild(): boolean;
