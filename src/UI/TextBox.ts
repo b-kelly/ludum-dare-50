@@ -74,6 +74,14 @@ export class TextBox extends Phaser.GameObjects.Container {
             origin = [0.5, 1];
         }
 
+        this.text = this.scene.add.text(config.padding, config.padding, "", {
+            ...baseTextOptions,
+            wordWrap: {
+                width: width - config.padding * 2,
+            },
+        });
+        this.add(this.text);
+
         // proceed button
         this.proceedBtn = new Button(this.scene, {
             x: buttonX,
@@ -86,20 +94,19 @@ export class TextBox extends Phaser.GameObjects.Container {
 
         this.add(this.proceedBtn);
 
-        this.text = this.scene.add.text(config.padding, config.padding, "", {
-            ...baseTextOptions,
-            wordWrap: {
-                width: width - config.padding * 2,
-            },
-        });
-        this.add(this.text);
-
         this.scene.add.existing(this);
 
         this.goToPage(this.currentPage);
     }
 
-    goToPage(page: number) {
+    setPages(pages: PagedText) {
+        this.pages = pages;
+        this.goToPage(0);
+
+        return this;
+    }
+
+    private goToPage(page: number) {
         const maxPage = this.pages.length - 1;
 
         // restrict page between 0 and number of pages
@@ -109,6 +116,6 @@ export class TextBox extends Phaser.GameObjects.Container {
         this.nextPageBtn.setVisible(page < maxPage);
         this.proceedBtn.setVisible(page === maxPage);
 
-        this.text.text = this.pages[this.currentPage].join("\n");
+        this.text.text = this.pages[this.currentPage]?.join("\n");
     }
 }

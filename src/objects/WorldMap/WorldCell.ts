@@ -3,7 +3,7 @@ import { CustomScene } from "../CustomScene";
 import { Cell, TILES_SHEET_WIDTH } from "./shared";
 import { WorldAssets } from "./WorldMap";
 
-const SHOW_DEBUG = true;
+const SHOW_DEBUG = false;
 
 export class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay: Phaser.GameObjects.Sprite;

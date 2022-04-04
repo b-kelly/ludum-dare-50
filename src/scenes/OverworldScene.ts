@@ -5,6 +5,7 @@ import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
 import { GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
+import { TextBox } from "../UI/TextBox";
 import { DayReviewScene } from "./DayReviewScene";
 import { ExploreAreaScene } from "./ExploreAreaScene";
 import { StatusUiScene, STATUS_UI_HEIGHT } from "./StatusUiScene";
@@ -14,6 +15,8 @@ export class OverworldScene extends CustomScene {
     private player: WorldPlayer;
     private movingTowardsCoords: { x: number; y: number };
     private exploreButton: Button;
+    private textBox: TextBox;
+    private tutorialShown: boolean;
 
     constructor() {
         super({ key: OverworldScene.KEY });
@@ -43,29 +46,54 @@ export class OverworldScene extends CustomScene {
         this.createAnimations();
         this.drawHexMap();
         this.movePlayerAndUpdateCells(null, null);
-
         const playerCell = this.global.worldMap.getPlayerCell();
 
+        const padding = 8;
+
         this.exploreButton = new Button(this, {
-            x: 0,
+            x: this.bounds.width - padding,
             y: STATUS_UI_HEIGHT,
             text: "Explore",
             onClick: () => this.exploreCell(),
             disabled: this.canExploreCell(playerCell),
-        }).setScrollFactor(0, 0);
+        })
+            .setScrollFactor(0, 0, true)
+            .setOrigin(1, 0);
 
         new Button(this, {
-            x: 0,
-            y: STATUS_UI_HEIGHT + 100,
+            x: this.bounds.width - padding,
+            y: STATUS_UI_HEIGHT + this.exploreButton.height + padding,
             text: "End day",
             onClick: () => this.returnToCamp(),
-        }).setScrollFactor(0, 0);
+        })
+            .setScrollFactor(0, 0, true)
+            .setOrigin(1, 0);
 
         this.global.worldMap.DEBUG_displayMap();
 
         if (!this.scene.isActive(StatusUiScene.KEY)) {
             this.scene.launch(StatusUiScene.KEY);
         }
+
+        this.textBox = new TextBox(this, {
+            x: padding,
+            y: STATUS_UI_HEIGHT,
+            backgroundAsset: this.add.rectangle(
+                0,
+                0,
+                this.bounds.width / 3,
+                this.bounds.height / 2,
+                0x0a2a33
+            ),
+            pages: [],
+            padding: 8,
+            buttonText: "Got it",
+            buttonAlign: "center",
+        })
+            .setScrollFactor(0, 0, true)
+            .setVisible(false);
+
+        this.launchTutorial();
     }
 
     update() {
@@ -85,6 +113,60 @@ export class OverworldScene extends CustomScene {
                 this.movingTowardsCoords.y
             );
             this.movingTowardsCoords = null;
+        }
+    }
+
+    private launchTutorial() {
+        const tutorialComplete = this.getTutorialCompleted();
+        if (tutorialComplete || this.global.campaignStats.dayCount !== 0) {
+            return;
+        }
+
+        const currentDay = this.global.currentDay;
+        const tutorialStep = this.getTutorialStep();
+
+        if (currentDay.tilesExplored > 0) {
+            // tutorial 3
+            this.textBox
+                .setPages([
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    this.cache.json.get(GeneralAssets.narration)
+                        .tutorial3 as string[],
+                ])
+                .off("proceedclick")
+                .on("proceedclick", () => {
+                    this.completeTutorialStep(3);
+                    this.textBox.setVisible(false);
+                })
+                .setVisible(true);
+        } else if (currentDay.tilesVisited === 0 && tutorialStep > 0) {
+            // tutorial 2
+            this.textBox
+                .setPages([
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    this.cache.json.get(GeneralAssets.narration)
+                        .tutorial2 as string[],
+                ])
+                .off("proceedclick")
+                .on("proceedclick", () => {
+                    this.completeTutorialStep(2);
+                    this.textBox.setVisible(false);
+                })
+                .setVisible(true);
+        } else if (tutorialStep === 0) {
+            // tutorial 1
+            this.textBox
+                .setPages([
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    this.cache.json.get(GeneralAssets.narration)
+                        .tutorial1 as string[],
+                ])
+                .off("proceedclick")
+                .on("proceedclick", () => {
+                    this.textBox.setVisible(false);
+                    this.completeTutorialStep(1);
+                })
+                .setVisible(true);
         }
     }
 
@@ -119,7 +201,14 @@ export class OverworldScene extends CustomScene {
             return false;
         }
 
-        this.movePlayerAndUpdateCells(x, y);
+        const next = () => this.movePlayerAndUpdateCells(x, y);
+
+        if (!this.getTutorialCompleted()) {
+            this.launchTutorial();
+            this.textBox.on("proceedclick", () => next());
+        } else {
+            next();
+        }
     }
 
     private drawHexMap() {
@@ -217,6 +306,18 @@ export class OverworldScene extends CustomScene {
 
     private canExploreCell(cell: Cell) {
         return !cell.playerHasExplored && cell.type === "explorable";
+    }
+
+    private completeTutorialStep(step: number) {
+        return this.registry.set("tutorialStep", step);
+    }
+
+    private getTutorialStep() {
+        return (this.registry.get("tutorialStep") as number) || 0;
+    }
+
+    private getTutorialCompleted() {
+        return this.registry.get("tutorialStep") === 3;
     }
 
     private createAnimations() {

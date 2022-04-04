@@ -52,7 +52,8 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] event upgrade support
 -   [ ] area map wall/corner rotation
 -   [ ] connect caverns in area map
--   [ ] overworld scene loads slowly
+-   [x] overworld scene loads slowly
+-   only happens when debug info is on (apparently text very renders slowly when wrapped)
 -   [ ] add toast and sound when you pick up an item
 -   [x] don't spawn resources on walls
 -   [ ] create and implement unique home base tile

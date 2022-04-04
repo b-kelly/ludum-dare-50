@@ -4,6 +4,18 @@ export class Button extends Phaser.GameObjects.Container {
     private isDisabled: boolean;
     private buttonImg: Phaser.GameObjects.Sprite;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    get height() {
+        return this.buttonImg.height;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    get width() {
+        return this.buttonImg.width;
+    }
+
     constructor(
         scene: Phaser.Scene,
         options: {
@@ -22,13 +34,7 @@ export class Button extends Phaser.GameObjects.Container {
         // large is the default size
         const asset =
             options.size === "small" ? UiAssets.buttonSm : UiAssets.buttonLg;
-        this.buttonImg = this.scene.make
-            .sprite({
-                key: asset,
-                x: 0,
-                y: 0,
-            })
-            .setOrigin(0, 0);
+        this.buttonImg = this.scene.add.sprite(0, 0, asset).setOrigin(0, 0);
 
         this.setInteractive(
             new Phaser.Geom.Rectangle(

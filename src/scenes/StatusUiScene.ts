@@ -96,6 +96,8 @@ export class StatusUiScene extends CustomScene {
     }
 
     create() {
+        this.input.enabled = false;
+
         // TODO HACK crop the image for real instead of hiding the part off the edge of the screen
         this.add.image(0, 0 - 40, UiAssets.topbar).setOrigin(0, 0);
 

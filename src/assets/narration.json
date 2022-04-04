@@ -20,8 +20,10 @@
         ]
     ],
     "tutorial1": [
-        "13th Colony - Kepler-22b - Month 2, Day 1\n",
-        "You've been foraging close to base since you arrived one month prior, but Luan has just finished fixing the Kepler Excursion Vehicle (KEV), which was damaged upon your arrival. As resources are scarce, today you begin foraging further afield.\n",
-        "Your fuel cells aren't fully charged, you're running low on pretty much everything, and everyone is counting on you.\n"
-    ]
+        "This map represents the area surrounding your base.\n",
+        "Tiles that have been previously explored cost 1 energy unit to traverse, and newly discovered tiles cost 2.\n",
+        "Left click on an adjacent tile to travel there."
+    ],
+    "tutorial2": ["t2"],
+    "tutorial3": ["t3"]
 }

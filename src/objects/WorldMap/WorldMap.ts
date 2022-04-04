@@ -43,11 +43,9 @@ export const WorldAssets = {
     // which row each tileset is on
     tilesData: {
         forest: 0,
-        wetland: 1,
-        desert: 2,
-        Empty: 3,
-        Colony: 4,
-        Overlay: 5,
+        desert: 1,
+        wetland: 2,
+        Overlay: 3,
     },
 } as const;
 
@@ -385,15 +383,7 @@ export class WorldMap {
             return 0; // TODO this can get called during initial map creation
         }
 
-        let row = 0;
-
-        if (biome === "forest") {
-            row = 0;
-        } else if (biome === "wetland") {
-            row = 1;
-        } else if (biome === "desert") {
-            row = 2;
-        }
+        const row = WorldAssets.tilesData[biome];
 
         const startIndex = row * TILES_SHEET_WIDTH;
 

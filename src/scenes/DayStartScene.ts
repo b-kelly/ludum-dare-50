@@ -40,8 +40,7 @@ export class DayStartScene extends CustomScene {
                 0,
                 img.width * 0.75,
                 img.height * 0.8,
-                0x000000,
-                0.5
+                0x0a2a33
             ),
             buttonAlign: "center",
             buttonText: "Explore",
