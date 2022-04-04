@@ -4,6 +4,7 @@ export declare class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay;
     private hasFogOfWar;
     private isVisitable;
+    private coords;
     constructor(scene: CustomScene, xIndex: number, yIndex: number, cell: Cell);
     setCellState(state: {
         isVisitable?: boolean;

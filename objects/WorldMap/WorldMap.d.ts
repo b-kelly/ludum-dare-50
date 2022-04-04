@@ -8,8 +8,8 @@ export declare const WorldAssets: {
     readonly tiles: "tiles";
     readonly tilesData: {
         readonly forest: 0;
-        readonly desert: 1;
-        readonly wetland: 2;
+        readonly wetland: 1;
+        readonly desert: 2;
         readonly Overlay: 3;
     };
 };

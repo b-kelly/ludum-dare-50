@@ -6,10 +6,12 @@ export declare class OverworldScene extends CustomScene {
     private exploreButton;
     private textBox;
     private noticeBox;
+    private tooltip;
     constructor();
     preload(): void;
     create(): void;
     update(): void;
+    private updateTooltip;
     private launchTutorial;
     private exploreCell;
     private returnToCamp;
