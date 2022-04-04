@@ -84,6 +84,14 @@ export class DayStartScene extends CustomScene {
             .setOrigin(0.5, 0);
 
         let prevHeight = sectionTitle.height + ELPADDING;
+        prevHeight +=
+            this.generateRow(
+                paneX,
+                sectionTitle.y + prevHeight,
+                paneWidth / 3,
+                null
+            ).height + ELPADDING;
+
         Object.keys(this.global.resources).forEach((k: keyof Resources) => {
             prevHeight +=
                 this.generateRow(
@@ -175,34 +183,5 @@ export class DayStartScene extends CustomScene {
         text.x += sectionWidth - text.width - ELPADDING;
 
         return text;
-    }
-
-    private getDisplayText() {
-        const ret: string[] = [];
-
-        const dailyEvent = this.global.currentDay.dailyEvent;
-
-        if (dailyEvent?.morningMessage) {
-            ret.push(dailyEvent.morningMessage + "\n");
-        }
-
-        const currentResources = this.global.resources;
-        const startingResources = currentResources;
-        const stat = this.global.baseStatus;
-
-        ret.push(
-            ...Object.entries(startingResources).map(
-                (kv: [keyof Resources, number]) => {
-                    const key = kv[0];
-                    const message = `${key}: ${String(kv[1])} (+${
-                        stat.dailyReplenish[key]
-                    }) / ${stat.maxStorage[key]}`;
-
-                    return message;
-                }
-            )
-        );
-
-        return ret;
     }
 }
