@@ -14,6 +14,7 @@ export declare class TextBox extends Phaser.GameObjects.Container {
         padding: number;
         buttonAlign?: "right" | "left" | "center";
         buttonText?: string;
+        pageStyles?: Phaser.Types.GameObjects.Text.TextStyle;
     });
     setPages(pages: PagedText): this;
     private goToPage;
