@@ -27,7 +27,7 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    //sceneKey: OverworldScene.KEY,
+    sceneKey: OverworldScene.KEY,
     data: {
         biome: "wetland",
     },

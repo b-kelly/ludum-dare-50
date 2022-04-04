@@ -51,7 +51,9 @@ export class StartMenuScene extends CustomScene {
     }
 
     create() {
-        this.DEBUG_ACTIONS();
+        if (this.DEBUG_ACTIONS()) {
+            return true;
+        }
 
         this.sound.play(SfxAssets.bgIntroOverworld.key);
 
@@ -83,7 +85,7 @@ export class StartMenuScene extends CustomScene {
 
     private DEBUG_ACTIONS() {
         if (!DEBUG_isDebugBuild()) {
-            return;
+            return false;
         }
 
         if (debugConfig.skipTutorial) {
@@ -93,7 +95,7 @@ export class StartMenuScene extends CustomScene {
         if (debugConfig.sceneKey) {
             console.warn("LOADING DEBUG CONFIG OVERRIDES");
             this.fadeToScene(debugConfig.sceneKey, debugConfig.data);
-            return;
+            return true;
         }
     }
 }

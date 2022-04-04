@@ -49,6 +49,7 @@ export class OverworldScene extends CustomScene {
 
         this.load.audio(SfxAssets.engine, "assets/sfx/engine.wav");
         this.load.audio(SfxAssets.mapEvent, "assets/sfx/map-event.mp3");
+        this.load.audio(SfxAssets.mapScan, "assets/sfx/map-scan.mp3");
     }
 
     create() {
@@ -311,9 +312,11 @@ export class OverworldScene extends CustomScene {
                 // fire off events
                 if (playerCell.type === "event") {
                     const event = this.eventManager.spawnMapEvent();
+                    this.sound.play(SfxAssets.mapEvent);
                     this.showEventNotice(event);
                 } else if (playerCell.type === "colony") {
                     const event = this.eventManager.spawnColonyEvent();
+                    this.sound.play(SfxAssets.mapEvent);
                     this.showEventNotice(event);
                 }
 
@@ -358,6 +361,7 @@ export class OverworldScene extends CustomScene {
     }
 
     private scanSurroundings() {
+        this.sound.play(SfxAssets.mapScan);
         // uncover fog of war two squares out
         const adjacentCells =
             this.global.worldMap.getPlayerAdjacentCellCoords();

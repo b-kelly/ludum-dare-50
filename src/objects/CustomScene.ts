@@ -25,11 +25,11 @@ export class CustomScene extends Phaser.Scene {
         this.events.on("transitionout", () => {
             // TODO DOESN'T WORK YET
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            if (!data?.keepAudioPlaying) {
-                // TODO fade bg tracks?
-                this.sound.stopAll();
-            }
+            //// @ts-expect-error
+            //if (!data?.keepAudioPlaying) {
+            // TODO fade bg tracks?
+            this.sound.stopAll();
+            //}
             this.cameras.main.fadeOut(500, 0, 0, 0);
         });
         this.events.on("transitionstart", () => {

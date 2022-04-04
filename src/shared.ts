@@ -50,6 +50,7 @@ export const SfxAssets = {
     engine: "engine",
     grabResource: "grabResource",
     mapEvent: "mapEvent",
+    mapScan: "mapScan",
 } as const;
 
 // tiles are 64x64 px
