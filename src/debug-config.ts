@@ -1,6 +1,7 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
 import { CellBiome } from "./objects/WorldMap/shared";
+import { DayReviewScene } from "./scenes/DayReviewScene";
 import { DayStartScene } from "./scenes/DayStartScene";
 import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
 import { LogScene } from "./scenes/LogScene";
@@ -27,7 +28,7 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: DayStartScene.KEY,
+    sceneKey: DayReviewScene.KEY,
     data: {
         biome: "desert",
     },
