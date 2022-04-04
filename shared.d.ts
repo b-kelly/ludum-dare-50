@@ -11,7 +11,6 @@ export declare const GeneralAssets: {
     readonly areaEnemies: "areaEnemies";
     readonly resources: "resources";
     readonly characterPortraits: "characterPortraits";
-    readonly characterInfo: "characterInfo";
 };
 export declare const UiAssets: {
     readonly buttonLg: "buttonLg";
