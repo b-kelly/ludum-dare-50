@@ -11,24 +11,38 @@ export declare const GeneralAssets: {
     readonly resources: "resources";
 };
 export declare const UiAssets: {
-    buttonLg: string;
-    buttonSm: string;
-    topbar: string;
-    arrowLeft: string;
-    arrowRight: string;
-    tutorialPane: string;
-    briefingPane: string;
+    readonly buttonLg: "buttonLg";
+    readonly buttonSm: "buttonSm";
+    readonly topbar: "topbar";
+    readonly arrowLeft: "arrowLeft";
+    readonly arrowRight: "arrowRight";
+    readonly tutorialPane: "tutorialPane";
+    readonly briefingPane: "briefingPane";
 };
 export declare const SfxAssets: {
-    bgDesert: string;
-    bgForest: string;
-    bgIntoOverworld: string;
-    bgWetland: string;
-    click: string;
-    enemyHit: string;
-    engine: string;
-    grabResource: string;
-    mapEvent: string;
+    readonly bgDesert: "bgDesert";
+    readonly bgForest: "bgForest";
+    readonly bgIntroOverworld: {
+        readonly key: "bgIntroOverworld";
+        readonly marker: {
+            readonly name: "overworldOnly";
+            readonly start: 36;
+            readonly config: {
+                readonly loop: true;
+            };
+        };
+    };
+    readonly bgWetland: "bgWetland";
+    readonly click: {
+        readonly key: "click";
+        readonly config: {
+            readonly volume: 1;
+        };
+    };
+    readonly enemyHit: "enemyHit";
+    readonly engine: "engine";
+    readonly grabResource: "grabResource";
+    readonly mapEvent: "mapEvent";
 };
 export declare const TILE_WIDTH = 64;
 export declare function DEBUG_isDebugBuild(): boolean;
