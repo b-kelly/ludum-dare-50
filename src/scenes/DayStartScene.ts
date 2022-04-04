@@ -30,6 +30,10 @@ export class DayStartScene extends CustomScene {
             UiAssets.portraitPane,
             "assets/ui/portrait-text.png"
         );
+        this.load.image(
+            GeneralAssets.characterPortraits,
+            "assets/sprites/portrait-spritesheet.png"
+        )
     }
 
     create() {
@@ -45,10 +49,16 @@ export class DayStartScene extends CustomScene {
         );
 
         const portrait = this.add.image(
-            pane.width,
-            pane.height,
+            pane.x - pane.width / 2 + PADDING + ELPADDING,
+            pane.y - pane.width / 2 + (PADDING * 2) - ELPADDING / 2,
             UiAssets.portraitPane
-        );
+        ).setOrigin(0, 0);
+
+        // const character = this.add.image(
+        //     portrait.x,
+        //     portrait.y,
+        //     GeneralAssets.characterPortraits
+        // )
 
         const paneX = PADDING + pane.x - pane.width / 2;
         const paneY = PADDING + pane.y - pane.height / 2;
@@ -68,15 +78,17 @@ export class DayStartScene extends CustomScene {
 
         const dailyEvent = this.global.currentDay.dailyEvent;
 
+        const character = dailyEvent.character;
+
         const dialogue = this.add.text(
-            paneX,
+            paneX + portrait.width + PADDING - ELPADDING,
             title.y + title.height + ELPADDING,
             dailyEvent?.morningMessage,
             {
                 ...baseTextOptions,
                 fontSize: "14pt",
                 wordWrap: {
-                    width: paneWidth,
+                    width: paneWidth - (portrait.width + ELPADDING + 4),
                 },
             }
         );
