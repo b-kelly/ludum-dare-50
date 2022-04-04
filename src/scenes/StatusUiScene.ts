@@ -107,9 +107,8 @@ class Indicator extends Phaser.GameObjects.Container {
                 this.customScene.global.currentDay.haul[this.resourceType];
             const stashText =
                 this.customScene.global.resources[this.resourceType];
-            this.resourceText.text = `${resourceName}\n${stashText} (${
-                haulCount > 0 ? "+" : ""
-            }${haulCount})`;
+            this.resourceText.text = `${resourceName}\n${stashText} (${haulCount > 0 ? "+" : ""
+                }${haulCount})`;
         }
     }
 }

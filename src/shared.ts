@@ -25,6 +25,8 @@ export const UiAssets = {
     arrowRight: "arrowRight",
     tutorialPane: "tutorialPane",
     briefingPane: "briefingPane",
+    kevIcon: "kev",
+    storageIcon: "storage"
 } as const;
 
 export const SfxAssets = {

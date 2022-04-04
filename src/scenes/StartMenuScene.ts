@@ -36,6 +36,8 @@ export class StartMenuScene extends CustomScene {
         );
         this.load.image(UiAssets.topbar, "assets/ui/top-bar.png");
         this.load.image(UiAssets.tutorialPane, "assets/ui/tutorial-pane.png");
+        this.load.image(UiAssets.kevIcon, "assets/ui/kev.png");
+        this.load.image(UiAssets.storageIcon, "assets/ui/storage.png");
 
         // audio/sfx
 
