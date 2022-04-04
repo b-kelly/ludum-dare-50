@@ -53,7 +53,7 @@ export class OverworldScene extends CustomScene {
 
         this.exploreButton = new Button(this, {
             x: this.bounds.width - padding,
-            y: STATUS_UI_HEIGHT,
+            y: STATUS_UI_HEIGHT + padding,
             text: "Explore",
             onClick: () => this.exploreCell(),
             disabled: this.canExploreCell(playerCell),

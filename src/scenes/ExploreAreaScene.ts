@@ -93,12 +93,15 @@ export class ExploreAreaScene extends CustomScene {
 
         this.physics.add.collider(this.player, layer);
 
+        const padding = 8;
         new Button(this, {
-            x: 0,
-            y: STATUS_UI_HEIGHT,
+            x: this.bounds.width - padding,
+            y: STATUS_UI_HEIGHT + padding,
             text: "Leave",
             onClick: () => this.leaveArea(),
-        }).setScrollFactor(0, 0);
+        })
+            .setScrollFactor(0, 0)
+            .setOrigin(1, 0);
 
         this.spawnResources();
 
