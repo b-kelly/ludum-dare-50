@@ -17,25 +17,25 @@ interface AreaCell {
 const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
     default: null,
     desert: {
-        fuel: 0.01,
-        food: 0.01,
-        water: 0.01,
-        filters: 0.01,
-        parts: 0.01,
+        fuel: 0.002,
+        food: 0.002,
+        water: 0.001,
+        filters: 0.001,
+        parts: 0.005,
     },
     forest: {
-        fuel: 0.01,
-        food: 0.01,
-        water: 0.01,
-        filters: 0.01,
-        parts: 0.01,
+        fuel: 0.002,
+        food: 0.005,
+        water: 0.001,
+        filters: 0.002,
+        parts: 0.001,
     },
     wetland: {
-        fuel: 0.01,
-        food: 0.01,
-        water: 0.01,
-        filters: 0.01,
-        parts: 0.01,
+        fuel: 0.001,
+        food: 0.002,
+        water: 0.05,
+        filters: 0.002,
+        parts: 0.001,
     },
 } as const;
 
@@ -204,8 +204,8 @@ export class AreaMap {
 
     /** Mark all the cavern walls in place, placing resources on them if able */
     private markWallsAndPlaceResources(map: AreaCell[][]) {
-        const spawnRates = resourceSpawnRate[this._cellType] || {};
-        const entries = Object.entries(spawnRates);
+        const spawnRates = resourceSpawnRate[this._cellType];
+        const entries = spawnRates ? Object.entries(spawnRates) : [];
 
         // run through each cell mark it as a wall if it has any open neighbors
         for (let y = 0; y < this._size.height; y++) {

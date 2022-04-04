@@ -27,14 +27,7 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: OverworldScene.KEY,
-    data: {
-        text: [
-            ["page 1 line 1", ...debugGenerateText()],
-            ["page 2 line 1", ...debugGenerateText()],
-            ["page 3 line 1", ...debugGenerateText()],
-        ],
-        onComplete: () => console.log("complete"),
-    },
+    sceneKey: ExploreAreaScene.KEY,
+    data: {},
     skipTutorial: true,
 };

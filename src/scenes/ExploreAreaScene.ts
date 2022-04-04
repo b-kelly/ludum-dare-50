@@ -3,7 +3,7 @@ import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
 import { AreaResource } from "../objects/AreaMap/AreaResource";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
-import { Cell } from "../objects/WorldMap/shared";
+import { Cell, CellBiome } from "../objects/WorldMap/shared";
 import { GeneralAssets, TILE_WIDTH } from "../shared";
 import { Button } from "../UI/Button";
 import { OverworldScene } from "./OverworldScene";
@@ -13,7 +13,7 @@ export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
     private map: AreaMap;
     private tileMap: Phaser.Tilemaps.Tilemap;
-    private currentCell: Cell & { x: number; y: number };
+    private biome: CellBiome;
 
     private player: AreaPlayer;
 
@@ -21,9 +21,9 @@ export class ExploreAreaScene extends CustomScene {
         super({ key: ExploreAreaScene.KEY });
     }
 
-    init(data: ExploreAreaScene["currentCell"]) {
+    init(data: Cell) {
         super.init(null);
-        this.currentCell = data;
+        this.biome = data?.biome || "forest";
     }
 
     preload() {
@@ -56,10 +56,10 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     create() {
-        const aSSheet = new AreaSpriteSheet(this.currentCell.biome);
+        const aSSheet = new AreaSpriteSheet(this.biome);
 
         this.createAnimations();
-        this.map = new AreaMap(50, 50, this.currentCell.biome);
+        this.map = new AreaMap(50, 50, this.biome);
         this.tileMap = new Phaser.Tilemaps.Tilemap(
             this,
             Phaser.Tilemaps.Parsers.Parse(
@@ -123,7 +123,7 @@ export class ExploreAreaScene extends CustomScene {
                 coord.x,
                 coord.y,
                 r.resource,
-                this.currentCell.biome
+                this.biome
             );
 
             this.physics.add.collider(res, this.player, (r: AreaResource) => {
