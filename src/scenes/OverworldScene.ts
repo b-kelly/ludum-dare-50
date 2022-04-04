@@ -4,7 +4,7 @@ import { Cell } from "../objects/WorldMap/shared";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
-import { GeneralAssets } from "../shared";
+import { GeneralAssets, SfxAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { TextBox } from "../UI/TextBox";
 import { DayReviewScene } from "./DayReviewScene";
@@ -41,9 +41,22 @@ export class OverworldScene extends CustomScene {
                 frameHeight: 96,
             }
         );
+
+        this.load.audio(
+            SfxAssets.bgIntroOverworld.key,
+            "assets/sfx/bg-intro-overworld.mp3"
+        );
+
+        this.load.audio(SfxAssets.engine, "assets/sfx/engine.wav");
+        this.load.audio(SfxAssets.mapEvent, "assets/sfx/map-event.mp3");
     }
 
     create() {
+        this.sound.play(
+            SfxAssets.bgIntroOverworld.key,
+            SfxAssets.bgIntroOverworld.marker
+        );
+
         this.createAnimations();
         this.drawHexMap();
         this.movePlayerAndUpdateCells(null, null);
@@ -228,6 +241,8 @@ export class OverworldScene extends CustomScene {
     }
 
     private selectSquare(x: number, y: number) {
+        this.sound.play(SfxAssets.click.key, SfxAssets.click.config);
+
         if (this.movingTowardsCoords) {
             return false;
         }
@@ -284,6 +299,10 @@ export class OverworldScene extends CustomScene {
                 newPY
             ).playerHasVisited;
 
+            this.sound.stopByKey(SfxAssets.engine);
+            this.sound.play(SfxAssets.engine, {
+                volume: 0.2,
+            });
             this.updatePlayerAdjacentCells(true);
             this.movePlayerToCoord(newPX, newPY);
             const playerCell = this.global.worldMap.getPlayerCell();

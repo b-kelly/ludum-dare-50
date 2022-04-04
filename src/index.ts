@@ -50,6 +50,9 @@ export const game = new Phaser.Game({
     ],
 });
 
+// set all audio to 40%
+game.sound.volume = 0.4;
+
 // fire up an alert when an exception happens (so at the very least users aren't scratching their heads)
 window.onerror = function (message: string) {
     alert(

@@ -1,7 +1,12 @@
 import { debugConfig } from "../debug-config";
 import { CustomScene } from "../objects/CustomScene";
 import { WebFontFile } from "../objects/WebFontFile";
-import { DEBUG_isDebugBuild, GeneralAssets, UiAssets } from "../shared";
+import {
+    DEBUG_isDebugBuild,
+    GeneralAssets,
+    SfxAssets,
+    UiAssets,
+} from "../shared";
 import { Button } from "../UI/Button";
 import { DayStartScene } from "./DayStartScene";
 import { LogScene } from "./LogScene";
@@ -31,6 +36,11 @@ export class StartMenuScene extends CustomScene {
         );
         this.load.image(UiAssets.topbar, "assets/ui/top-bar.png");
         this.load.image(UiAssets.tutorialPane, "assets/ui/tutorial-pane.png");
+
+        // audio/sfx
+        // TODO BG MUSIC
+        this.load.audio(SfxAssets.click.key, "assets/sfx/click.mp3");
+
         // json data
         this.load.json(GeneralAssets.narration, "assets/narration.json");
         this.load.json(GeneralAssets.events, "assets/events.json");

@@ -23,6 +23,8 @@ export class CustomScene extends Phaser.Scene {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(_: unknown) {
         this.events.on("transitionout", () => {
+            // TODO fade bg tracks?
+            this.sound.stopAll();
             this.cameras.main.fadeOut(500, 0, 0, 0);
         });
         this.events.on("transitionstart", () => {

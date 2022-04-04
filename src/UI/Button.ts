@@ -1,4 +1,4 @@
-import { baseTextOptions, UiAssets } from "../shared";
+import { baseTextOptions, SfxAssets, UiAssets } from "../shared";
 
 export class Button extends Phaser.GameObjects.Container {
     private isDisabled: boolean;
@@ -47,6 +47,12 @@ export class Button extends Phaser.GameObjects.Container {
             Phaser.Geom.Rectangle.Contains
         )
             .on("pointerup", options.onClick)
+            .on("pointerdown", () =>
+                this.scene.sound.play(
+                    SfxAssets.click.key,
+                    SfxAssets.click.config
+                )
+            )
             .on("pointerover", () => this.hover(true))
             .on("pointerout", () => this.hover(false));
 

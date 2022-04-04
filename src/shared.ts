@@ -24,19 +24,33 @@ export const UiAssets = {
     arrowRight: "arrowRight",
     tutorialPane: "tutorialPane",
     briefingPane: "briefingPane",
-};
+} as const;
 
 export const SfxAssets = {
     bgDesert: "bgDesert",
     bgForest: "bgForest",
-    bgIntoOverworld: "bgIntoOverworld",
+    bgIntroOverworld: {
+        key: "bgIntroOverworld",
+        marker: {
+            name: "overworldOnly",
+            start: 36,
+            config: {
+                loop: true,
+            },
+        },
+    },
     bgWetland: "bgWetland",
-    click: "click",
+    click: {
+        key: "click",
+        config: {
+            volume: 1,
+        },
+    },
     enemyHit: "enemyHit",
     engine: "engine",
     grabResource: "grabResource",
     mapEvent: "mapEvent",
-};
+} as const;
 
 // tiles are 64x64 px
 export const TILE_WIDTH = 64;

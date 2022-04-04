@@ -63,7 +63,7 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     create() {
-        let bgmKey = SfxAssets.bgForest;
+        let bgmKey: string = SfxAssets.bgForest;
         if (this.biome === "desert") {
             bgmKey = SfxAssets.bgDesert;
         } else if (this.biome === "wetland") {
