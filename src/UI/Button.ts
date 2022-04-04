@@ -1,9 +1,8 @@
-import { baseTextOptions } from "../shared";
+import { baseTextOptions, UiAssets } from "../shared";
 
-export type ButtonType = "button" | "primary"; //TODO
-
-export class Button extends Phaser.GameObjects.Text {
+export class Button extends Phaser.GameObjects.Container {
     private isDisabled: boolean;
+    private buttonImg: Phaser.GameObjects.Sprite;
 
     constructor(
         scene: Phaser.Scene,
@@ -12,26 +11,57 @@ export class Button extends Phaser.GameObjects.Text {
             y: number;
             text: string;
             onClick: () => void;
-            width?: number;
-            height?: number;
-            type?: ButtonType;
+            size?: "large" | "small";
             disabled?: boolean;
         }
     ) {
-        super(scene, options.x, options.y, options.text, {
-            ...baseTextOptions,
-            color: "#ffffff", //TODO
-            backgroundColor: "#0000ff", // TODO
-        });
+        super(scene, options.x, options.y);
 
-        this.isDisabled = options.disabled || false;
+        scene.add.existing(this);
 
-        // TODO abstract out colors, base them on the button type
-        this.setInteractive()
+        // large is the default size
+        const asset =
+            options.size === "small" ? UiAssets.buttonSm : UiAssets.buttonLg;
+        this.buttonImg = this.scene.make
+            .sprite({
+                key: asset,
+                x: 0,
+                y: 0,
+            })
+            .setOrigin(0, 0);
+
+        this.setInteractive(
+            new Phaser.Geom.Rectangle(
+                0,
+                0,
+                this.buttonImg.width,
+                this.buttonImg.height
+            ),
+            // eslint-disable-next-line @typescript-eslint/unbound-method
+            Phaser.Geom.Rectangle.Contains
+        )
             .on("pointerup", options.onClick)
             .on("pointerover", () => this.hover(true))
             .on("pointerout", () => this.hover(false));
-        scene.add.existing(this);
+
+        this.setDisabled(options.disabled);
+
+        // take the width of the shadow into consideration when visually centering
+        const shadowWidth = 4;
+        const text = this.scene.make
+            .text({
+                x: this.buttonImg.width / 2 - shadowWidth,
+                y: this.buttonImg.height / 2 - shadowWidth,
+                text: options.text,
+                style: {
+                    ...baseTextOptions,
+                    align: "center",
+                },
+            })
+            .setOrigin(0.5);
+
+        this.add(this.buttonImg);
+        this.add(text);
     }
 
     setOnClick(callback: () => void) {
@@ -41,6 +71,7 @@ export class Button extends Phaser.GameObjects.Text {
     setDisabled(isDisabled: boolean) {
         this.isDisabled = isDisabled;
 
+        // TODO potentially change sprite frame
         if (this.isDisabled) {
             this.setAlpha(0.5);
         } else {
@@ -54,9 +85,9 @@ export class Button extends Phaser.GameObjects.Text {
         }
 
         if (entered) {
-            this.setStyle({ backgroundColor: "#00ff00", color: "#000000" });
+            // TODO change sprite frame
         } else {
-            this.setStyle({ backgroundColor: "#0000ff", color: "#ffffff" });
+            // TODO change sprite frame
         }
     }
 }

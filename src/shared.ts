@@ -16,6 +16,16 @@ export const GeneralAssets = {
     resources: "resources",
 } as const;
 
+export const UiAssets = {
+    buttonLg: "buttonLg",
+    buttonSm: "buttonSm",
+    topbar: "topbar",
+    arrowLeft: "arrowLeft",
+    arrowRight: "arrowRight",
+    tutorialPane: "tutorialPane",
+    briefingPane: "briefingPane",
+};
+
 // tiles are 64x64 px
 export const TILE_WIDTH = 64;
 

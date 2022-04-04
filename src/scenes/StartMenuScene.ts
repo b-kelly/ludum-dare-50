@@ -1,6 +1,6 @@
 import { debugConfig } from "../debug-config";
 import { WebFontFile } from "../objects/WebFontFile";
-import { DEBUG_isDebugBuild, GeneralAssets } from "../shared";
+import { DEBUG_isDebugBuild, GeneralAssets, UiAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayStartScene } from "./DayStartScene";
 import { LogScene } from "./LogScene";
@@ -17,9 +17,22 @@ export class StartMenuScene extends Phaser.Scene {
             GeneralAssets.startBackground,
             "assets/bg/title-screen-bg.png"
         );
+        // load "Exo 2" from Google Fonts using WebFontLoader
+        this.load.addFile(new WebFontFile(this.load, "Exo+2"));
+        // UI assets
+        this.load.image(UiAssets.arrowLeft, "assets/ui/arrow-left.png");
+        this.load.image(UiAssets.arrowRight, "assets/ui/arrow-right.png");
+        this.load.image(UiAssets.buttonLg, "assets/ui/button-lg.png");
+        this.load.image(UiAssets.buttonSm, "assets/ui/button-sm.png");
+        this.load.image(
+            UiAssets.briefingPane,
+            "assets/ui/daily-briefing-pane.png"
+        );
+        this.load.image(UiAssets.topbar, "assets/ui/top-bar.png");
+        this.load.image(UiAssets.tutorialPane, "assets/ui/tutorial-pane.png");
+        // json data
         this.load.json(GeneralAssets.narration, "assets/narration.json");
         this.load.json(GeneralAssets.events, "assets/events.json");
-        this.load.addFile(new WebFontFile(this.load, "Exo+2"));
     }
 
     create() {

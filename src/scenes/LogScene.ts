@@ -53,7 +53,6 @@ export class LogScene extends CustomScene {
                 this.scrollDown();
             },
         });
-        this.interactButton.setOrigin(1, 1);
         this.showNext();
     }
 
@@ -64,11 +63,11 @@ export class LogScene extends CustomScene {
     }
 
     private showNext() {
-        if (this.text.y * -1 >= this.text.height - this.bounds.height) {
-            this.interactButton.text = "Next";
-            this.interactButton.setOnClick(() => {
-                this.onComplete();
-            });
-        }
+        // if (this.text.y * -1 >= this.text.height - this.bounds.height) {
+        //     this.interactButton.text = "Next";
+        //     this.interactButton.setOnClick(() => {
+        //         this.onComplete();
+        //     });
+        // }
     }
 }

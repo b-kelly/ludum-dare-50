@@ -28,17 +28,18 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] hover tooltip support
 -   [ ] select A vs B in popup
 -   [ ] paginate intro pages
--   [ ] update font
+-   [x] update font
 -   [ ] new topbar - no images, text only
 -   [ ] include fuel and health in topbar
+-   [ ] button hover/active/disabled states
 
 ### Events
 
 -   [x] load events.json
 -   [ ] biome specific event filters
 -   [ ] colony progress based event filters
--   [ ] specific event for specific day
--   [ ] split daily events morning/night message
+-   [x] specific event for specific day
+-   [x] split daily events morning/night message
 -   [ ] resource condition event filters
 -   [ ] daily event pass/fail support
 
@@ -52,7 +53,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] area map wall/corner rotation
 -   [ ] overworld scene loads slowly
 -   [ ] add toast and sound when you pick up an item
--   [ ] don't spawn resources on walls
+-   [x] don't spawn resources on walls
 -   [ ] create and implement unique home base tile
 -   [ ] fix line artifacts in exploration areas
 -   [ ] rotate tiles in exploration areas properly
