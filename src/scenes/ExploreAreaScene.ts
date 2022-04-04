@@ -4,7 +4,7 @@ import { AreaResource } from "../objects/AreaMap/AreaResource";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
 import { Cell, CellBiome } from "../objects/WorldMap/shared";
-import { GeneralAssets, TILE_WIDTH } from "../shared";
+import { GeneralAssets, SfxAssets, TILE_WIDTH } from "../shared";
 import { Button } from "../UI/Button";
 import { OverworldScene } from "./OverworldScene";
 import { StatusUiScene, STATUS_UI_HEIGHT } from "./StatusUiScene";
@@ -53,9 +53,26 @@ export class ExploreAreaScene extends CustomScene {
                 frameHeight: TILE_WIDTH,
             }
         );
+
+        this.load.audio(SfxAssets.bgDesert, "assets/sfx/bg-desert.mp3");
+        this.load.audio(SfxAssets.bgForest, "assets/sfx/bg-forest.mp3");
+        this.load.audio(SfxAssets.bgWetland, "assets/sfx/bg-wetland.mp3");
+        this.load.audio(SfxAssets.grabResource, "assets/sfx/grab-resource.mp3");
+        // TODO
+        //this.load.audio(SfxAssets.enemyHit, "assets/sfx/enemy-hit.mp3");
     }
 
     create() {
+        let bgmKey = SfxAssets.bgForest;
+        if (this.biome === "desert") {
+            bgmKey = SfxAssets.bgDesert;
+        } else if (this.biome === "wetland") {
+            bgmKey = SfxAssets.bgWetland;
+        }
+        this.sound.play(bgmKey, {
+            loop: true,
+        });
+
         const aSSheet = new AreaSpriteSheet(this.biome);
 
         this.createAnimations();
@@ -130,6 +147,7 @@ export class ExploreAreaScene extends CustomScene {
             );
 
             this.physics.add.collider(res, this.player, (r: AreaResource) => {
+                this.sound.play(SfxAssets.grabResource);
                 this.global.adjustHaul({
                     [r.resource]: 1,
                 });

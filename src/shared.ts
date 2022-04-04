@@ -26,6 +26,18 @@ export const UiAssets = {
     briefingPane: "briefingPane",
 };
 
+export const SfxAssets = {
+    bgDesert: "bgDesert",
+    bgForest: "bgForest",
+    bgIntoOverworld: "bgIntoOverworld",
+    bgWetland: "bgWetland",
+    click: "click",
+    enemyHit: "enemyHit",
+    engine: "engine",
+    grabResource: "grabResource",
+    mapEvent: "mapEvent",
+};
+
 // tiles are 64x64 px
 export const TILE_WIDTH = 64;
 

@@ -28,6 +28,8 @@ function debugGenerateText() {
 
 export const debugConfig: DebugConfig = {
     sceneKey: ExploreAreaScene.KEY,
-    data: {},
+    data: {
+        biome: "wetland",
+    },
     skipTutorial: true,
 };
