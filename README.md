@@ -51,10 +51,10 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 ### Other
 
 -   [x] (HIGH) hit targets are wrong for buttons
--   [ ] (HIGH) when you hit explore on the central tile it ends the day
+-   [x] (HIGH) when you hit explore on the central tile it ends the day
 -   [x] (HIGH) Music doesn’t continue once you click “Start” on main page
 -   [ ] (HIGH) implement portraits and textboxes for crew requests
--   [ ] (HIGH) update overlay’s layout
+-   [ ] (HIGH) update layouts as per sketches
 -   [ ] (HIGH) tutorials should have new UI elements and should be centered on the page so they have to read before they can interact. (i know, i changed my mind on this)
 -   [ ] (HIGH) Implement all gameover states
 -   [x] (HIGH) area music sometimes doesn't start
@@ -64,7 +64,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] (MID) implement unique home base tile
 -   [ ] (MID) fade in base-bg, and then wait a second before fading in the text overlay. otherwise they will never see the base bg.
 -   [ ] (MID) top bar should have new UI applied
--   [ ] (MID) “explore” shouldn’t show up on first tile
+-   [x] (MID) “explore” shouldn’t show up on first tile
 -   [ ] (MID) “end day” should be at bottom right
 -   [ ] (MID) sometimes biome bg doesn’t match tile biome
 -   [ ] (MID) music doesn’t restart when we go back to the overworld

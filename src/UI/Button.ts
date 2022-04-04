@@ -49,6 +49,10 @@ export class Button extends Phaser.GameObjects.Container {
             Phaser.Geom.Rectangle.Contains
         )
             .on("pointerdown", () => {
+                if (this.isDisabled) {
+                    return;
+                }
+
                 this.scene.sound.play(
                     SfxAssets.click.key,
                     SfxAssets.click.config
@@ -103,6 +107,9 @@ export class Button extends Phaser.GameObjects.Container {
 
     setOnClick(callback: () => void) {
         this.off("pointerup").on("pointerup", () => {
+            if (this.isDisabled) {
+                return;
+            }
             this.buttonImg.setTexture(
                 this.buttonSize === "large"
                     ? UiAssets.buttonLg

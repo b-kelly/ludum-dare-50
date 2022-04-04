@@ -71,7 +71,7 @@ export class OverworldScene extends CustomScene {
             y: STATUS_UI_HEIGHT + padding,
             text: "Explore",
             onClick: () => this.exploreCell(),
-            disabled: this.canExploreCell(playerCell),
+            disabled: !this.canExploreCell(playerCell),
         })
             .setScrollFactor(0, 0, true)
             .setOrigin(1, 0);
