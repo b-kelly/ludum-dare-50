@@ -26,7 +26,7 @@ const resourceSpawnRate: Record<
         panels: 0.002,
         parts: 0.005,
         water: 0.0009,
-        enemy: 0.05,
+        enemy: 0.03,
     },
     forest: {
         filters: 0.002,
@@ -35,7 +35,7 @@ const resourceSpawnRate: Record<
         panels: 0.002,
         parts: 0.001,
         water: 0.001,
-        enemy: 0.05,
+        enemy: 0.03,
     },
     wetland: {
         filters: 0.002,
@@ -44,7 +44,7 @@ const resourceSpawnRate: Record<
         panels: 0.001,
         parts: 0.001,
         water: 0.009,
-        enemy: 0.05,
+        enemy: 0.03,
     },
 } as const;
 

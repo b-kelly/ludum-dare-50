@@ -73,7 +73,7 @@ export interface CampaignStats {
 
 /** Handy wrapper around our shared data */
 export class GlobalDataStore {
-    constructor(private scene: CustomScene) {}
+    constructor(private scene: CustomScene) { }
 
     get resources(): Readonly<Resources> {
         return this.getOrCreate<Resources>(
