@@ -28,7 +28,7 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: DayStartScene.KEY,
+    sceneKey: DayReviewScene.KEY,
     data: {
         biome: "desert",
     },

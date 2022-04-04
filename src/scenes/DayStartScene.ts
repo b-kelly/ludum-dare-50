@@ -169,9 +169,9 @@ export class DayStartScene extends CustomScene {
             }
         );
 
-        let sectionStartHeight = dialogue.y + dialogue.height + ELPADDING;
+        let sectionStartHeight = dialogue.y + dialogue.height;
         if ((portrait.y + portrait.height + ELPADDING) > sectionStartHeight) {
-            sectionStartHeight = portrait.y + portrait.height + ELPADDING;
+            sectionStartHeight = portrait.y + portrait.height;
         }
         const sectionTitle = this.add
             .text(
@@ -185,6 +185,14 @@ export class DayStartScene extends CustomScene {
             .setOrigin(0.5, 0);
 
         let prevHeight = sectionTitle.height + ELPADDING;
+
+        prevHeight += this.generateRow(
+            paneX,
+            sectionTitle.y + prevHeight,
+            paneWidth / 3,
+            null).height + ELPADDING;
+
+
         Object.keys(this.global.resources).forEach((k: keyof Resources) => {
             prevHeight +=
                 this.generateRow(
@@ -235,7 +243,7 @@ export class DayStartScene extends CustomScene {
             )
             .setOrigin(0, 0);
 
-        let storageCountText = "Storage";
+        let storageCountText = "In Storage";
         if (resource) {
             storageCountText = String(this.global.resources[resource]);
         }

@@ -32,6 +32,18 @@ export class DayReviewScene extends CustomScene {
             GeneralAssets.baseBackgroundNight,
             "assets/bg/base-bg-night.png"
         );
+        this.load.image(
+            UiAssets.portraitPane,
+            "assets/ui/portrait-text.png"
+        );
+        this.load.spritesheet(
+            GeneralAssets.characterPortraits,
+            "assets/sprites/portrait-spritesheet.png",
+            {
+                frameWidth: 200,
+                frameHeight: 200
+            }
+        );
     }
 
     create() {
@@ -55,8 +67,7 @@ export class DayReviewScene extends CustomScene {
             .text(
                 paneX + paneWidth / 2,
                 paneY,
-                `13th Mission to Kepler 22B - Day ${
-                    30 + this.global.campaignStats.dayCount
+                `13th Mission to Kepler 22B - Day ${31 + this.global.campaignStats.dayCount
                 }`,
                 {
                     ...baseTextOptions,
@@ -94,15 +105,106 @@ export class DayReviewScene extends CustomScene {
                 ).height + ELPADDING;
         });
 
+        const portrait = this.add.image(
+            pane.x - pane.width / 2 + PADDING + ELPADDING,
+            pane.y / 2 + prevHeight - PADDING,
+            UiAssets.portraitPane
+        ).setOrigin(0, 0);
+
+        const character = this.global.currentDay.dailyEvent?.character || "kiran";
+        let characterNum = 0;
+        let characterText = "Commanding Officer Kiran Adam";
+
+        switch (character) {
+            case "kiran":
+                characterNum = 0;
+                characterText = "Commanding Officer Kiran Adam";
+                break;
+            case "adzo":
+                characterNum = 1;
+                characterText = "Agricultural Officer Adzo Loman";
+                break;
+            case "shreya":
+                characterNum = 2;
+                characterText = "Agricultural Specialist Shira Loman";
+                break;
+            case "kamal":
+                characterNum = 5;
+                characterText = "Philosophy Specialist Kamal Marion";
+                break;
+            case "lufti":
+                characterNum = 3;
+                characterText = "Kepler-22b Expert Lufti Andela";
+                break;
+            case "harish":
+                characterNum = 7;
+                characterText = "Medical Officer Harish Kuroda";
+                break;
+            case "annika":
+                characterNum = 6;
+                characterText = "Comms Specialist Annika Villalobos";
+                break;
+            case "gaston":
+                characterNum = 8;
+                characterText = "Logistics Specialist Gaston Fisher";
+                break;
+            case "martin":
+                characterNum = 9;
+                characterText = "Logistics Specialist Martin Fisher";
+                break;
+            case "britt":
+                characterNum = 10;
+                characterText = "Botanist Britt Saarinen";
+                break;
+            case "girish":
+                characterNum = 11;
+                characterText = "Botanist Girish Martell";
+                break;
+            case "sachin":
+                characterNum = 13;
+                characterText = "Medical Assistant Sachin Traves";
+                break;
+            case "chip":
+                characterNum = 12;
+                characterText = "Engineer Chip O'Dell";
+                break;
+            case "dora":
+                characterNum = 14;
+                characterText = "Engineer Dora Hintzen";
+                break;
+            case "marcel":
+                characterNum = 15;
+                characterText = "Artist Marcel Kralij";
+                break;
+            case "rupert":
+                characterNum = 4;
+                characterText = "Engineering Specialist Rupert Luan";
+                break;
+            default:
+                break;
+        }
+
+        const characterPortrait = this.add.image(
+            portrait.x + 114,
+            portrait.y + 116,
+            GeneralAssets.characterPortraits,
+            characterNum
+        );
+
+        let placeholderText = characterText + ": " + "”Good job today, EXL.”";
+        if (this.dailyEventOutcome?.message != null) {
+            placeholderText = characterText + ": ”" + this.dailyEventOutcome?.message + "”";
+        }
+
         const dialogue = this.add.text(
-            paneX,
+            paneX + portrait.width + ELPADDING + 8,
             sectionTitle.y + sectionTitle.height + prevHeight + ELPADDING,
-            this.dailyEventOutcome?.message,
+            placeholderText,
             {
                 ...baseTextOptions,
                 fontSize: "14pt",
                 wordWrap: {
-                    width: paneWidth,
+                    width: paneWidth - portrait.width + PADDING,
                 },
             }
         );
