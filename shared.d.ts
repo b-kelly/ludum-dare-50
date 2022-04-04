@@ -6,11 +6,13 @@ export declare const GeneralAssets: {
     readonly logBackground: "logBackground";
     readonly baseBackgroundDay: "baseBackgroundDay";
     readonly baseBackgroundNight: "baseBackgroundNight";
+    readonly colonyEventBackground: "colonyEventBackground";
     readonly worldPlayer: "worldPlayer";
     readonly areaPlayer: "areaPlayer";
     readonly areaEnemies: "areaEnemies";
     readonly resources: "resources";
     readonly characterPortraits: "characterPortraits";
+    readonly characterInfo: "characterInfo";
 };
 export declare const UiAssets: {
     readonly buttonLg: "buttonLg";

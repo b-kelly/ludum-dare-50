@@ -9,4 +9,6 @@ export declare class GameOverScene extends CustomScene {
     }): void;
     preload(): void;
     create(): void;
+    private showLog;
+    private getText;
 }

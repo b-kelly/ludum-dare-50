@@ -2,7 +2,7 @@ import { CustomScene } from "./CustomScene";
 import { GameEvent } from "./EventManager";
 import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
-export declare type GameOverType = "resource" | "tiles" | null;
+export declare type GameOverType = "resource" | "tiles" | "colonies" | null;
 export interface Resources {
     filters: number;
     food: number;
