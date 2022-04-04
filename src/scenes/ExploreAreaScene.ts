@@ -23,7 +23,6 @@ export class ExploreAreaScene extends CustomScene {
 
     init(data: ExploreAreaScene["currentCell"]) {
         this.currentCell = data;
-        console.log(data);
     }
 
     preload() {

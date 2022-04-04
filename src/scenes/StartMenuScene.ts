@@ -1,4 +1,5 @@
 import { debugConfig } from "../debug-config";
+import { WebFontFile } from "../objects/WebFontFile";
 import { DEBUG_isDebugBuild, GeneralAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayStartScene } from "./DayStartScene";
@@ -18,6 +19,7 @@ export class StartMenuScene extends Phaser.Scene {
         );
         this.load.json(GeneralAssets.narration, "assets/narration.json");
         this.load.json(GeneralAssets.events, "assets/events.json");
+        this.load.addFile(new WebFontFile(this.load, "Exo+2"));
     }
 
     create() {

@@ -12,6 +12,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/webfontloader": "^1.6.34",
         "@typescript-eslint/eslint-plugin": "^5.17.0",
         "@typescript-eslint/parser": "^5.17.0",
         "copy-webpack-plugin": "^10.2.4",
@@ -28,6 +29,7 @@
         "webpack-dev-server": "^4.7.4"
     },
     "dependencies": {
-        "phaser": "^3.55.2"
+        "phaser": "^3.55.2",
+        "webfontloader": "^1.6.28"
     }
 }

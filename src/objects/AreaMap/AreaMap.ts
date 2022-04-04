@@ -336,7 +336,12 @@ export class AreaMap {
                     }
                 }
 
-                ctx.fillRect(y * width, x * width, width, width);
+                ctx.fillRect(
+                    y * width + width / 4,
+                    x * width + width / 4,
+                    width / 2,
+                    width / 2
+                );
             }
         }
 
