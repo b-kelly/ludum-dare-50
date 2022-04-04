@@ -15,6 +15,7 @@ export interface BaseStatus {
     dailyReplenish: Resources;
     fuelCostVisitedTile: number;
     fuelCostUnvisitedTile: number;
+    fuelCostPerScan: number;
 }
 interface CurrentDay {
     colonyCount: number;
@@ -47,6 +48,7 @@ export declare class GlobalDataStore {
     /** @returns true if a gameover was triggered */
     endDay(): GameOverType;
     expendMoveResources(amtToExpend: number): boolean;
+    expendScanResources(): boolean;
     private updateResources;
     private getOrCreate;
 }

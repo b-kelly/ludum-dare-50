@@ -18,6 +18,7 @@ export declare class OverworldScene extends CustomScene {
     private movePlayerAndUpdateCells;
     private movePlayerToCoord;
     private updatePlayerAdjacentCells;
+    private scanSurroundings;
     private showEventNotice;
     private showNotice;
     private getCell;

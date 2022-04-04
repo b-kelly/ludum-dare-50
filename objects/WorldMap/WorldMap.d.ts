@@ -37,6 +37,7 @@ export declare class WorldMap {
     cellIsAdjacentToPlayer(x: number, y: number): boolean;
     setPlayerPosition(x: number, y: number): void;
     markCellExplored(x: number, y: number): void;
+    clearFogOfWar(x: number, y: number): void;
     getPlayerCellStats(): {
         visited: number;
         explored: number;
