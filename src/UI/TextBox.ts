@@ -53,13 +53,13 @@ export class TextBox extends Phaser.GameObjects.Container {
         // TODO HARDCODED BUTTON DIMENSIONS
         // proceed button
         this.proceedBtn = new Button(this.scene, {
-            x: img.width - 128,
-            y: img.height - 56,
+            x: img.width,
+            y: img.height,
             onClick: () => {
                 this.emit("proceedclick");
             },
             text: "Next",
-        }).setVisible(false);
+        }).setOrigin(1, 1);
 
         this.add(this.proceedBtn);
 

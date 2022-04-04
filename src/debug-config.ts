@@ -26,7 +26,7 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    //sceneKey: LogScene.KEY,
+    sceneKey: DayStartScene.KEY,
     data: {
         text: [
             ["page 1 line 1", ...debugGenerateText()],

@@ -27,7 +27,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] tutorial / popup support
 -   [ ] hover tooltip support
 -   [ ] select A vs B in popup
--   [ ] paginate intro pages
+-   [x] paginate intro pages
 -   [x] update font
 -   [x] new topbar - no images, text only
 -   [ ] include fuel and health in topbar
@@ -51,6 +51,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 -   [ ] event upgrade support
 -   [ ] area map wall/corner rotation
+-   [ ] connect caverns in area map
 -   [ ] overworld scene loads slowly
 -   [ ] add toast and sound when you pick up an item
 -   [x] don't spawn resources on walls

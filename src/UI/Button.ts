@@ -64,6 +64,14 @@ export class Button extends Phaser.GameObjects.Container {
         this.add(text);
     }
 
+    setOrigin(x: number, y: number) {
+        const newX = this.x - this.buttonImg.width * x;
+        const newY = this.y - this.buttonImg.height * y;
+        this.setPosition(newX, newY);
+
+        return this;
+    }
+
     setOnClick(callback: () => void) {
         this.off("pointerup").on("pointerup", callback);
     }
