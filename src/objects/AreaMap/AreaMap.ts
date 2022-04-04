@@ -20,13 +20,13 @@ const resourceSpawnRate: Record<
 > = {
     default: null,
     desert: {
-        filters: 0.001,
+        filters: 0.002,
         food: 0.002,
         fuel: 0,
         panels: 0.002,
         parts: 0.005,
-        water: 0.001,
-        enemy: 0.005,
+        water: 0.0009,
+        enemy: 0.05,
     },
     forest: {
         filters: 0.002,
@@ -35,7 +35,7 @@ const resourceSpawnRate: Record<
         panels: 0.002,
         parts: 0.001,
         water: 0.001,
-        enemy: 0.005,
+        enemy: 0.05,
     },
     wetland: {
         filters: 0.002,
@@ -43,8 +43,8 @@ const resourceSpawnRate: Record<
         fuel: 0,
         panels: 0.001,
         parts: 0.001,
-        water: 0.05,
-        enemy: 0.005,
+        water: 0.009,
+        enemy: 0.05,
     },
 } as const;
 
