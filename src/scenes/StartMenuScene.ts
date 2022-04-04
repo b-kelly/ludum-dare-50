@@ -65,7 +65,7 @@ export class StartMenuScene extends CustomScene {
             return true;
         }
 
-        this.sound.play(SfxAssets.bgIntroOverworld.key);
+        this.playBgm(SfxAssets.bgIntroOverworld.key);
 
         this.add.image(0, 0, GeneralAssets.startBackground).setOrigin(0, 0);
 

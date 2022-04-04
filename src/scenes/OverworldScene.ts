@@ -54,7 +54,7 @@ export class OverworldScene extends CustomScene {
     }
 
     create() {
-        this.sound.play(
+        this.playBgm(
             SfxAssets.bgIntroOverworld.key,
             SfxAssets.bgIntroOverworld.marker
         );

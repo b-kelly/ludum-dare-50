@@ -79,7 +79,7 @@ export class ExploreAreaScene extends CustomScene {
         } else if (this.biome === "wetland") {
             bgmKey = SfxAssets.bgWetland;
         }
-        this.sound.play(bgmKey, {
+        this.playBgm(bgmKey, {
             loop: true,
         });
 

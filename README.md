@@ -31,7 +31,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [x] update font
 -   [x] new topbar - no images, text only
 -   [x] include fuel and health in topbar
--   [ ] button hover/active/disabled states
+-   [x] button hover/active/disabled states
 
 ### Events
 
@@ -49,15 +49,15 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [x] overworld scan
 
 ### Other
--   [ ] (HIGH) hit targets are wrong for buttons
--   [ ] (HIGH) when you hit explore on the central tile it ends the day (we should remove explore from central tile
--   [ ] (HIGH) Music doesn’t continue once you click “Start” on main page
+
+-   [x] (HIGH) hit targets are wrong for buttons
+-   [ ] (HIGH) when you hit explore on the central tile it ends the day
+-   [x] (HIGH) Music doesn’t continue once you click “Start” on main page
 -   [ ] (HIGH) implement portraits and textboxes for crew requests
 -   [ ] (HIGH) update overlay’s layout
 -   [ ] (HIGH) tutorials should have new UI elements and should be centered on the page so they have to read before they can interact. (i know, i changed my mind on this)
 -   [ ] (HIGH) Implement all gameover states
--   [ ] (HIGH) desert music isn’t playing properly at all
-
+-   [x] (HIGH) area music sometimes doesn't start
 
 -   [ ] (MID) rotate tiles in exploration areas properly
 -   [ ] (MID) add statement pieces to exploration areas
@@ -70,7 +70,6 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] (MID) music doesn’t restart when we go back to the overworld
 -   [ ] (MID) nighttime needs to have the same transitioning that morning has
 
-
 -   [ ] (LOW) Music doesn’t start on main page until you click the canvas
 -   [ ] (LOW) Text in intro page 1 should be vertically centered.
 -   [ ] (LOW) Text in intro page 3, “Will humanity survive” needs to be bigger font and centered
@@ -80,7 +79,6 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] (LOW) wetlands biome resource spawning is too high
 -   [ ] (LOW) in exploration “Leave” should be bottom right
 -   [ ] (LOW) can we blink the number once n the top bar when we add an item to it?
-
 
 -   [x] hover overlays on tiles (the blue outline) should be at about 75% transparency
 -   [x] fix line artifacts in exploration areas
