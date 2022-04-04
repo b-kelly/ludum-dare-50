@@ -3,9 +3,13 @@
         {
             "type": "colony",
             "shortDescriptor": "found colony 2",
-            "message": "You approach the central dome in your KEV. \"Second Mission of Humanity to Kepler-22b\" is engraved on the front hatch, just like \"Thirteenth\" is engraved on yours. These colonists only landed about seven years ago, as far as you know, but their base might as well be an ancient ruin. The stiff plastic polymer that comprises the dome's membrane is all but disintegrated, and the structure itself is pock-marked and brittle. The materials seem to be of lower quality than the ones that make up your base. There's no sign of any crew members.",
+            "message": "You approach the central dome in your KEV. \"Second Mission of Humanity to Kepler-22b\" is engraved on the front hatch, just like \"Thirteenth\" is engraved on yours. These colonists only landed about seven years ago, as far as you know, but their base might as well be an ancient ruin. The stiff plastic polymer that comprises the dome's membrane is all but disintegrated, and the structure itself is pock-marked and brittle. The materials seem to be of lower quality than the ones that make up your base. There's no sign of any crew members, but you do spot a fuel cell socket on the ground.",
+            "upgrades": {
+                "resource": "fuel",
+                "upgradeType": "capacity",
+                "upgradeDelta": 1
+            },
             "unique": true,
-            "upgrades": "TODO",
             "conditions": {
                 "coloniesFound": 0
             }
@@ -15,7 +19,6 @@
             "shortDescriptor": "found colony 8",
             "message": "As you get closer to the dome of what appears to be the Eighth Colony, you hear a slight buzzing noise coming from somewhere inside. You step inside the hatch, which is ajar, and see some sort of electronic device nestled amongst fuel cells. You realize as you look closer that this is a jury-rigged signal jammer. A note written on the floor with a piece of charred wood reads: \"Only way to stop 4 from finding us. Gone to stop them.\" One of the lunar panels is in good repair, so you pick it up. The whining buzz emanating from the device peters out.",
             "unique": true,
-            "upgrades": "TODO",
             "conditions": {
                 "coloniesFound": 1
             }
@@ -25,7 +28,11 @@
             "shortDescriptor": "found colony 6",
             "message": "Approaching the colony, it almost looks like they weren't able to set it up. Storage structures are still dotting the clearing, and only the central dome is readily identifiable - \"Sixth Mission.\" When you look closer, you see that while it seems like it was stopped in-progress, parts of this settlement have actually been dismantled. Stripped for parts. Shreds of polymer cling to the half-assembled dome, ripped from their anchor points. Whoever did this had no regard for the survival of this colony. When you poke your head into one of the storage structures, you see that crew members had attempted to take shelter inside, but they just weren't designed to sustain human life. One desiccated corpse is clinging to a scanner. You pry it from their hand, thinking that another scanner might make your job easier. Somehow.",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "fuel",
+                "upgradeType": "efficiency",
+                "upgradeDelta": -1
+            },
             "conditions": {
                 "coloniesFound": 2
             }
@@ -35,7 +42,11 @@
             "shortDescriptor": "found colony 1",
             "message": "Walking up to the colony (there is no label on the hatch so you assume this is the First Mission, before they added the engraving) you see massive amounts of hexaslug residue everywhere. On the ground, on the surrounding flora, on the hatch door… but no hexaslugs. You get closer to the main dome and squint inside, but can't see anything. You try rubbing the plastic to get a clearer view, when you realize that you're staring directly into the underbelly of a hexaslug, which seems to be napping on the wall. The dome has been taken over by a different kind of colony. Ironically, the central dome turned slug chamber is in fairly good condition, since the slug residue effectively keeps the surfaces glued together. You scrape up a ton of slug residue on your way out, noting that you should be able to increase the durability of your own central dome with this much material.",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "parts",
+                "upgradeType": "efficiency",
+                "upgradeDelta": -1
+            },
             "conditions": {
                 "coloniesFound": 3
             }
@@ -45,7 +56,11 @@
             "shortDescriptor": "found colony 3",
             "message": "You drive your KEV right up to the front hatch of the Third Mission - you want to be able to beat a quick escape if there's some other kind of infestation in there. It's clear that there aren't any living humans here, but surrounding the hatch are a ton of materials shoved into disintegrating packs. Fuel cells, dried up bundles of plant fiber… you squint at a tatter of fabric from what looks like an official Kepler-22b all-purpose coverall, and can just make out \"Second Mission\" embroidered on a faded patch. These must be the people who were missing from the second colony. But why did this colony not let them in? ",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "fuel",
+                "upgradeType": "capacity",
+                "upgradeDelta": 1
+            },
             "conditions": {
                 "coloniesFound": 4
             }
@@ -55,7 +70,11 @@
             "shortDescriptor": "found colony 7",
             "message": "You see the dormitory quarters - a tiny dome off to your right. You see the medical and engineering domes set up alongside. But where's the central dome? Which colony is this? These colonists, it seems, tried to make a go of it using just the ancillary domes, but it was no use. Without the oxygen-generating agriculture in the central dome, they were fighting a losing battle. You pick up some medical supplies half-hidden under a crate in the medical dome, thinking that they may help you better survive encounters with native fauna.",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "health",
+                "upgradeType": "capacity",
+                "upgradeDelta": 1
+            },
             "conditions": {
                 "coloniesFound": 5
             }
@@ -65,7 +84,11 @@
             "shortDescriptor": "found colony 5",
             "message": "One notable thing about this dome is that there's a big tree growing out of it. Not an Earth tree, a local purple one with vines criss-crossing around the ceiling. When you step through a hole in the side, you see a large area that looks … interrupted. As if everyone in the 5th Mission was doing their work and then suddenly stopped. Storage boxes are opened and discarded wrappings strewn everywhere. The hatch to the dormitories is sealed shut. Opening the hatch, you're hit with an overpoweringly stale odor. Walking closer, you see skeletons huddled together on the floor and on the beds like they're waiting for something. One glance at their clogged air vents tells you that these crew members suffocated. What were they hiding from?",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "panels",
+                "upgradeType": "efficiency",
+                "upgradeDelta": -1
+            },
             "conditions": {
                 "coloniesFound": 6
             }
@@ -75,7 +98,11 @@
             "shortDescriptor": "found colony 10",
             "message": "You smell Colony 10 before you see it. For not the first time, you wonder why your in-suit air filtration doesn't filter out smells. Your first guess at the stench is a dreadfully unkempt chemical toilet, but then the makeshift pens full of starved toughskins come into view. Their corpses seem fairly fresh, especially when compared with the piles of human bones surrounding them. You can't help but wonder if the pens smelled any better when the toughskins were alive. ",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "food",
+                "upgradeType": "efficiency",
+                "upgradeDelta": -1
+            },
             "conditions": {
                 "coloniesFound": 7
             }
@@ -83,9 +110,13 @@
         {
             "type": "colony",
             "shortDescriptor": "found colony 9",
-            "message": "Approaching the central dome, you feel some sense of excitement. It's the 9th Mission, and it looks well-preserved! There might be other colonists inside! Walking up to the semi-transparent exterior, you glance inside and see that the floor looks like it's… moving? Looking down a bit more closely, you notice a small hole gnawed through a weakened point in the plastic. The floor isn't moving. It's the nibblers. Nibblers everywhere, swarming over shapes on the ground that are too corpse-like for your taste. Did they stockpile too much food? Did they try to take one for a pet? Whatever the case, you get out of there as quickly as you can. On your way back to the KEV, you see theirs hidden in some overgrown weeds. Poking your head inside their KEV reveals a still-packaged backup air filter. You take it - this will increase your base's capacity substantially.",
+            "message": "Approaching the central dome, you feel some sense of excitement. It's the 9th Mission, and it looks well-preserved! There might be other colonists inside! Walking up to the semi-transparent exterior, you glance inside and see that the floor looks like it's… moving? Looking down a bit more closely, you notice a small hole gnawed through a weakened point in the plastic. The floor isn't moving. It's the nibblers. Nibblers everywhere, swarming over shapes on the ground that are too corpse-like for your taste. Did they stockpile too much food? Did they try to take one for a pet? Whatever the case, you get out of there as quickly as you can. On your way back to the KEV, you see theirs hidden in some overgrown weeds. Poking your head inside their KEV reveals a still-packaged backup air filter. You take it - this will increase your base's efficiency substantially.",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "filters",
+                "upgradeType": "efficiency",
+                "upgradeDelta": -1
+            },
             "conditions": {
                 "coloniesFound": 8
             }
@@ -95,7 +126,11 @@
             "shortDescriptor": "found colony 11",
             "message": "Finally: you've found the 11th Mission. You know that __ and __ back at base are desperate to meet, well, anyone else, and approach the hatch confident that, this time, you'll find people inside. You were just talking to __ a couple of days ago. So when you see a scratched note on the hatch's face, your stomach sinks. \"Our water recycling system died. So did our KEV. Have coordinates for C13, are leaving now on foot.\" It's dated yesterday. You know how far you are from your base. Without water recycling? Without a KEV? Dejected, you walk away from the hatch and back to your vehicle.",
             "unique": true,
-            "upgrades": "TODO",
+            "upgrades": {
+                "resource": "water",
+                "upgradeType": "efficiency",
+                "upgradeDelta": -1
+            },
             "conditions": {
                 "coloniesFound": 9
             }
@@ -105,7 +140,6 @@
             "shortDescriptor": "found colony 4",
             "message": "You spot this colony from further away than the others. As you get closer, you see why: two center domes! Three KEVs? You know that Earth didn't send the 4th Mission here with tons of extra supplies, and are confused until you realize: that's where the plundered supplies from the other colonies went. This colony stole it all. Looking around, you see no signs of life save a few nibblers scurrying across the clearing. Half of the structures here are charred, with holes punctured into the membrane walls. There are human bones scattered around and you realize that what you're actually looking at is a battlefield. There is nothing here for you.",
             "unique": true,
-            "upgrades": "TODO",
             "conditions": {
                 "coloniesFound": 10
             }
@@ -115,7 +149,6 @@
             "shortDescriptor": "found colony 12",
             "message": "Could it be? Is this the 12th Mission? You approach cautiously, trying not to get your expectations too high. Realistically, you've only gotten one transmission from what you *think* is them, but who can know? You step over a pile of glittering debris to open the hatch - the seal is still working. Exiting the airlock, you see a central dome basically identical to yours. Plants, trees, comms center… this mission only left three months before yours did, so you have the same setup. Unfortunately, this base has gone dark. No blinking lights on the comms, no artificial sunlight set up by the Earth plants, nothing. And you don't see anyone. You realize then that the debris outside the door were the colony's smashed up lunar panels. And just when you realize that, your helmet comms flicker on. \"Is anyone here? I see your KEV, I know you're here.\" The voice is quavering, uncertain. It has an edge of hysteria to it. Did they do this? Should you respond? Would making contact add a member to your crew and save a life, or doom what's left of humanity?",
             "unique": true,
-            "upgrades": "TODO",
             "conditions": {
                 "coloniesFound": 11
             }
