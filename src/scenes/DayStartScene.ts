@@ -1,6 +1,6 @@
 import { CustomScene } from "../objects/CustomScene";
 import { Resources } from "../objects/GlobalDataStore";
-import { GeneralAssets, UiAssets } from "../shared";
+import { GeneralAssets } from "../shared";
 import { TextBox } from "../UI/TextBox";
 import { OverworldScene } from "./OverworldScene";
 import { StatusUiScene } from "./StatusUiScene";
@@ -71,7 +71,7 @@ export class DayStartScene extends CustomScene {
 
         ret.push(
             ...Object.entries(startingResources).map(
-                (kv: [keyof Resources, number], i) => {
+                (kv: [keyof Resources, number]) => {
                     const key = kv[0];
                     const message = `${key}: ${String(kv[1])} (+${
                         stat.dailyReplenish[key]
