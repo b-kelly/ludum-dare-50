@@ -6,4 +6,5 @@ export declare class DayStartScene extends CustomScene {
     preload(): void;
     create(): void;
     private generateRow;
+    private getDisplayText;
 }

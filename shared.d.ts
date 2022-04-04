@@ -21,6 +21,7 @@ export declare const UiAssets: {
     readonly arrowRight: "arrowRight";
     readonly tutorialPane: "tutorialPane";
     readonly briefingPane: "briefingPane";
+    readonly portraitPane: "portraitPane";
 };
 export declare const SfxAssets: {
     readonly bgDesert: "bgDesert";
