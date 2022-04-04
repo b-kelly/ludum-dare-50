@@ -26,6 +26,10 @@ export class DayStartScene extends CustomScene {
             GeneralAssets.baseBackgroundDay,
             "assets/bg/base-bg.png"
         );
+        this.load.image(
+            UiAssets.portraitPane,
+            "assets/ui/portrait-text.png"
+        );
     }
 
     create() {
@@ -38,6 +42,12 @@ export class DayStartScene extends CustomScene {
             img.width / 2,
             img.height / 2,
             UiAssets.briefingPane
+        );
+
+        const portrait = this.add.image(
+            pane.width,
+            pane.height,
+            UiAssets.portraitPane
         );
 
         const paneX = PADDING + pane.x - pane.width / 2;
@@ -83,14 +93,6 @@ export class DayStartScene extends CustomScene {
             .setOrigin(0.5, 0);
 
         let prevHeight = sectionTitle.height + ELPADDING;
-        prevHeight +=
-            this.generateRow(
-                paneX,
-                sectionTitle.y + prevHeight,
-                paneWidth / 3,
-                null
-            ).height + ELPADDING;
-
         Object.keys(this.global.resources).forEach((k: keyof Resources) => {
             prevHeight +=
                 this.generateRow(
@@ -183,7 +185,6 @@ export class DayStartScene extends CustomScene {
 
         return text;
     }
-<<<<<<< HEAD
 
     private getDisplayText() {
         const ret: string[] = [];
@@ -212,6 +213,4 @@ export class DayStartScene extends CustomScene {
 
         return ret;
     }
-=======
->>>>>>> 14776ccd481bd6e8e6a594d6e227b22f74425ae3
 }
