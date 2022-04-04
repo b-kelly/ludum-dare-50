@@ -17,25 +17,28 @@ interface AreaCell {
 const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
     default: null,
     desert: {
-        fuel: 0.002,
-        food: 0.002,
-        water: 0.001,
         filters: 0.001,
+        food: 0.002,
+        fuel: 0,
+        panels: 0.002,
         parts: 0.005,
+        water: 0.001,
     },
     forest: {
-        fuel: 0.002,
-        food: 0.005,
-        water: 0.001,
         filters: 0.002,
+        food: 0.005,
+        fuel: 0,
+        panels: 0.002,
         parts: 0.001,
+        water: 0.001,
     },
     wetland: {
-        fuel: 0.001,
-        food: 0.002,
-        water: 0.05,
         filters: 0.002,
+        food: 0.002,
+        fuel: 0,
+        panels: 0.001,
         parts: 0.001,
+        water: 0.05,
     },
 } as const;
 

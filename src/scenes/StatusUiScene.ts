@@ -10,8 +10,12 @@ import {
 
 export const STATUS_UI_HEIGHT = 80;
 
+const PADDING = 16;
+
 class Indicator extends Phaser.GameObjects.Container {
     private resourceType: keyof Resources;
+    private iconWidth = 0;
+    private iconHeight = 0;
     private resourceText: Phaser.GameObjects.Text;
     private customScene: CustomScene;
 
@@ -19,7 +23,8 @@ class Indicator extends Phaser.GameObjects.Container {
         scene: CustomScene,
         x: number,
         y: number,
-        type: keyof Resources
+        type: keyof Resources,
+        hideIcon: boolean
     ) {
         super(scene, x, y);
         this.customScene = scene;
@@ -27,21 +32,25 @@ class Indicator extends Phaser.GameObjects.Container {
         this.resourceType = type;
         this.scene = scene;
 
-        const icon = scene.make
-            .sprite({
-                x: x + 16,
-                y: y + 16,
-                key: GeneralAssets.resources,
-                frame: AreaResource.getGenericResourceSpriteFrame(type),
-            })
-            .setOrigin(0, 0)
-            .setScale(0.5);
-        this.add(icon);
+        if (!hideIcon) {
+            const resourceIcon = scene.make
+                .sprite({
+                    x: PADDING,
+                    y: PADDING,
+                    key: GeneralAssets.resources,
+                    frame: AreaResource.getGenericResourceSpriteFrame(type),
+                })
+                .setOrigin(0, 0)
+                .setScale(0.5);
+            this.add(resourceIcon);
+            this.iconWidth = resourceIcon.width;
+            this.iconHeight = resourceIcon.height;
+        }
 
         this.resourceText = scene.make
             .text({
-                x: x + icon.width,
-                y: y + icon.height / 2,
+                x: this.iconWidth,
+                y: this.iconHeight / 2,
                 text: "",
                 style: {
                     ...baseTextOptions,
@@ -60,6 +69,18 @@ class Indicator extends Phaser.GameObjects.Container {
 
     update() {
         this.updateText();
+    }
+
+    setOrigin(x: number, y: number) {
+        const totalWidth = this.iconWidth + this.resourceText.width + PADDING;
+        const totalHeight =
+            this.iconHeight + this.resourceText.height + PADDING;
+
+        const newX = this.x - totalWidth * x;
+        const newY = this.y - totalHeight * y;
+        this.setPosition(newX, newY);
+
+        return this;
     }
 
     private updateText() {
@@ -102,18 +123,29 @@ export class StatusUiScene extends CustomScene {
         this.add.image(0, 0 - 40, UiAssets.topbar).setOrigin(0, 0);
 
         this.text = {
-            fuel: null,
-            food: null,
             filters: null,
+            food: null,
+            fuel: null,
+            panels: null,
             parts: null,
             water: null,
         };
 
         Object.keys(this.text)
             .sort()
+            .filter((k) => k !== "fuel") // fuel has its own indicator
             .forEach((k: keyof Resources, i) => {
-                this.text[k] = new Indicator(this, i * 75, 0, k);
+                // TODO hardcoded width
+                this.text[k] = new Indicator(this, i * 150, 0, k, false);
             });
+
+        this.text["fuel"] = new Indicator(
+            this,
+            this.bounds.width,
+            0,
+            "fuel",
+            false
+        ).setOrigin(1, 0);
 
         this.registry.events.on("changedata", () => {
             if (!this.scene.isActive(StatusUiScene.KEY)) {

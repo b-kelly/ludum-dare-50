@@ -8,25 +8,28 @@ const GAME_OVER_TILES_COUNT = 50; // How many visited tiles it takes to get a "g
 
 const startingValues = {
     resources: {
-        fuel: 10,
-        food: 10,
-        water: 10,
-        parts: 10,
         filters: 10,
+        food: 10,
+        fuel: 10,
+        panels: 10,
+        parts: 10,
+        water: 10,
     },
     maxStorage: {
-        fuel: 10,
-        food: 15,
-        water: 15,
-        parts: 10,
         filters: 10,
+        food: 15,
+        fuel: 10,
+        panels: 10,
+        parts: 10,
+        water: 15,
     },
     dailyReplenish: {
-        fuel: 10,
-        food: 1,
-        water: 1,
-        parts: 0,
         filters: 0,
+        food: 1,
+        fuel: 10,
+        panels: 0,
+        parts: 0,
+        water: 1,
     },
     fuelCostVisitedTile: 1,
     fuelCostUnvisitedTile: 2,
@@ -34,11 +37,12 @@ const startingValues = {
 } as const;
 
 export interface Resources {
-    fuel: number;
-    food: number;
-    water: number;
-    parts: number;
     filters: number;
+    food: number;
+    fuel: number;
+    panels: number;
+    parts: number;
+    water: number;
 }
 
 export interface BaseStatus {
@@ -103,6 +107,7 @@ export class GlobalDataStore {
             colonyCount: 0,
             haul: {
                 fuel: 0,
+                panels: 0,
                 food: 0,
                 water: 0,
                 parts: 0,
@@ -170,6 +175,10 @@ export class GlobalDataStore {
         const stat = this.baseStatus;
 
         this.updateResources({
+            filters: Math.min(
+                haul.filters + res.filters + stat.dailyReplenish.filters,
+                stat.maxStorage.filters
+            ),
             food: Math.min(
                 haul.food + res.food + stat.dailyReplenish.food,
                 stat.maxStorage.food
@@ -178,17 +187,17 @@ export class GlobalDataStore {
                 haul.fuel + res.fuel + stat.dailyReplenish.fuel,
                 stat.maxStorage.fuel
             ),
-            water: Math.min(
-                haul.water + res.water + stat.dailyReplenish.water,
-                stat.maxStorage.water
+            panels: Math.min(
+                haul.panels + res.panels + stat.dailyReplenish.panels,
+                stat.maxStorage.panels
             ),
             parts: Math.min(
                 haul.parts + res.parts + stat.dailyReplenish.parts,
                 stat.maxStorage.parts
             ),
-            filters: Math.min(
-                haul.filters + res.filters + stat.dailyReplenish.filters,
-                stat.maxStorage.filters
+            water: Math.min(
+                haul.water + res.water + stat.dailyReplenish.water,
+                stat.maxStorage.water
             ),
         });
 

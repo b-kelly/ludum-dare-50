@@ -33,7 +33,7 @@ export class AreaResource extends Phaser.GameObjects.Sprite {
     }
 
     static getGenericResourceSpriteFrame(resource: keyof Resources) {
-        if (resource === "fuel") {
+        if (resource === "fuel" || resource === "panels") {
             return 0;
         } else if (resource === "water") {
             return 2;
