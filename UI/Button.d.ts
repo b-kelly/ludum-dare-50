@@ -9,6 +9,7 @@ export declare class Button extends Phaser.GameObjects.Container {
         size?: "large" | "small";
         disabled?: boolean;
     });
+    setOrigin(x: number, y: number): this;
     setOnClick(callback: () => void): void;
     setDisabled(isDisabled: boolean): void;
     private hover;

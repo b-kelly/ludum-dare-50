@@ -4,5 +4,6 @@ export declare class StatusUiScene extends CustomScene {
     static readonly KEY = "StatusUiScene";
     private text;
     constructor();
+    preload(): void;
     create(): void;
 }
