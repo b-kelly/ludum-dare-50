@@ -4,32 +4,32 @@ import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
 
 export type GameOverType = "resource" | "tiles" | null;
-const GAME_OVER_TILES_COUNT = 50; // How many visited tiles it takes to get a "game success"
+const GAME_OVER_TILES_COUNT = 80; // How many visited tiles it takes to get a "game success"
 
 const startingValues = {
     resources: {
-        filters: 10,
+        filters: 5,
         food: 10,
         fuel: 10,
-        panels: 10,
-        parts: 10,
+        panels: 5,
+        parts: 5,
         water: 10,
     },
     maxStorage: {
-        filters: 10,
-        food: 15,
-        fuel: 10,
-        panels: 10,
-        parts: 10,
-        water: 15,
+        filters: 20,
+        food: 30,
+        fuel: 20,
+        panels: 20,
+        parts: 20,
+        water: 30,
     },
     dailyReplenish: {
-        filters: 0,
-        food: 1,
+        filters: -2,
+        food: -5,
         fuel: 10,
-        panels: 0,
-        parts: 0,
-        water: 1,
+        panels: -2,
+        parts: -2,
+        water: -5,
     },
     fuelCostVisitedTile: 1,
     fuelCostUnvisitedTile: 2,
@@ -71,7 +71,7 @@ export interface CampaignStats {
 
 /** Handy wrapper around our shared data */
 export class GlobalDataStore {
-    constructor(private scene: CustomScene) {}
+    constructor(private scene: CustomScene) { }
 
     get resources(): Readonly<Resources> {
         return this.getOrCreate<Resources>(

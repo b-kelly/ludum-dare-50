@@ -59,7 +59,7 @@
             "upgrades": {
                 "resource": "fuel",
                 "upgradeType": "capacity",
-                "upgradeDelta": 1
+                "upgradeDelta": 5
             },
             "conditions": {
                 "coloniesFound": 4

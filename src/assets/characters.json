@@ -1,0 +1,84 @@
+{
+    "characters": [
+        {
+            "key": "kiran",
+            "fullName": "Commanding Officer Kiran Adam",
+            "spritePosition": 0
+        },
+        {
+            "key": "adzo",
+            "fullName": "Agricultural Officer Adzo Loman",
+            "spritePosition": 1
+        },
+        {
+            "key": "shreya",
+            "fullName": "Agricultural Specialist Shira Loman",
+            "spritePosition": 2
+        },
+        {
+            "key": "kamal",
+            "fullName": "Philosophy Specialist Kamal Marion",
+            "spritePosition": 5
+        },
+        {
+            "key": "lufti",
+            "fullName": "Kepler-22b Expert Lufti Andela",
+            "spritePosition": 3
+        },
+        {
+            "key": "rupert",
+            "fullName": "Engineering Specialist Rupert Luan",
+            "spritePosition": 4
+        },
+        {
+            "key": "harish",
+            "fullName": "Medical Officer Harish Kuroda",
+            "spritePosition": 7
+        },
+        {
+            "key": "annika",
+            "fullName": "Comms Specialist Annika Villalobos",
+            "spritePosition": 6
+        },
+        {
+            "key": "gaston",
+            "fullName": "Logistics Specialist Gaston Fisher",
+            "spritePosition": 8
+        },
+        {
+            "key": "martin",
+            "fullName": "Logistics Specialist Martin Fisher",
+            "spritePosition": 9
+        },
+        {
+            "key": "britt",
+            "fullName": "Botanist Britt Saarinen",
+            "spritePosition": 10
+        },
+        {
+            "key": "girish",
+            "fullName": "Botanist Girish Martell",
+            "spritePosition": 11
+        },
+        {
+            "key": "sachin",
+            "fullName": "Medical Assistant Sachin Traves",
+            "spritePosition": 13
+        },
+        {
+            "key": "chip",
+            "fullName": "Engineer Chip O'Dell",
+            "spritePosition": 12
+        },
+        {
+            "key": "dora",
+            "fullName": "Engineer Dora Hintzen",
+            "spritePosition": 14
+        },
+        {
+            "key": "marcel",
+            "fullName": "Artist Marcel Kralij",
+            "spritePosition": 15
+        }
+    ]
+}
