@@ -5,6 +5,7 @@ export declare class OverworldScene extends CustomScene {
     private movingTowardsCoords;
     private exploreButton;
     private textBox;
+    private noticeBox;
     constructor();
     preload(): void;
     create(): void;
@@ -17,6 +18,8 @@ export declare class OverworldScene extends CustomScene {
     private movePlayerAndUpdateCells;
     private movePlayerToCoord;
     private updatePlayerAdjacentCells;
+    private showEventNotice;
+    private showNotice;
     private getCell;
     private canExploreCell;
     private completeTutorialStep;

@@ -4,4 +4,5 @@ export declare class StartMenuScene extends Phaser.Scene {
     preload(): void;
     create(): void;
     private launchGame;
+    private DEBUG_ACTIONS;
 }
