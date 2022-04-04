@@ -43,8 +43,8 @@ export const WorldAssets = {
     // which row each tileset is on
     tilesData: {
         forest: 0,
-        desert: 1,
-        wetland: 2,
+        wetland: 1,
+        desert: 2,
         Overlay: 3,
     },
 } as const;

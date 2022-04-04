@@ -4,7 +4,7 @@ import { Cell } from "../objects/WorldMap/shared";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
-import { GeneralAssets, SfxAssets } from "../shared";
+import { baseTextOptions, GeneralAssets, SfxAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { TextBox } from "../UI/TextBox";
 import { DayReviewScene } from "./DayReviewScene";
@@ -18,6 +18,7 @@ export class OverworldScene extends CustomScene {
     private exploreButton: Button;
     private textBox: TextBox;
     private noticeBox: TextBox;
+    private tooltip: Phaser.GameObjects.Text;
 
     constructor() {
         super({ key: OverworldScene.KEY });
@@ -144,10 +145,58 @@ export class OverworldScene extends CustomScene {
                 this.noticeBox.setVisible(false);
             });
 
+        this.tooltip = this.add
+            .text(0, 0, "", {
+                ...baseTextOptions,
+                backgroundColor: "#000000",
+                padding: {
+                    x: 8,
+                    y: 8,
+                },
+            })
+            .setOrigin(1, 1);
+
+        this.events.on(
+            "worldcell_hover",
+            (data: {
+                hasEntered: boolean;
+                coords: { x: number; y: number };
+            }) => {
+                this.tooltip.setVisible(data.hasEntered);
+                const cell = this.global.worldMap.getCell(
+                    data.coords.x,
+                    data.coords.y
+                );
+
+                if (!cell.clearedFogOfWar) {
+                    this.tooltip.text = `???\nUndiscovered`;
+                    return;
+                }
+
+                const biomeName = cell.biome.replace(/^./, (c) =>
+                    c.toUpperCase()
+                );
+                const status = cell.playerHasExplored
+                    ? "Explored"
+                    : cell.playerHasVisited
+                    ? "Visited"
+                    : "Unvisited";
+                const explored =
+                    cell.playerHasVisited && cell.type === "explorable"
+                        ? cell.playerHasExplored
+                            ? " (Explored)"
+                            : " (Unexplored)"
+                        : "";
+                this.tooltip.text = `${biomeName}\n${status}${explored}`;
+            }
+        );
+
         this.launchTutorial();
     }
 
     update() {
+        this.updateTooltip();
+
         // because of how timing works, the player may not reach the exact point, so check within a threshold
         if (
             this.movingTowardsCoords &&
@@ -165,6 +214,11 @@ export class OverworldScene extends CustomScene {
             );
             this.movingTowardsCoords = null;
         }
+    }
+
+    private updateTooltip() {
+        const { worldX, worldY } = this.input.activePointer;
+        this.tooltip.setPosition(worldX, worldY);
     }
 
     private launchTutorial() {

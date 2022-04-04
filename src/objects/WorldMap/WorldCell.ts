@@ -10,6 +10,8 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     private hasFogOfWar: boolean;
     private isVisitable: boolean;
 
+    private coords: { x: number; y: number };
+
     constructor(
         scene: CustomScene,
         xIndex: number,
@@ -35,6 +37,10 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
 
         // set the name so we can easily find a specific object later
         this.name = WorldCell.genName(xIndex, yIndex);
+        this.coords = {
+            x: xIndex,
+            y: yIndex,
+        };
 
         this.setOrigin(0, 0);
         this.scene.add.existing(this);
@@ -100,6 +106,11 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     }
 
     private hover(hasEntered: boolean) {
+        this.scene.events.emit("worldcell_hover", {
+            hasEntered,
+            coords: this.coords,
+        });
+
         if (this.hasFogOfWar) {
             return;
         }
