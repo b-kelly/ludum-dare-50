@@ -40,6 +40,10 @@ export class AreaPlayer extends Phaser.GameObjects.Sprite {
     }
 
     update() {
+        if (!this.active) {
+            return;
+        }
+
         const playerSpeed = 200;
         let yVelocity = 0;
         let xVelocity = 0;

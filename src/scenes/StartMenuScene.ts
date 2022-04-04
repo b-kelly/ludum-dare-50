@@ -1,11 +1,12 @@
 import { debugConfig } from "../debug-config";
+import { CustomScene } from "../objects/CustomScene";
 import { WebFontFile } from "../objects/WebFontFile";
 import { DEBUG_isDebugBuild, GeneralAssets, UiAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayStartScene } from "./DayStartScene";
 import { LogScene } from "./LogScene";
 
-export class StartMenuScene extends Phaser.Scene {
+export class StartMenuScene extends CustomScene {
     static readonly KEY = "StartMenuScene";
 
     constructor() {
@@ -52,10 +53,10 @@ export class StartMenuScene extends Phaser.Scene {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const text = this.cache.json.get(GeneralAssets.narration)
             .intro as string[];
-        this.scene.start(LogScene.KEY, {
+        this.fadeToScene(LogScene.KEY, {
             text: text,
-            onComplete(this: Phaser.Scene) {
-                this.scene.start(DayStartScene.KEY);
+            onComplete(this: CustomScene) {
+                this.fadeToScene(DayStartScene.KEY);
             },
         });
     }
@@ -71,7 +72,7 @@ export class StartMenuScene extends Phaser.Scene {
 
         if (debugConfig.sceneKey) {
             console.warn("LOADING DEBUG CONFIG OVERRIDES");
-            this.scene.start(debugConfig.sceneKey, debugConfig.data);
+            this.fadeToScene(debugConfig.sceneKey, debugConfig.data);
             return;
         }
     }

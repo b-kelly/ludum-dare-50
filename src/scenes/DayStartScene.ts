@@ -13,6 +13,7 @@ export class DayStartScene extends CustomScene {
     }
 
     init() {
+        super.init(null);
         // TODO is this safe here? It won't run too many times?
         this.global.startDay();
     }
@@ -47,7 +48,7 @@ export class DayStartScene extends CustomScene {
         });
 
         textBox.on("proceedclick", () => {
-            this.scene.start(OverworldScene.KEY, {});
+            this.fadeToScene(OverworldScene.KEY, {});
         });
 
         if (this.scene.isActive(StatusUiScene.KEY)) {

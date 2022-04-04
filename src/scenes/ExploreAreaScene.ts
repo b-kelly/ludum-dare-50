@@ -22,6 +22,7 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     init(data: ExploreAreaScene["currentCell"]) {
+        super.init(null);
         this.currentCell = data;
     }
 
@@ -135,7 +136,7 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     private leaveArea() {
-        this.scene.start(OverworldScene.KEY);
+        this.fadeToScene(OverworldScene.KEY);
     }
 
     private translateCoord(xIndex: number, yIndex: number) {

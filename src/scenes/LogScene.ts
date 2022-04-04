@@ -14,6 +14,7 @@ export class LogScene extends CustomScene {
     }
 
     init(data: { text: string[][]; onComplete: () => void }) {
+        super.init(data);
         this.content = data.text;
         this.onComplete = data.onComplete.bind(this);
     }

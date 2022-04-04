@@ -12,6 +12,7 @@ export class GameOverScene extends CustomScene {
     }
 
     init(data: { type: GameOverType }) {
+        super.init(null);
         this.type = data.type;
     }
 

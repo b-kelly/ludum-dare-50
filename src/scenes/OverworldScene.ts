@@ -201,13 +201,13 @@ export class OverworldScene extends CustomScene {
         const playerCell = this.global.worldMap.getPlayerCell();
         this.global.worldMap.markCellExplored(playerCell.x, playerCell.y);
         this.global.logTileExploration();
-        this.scene.start(ExploreAreaScene.KEY, {
+        this.fadeToScene(ExploreAreaScene.KEY, {
             ...playerCell,
         });
     }
 
     private returnToCamp() {
-        this.scene.start(DayReviewScene.KEY, {
+        this.fadeToScene(DayReviewScene.KEY, {
             dailyHaul: this.global.currentDay.haul,
         });
     }

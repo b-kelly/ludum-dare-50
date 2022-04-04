@@ -17,6 +17,7 @@ export class DayReviewScene extends CustomScene {
     }
 
     init(data: { dailyHaul: Resources }) {
+        super.init(data);
         this.dailyHaul = data.dailyHaul;
 
         // TODO this is safe here?
@@ -52,11 +53,11 @@ export class DayReviewScene extends CustomScene {
         const gameOver = this.global.endDay();
 
         if (gameOver === null) {
-            this.scene.start(DayStartScene.KEY);
+            this.fadeToScene(DayStartScene.KEY);
             return;
         }
 
-        this.scene.start(GameOverScene.KEY, {
+        this.fadeToScene(GameOverScene.KEY, {
             type: gameOver,
         });
     }
