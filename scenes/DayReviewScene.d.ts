@@ -11,5 +11,5 @@ export declare class DayReviewScene extends CustomScene {
     preload(): void;
     create(): void;
     private sleepAndStartNextDay;
-    private createResourcesDisplay;
+    private generateRow;
 }
