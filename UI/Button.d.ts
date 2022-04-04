@@ -1,6 +1,7 @@
 export declare class Button extends Phaser.GameObjects.Container {
     private isDisabled;
     private buttonImg;
+    private buttonSize;
     get height(): number;
     get width(): number;
     constructor(scene: Phaser.Scene, options: {
@@ -8,7 +9,7 @@ export declare class Button extends Phaser.GameObjects.Container {
         y: number;
         text: string;
         onClick: () => void;
-        size?: "large" | "small";
+        size?: Button["buttonSize"];
         disabled?: boolean;
     });
     setOrigin(x: number, y: number): this;

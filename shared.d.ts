@@ -13,14 +13,14 @@ export declare const GeneralAssets: {
 };
 export declare const UiAssets: {
     readonly buttonLg: "buttonLg";
+    readonly buttonLgHover: "buttonLgHover";
+    readonly buttonLgPress: "buttonLgPress";
     readonly buttonSm: "buttonSm";
     readonly topbar: "topbar";
     readonly arrowLeft: "arrowLeft";
     readonly arrowRight: "arrowRight";
     readonly tutorialPane: "tutorialPane";
     readonly briefingPane: "briefingPane";
-    readonly kevIcon: "kev";
-    readonly storageIcon: "storage";
 };
 export declare const SfxAssets: {
     readonly bgDesert: "bgDesert";
