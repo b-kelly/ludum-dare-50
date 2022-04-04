@@ -50,17 +50,17 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 ### Other
 
--   [ ] event upgrade support
+-   [x] event upgrade support
 -   [ ] area map wall/corner rotation
 -   [x] connect caverns in area map
 -   [x] overworld scene loads slowly - only happens when debug info is on (apparently text very renders slowly when wrapped)
--   [ ] add toast and sound when you pick up an item
+-   [-] add toast and sound when you pick up an item
 -   [x] don't spawn resources on walls
 -   [ ] create and implement unique home base tile
 -   [x] fix line artifacts in exploration areas
 -   [ ] rotate tiles in exploration areas properly
 -   [ ] add statement pieces to exploration areas
--   [ ] implement special map event sound
+-   [x] implement special map event sound
 -   [ ] implement portraits and textboxes for crew requests
 -   [x] add transitions between scenes to slow it down a bit and make it feel more polished
 -   [ ] hit targets are wrong for buttons
@@ -78,12 +78,9 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] “end day” should be at bottom right
 -   [ ] “scan” shouldn’t be available on home tile
 -   [ ] home tile should always be forest if possible (since bg is forest)
--   [ ] hover overlays on tiles (the blue outline) should be at about 75% transparency
+-   [x] hover overlays on tiles (the blue outline) should be at about 75% transparency
 -   [ ] sometimes biome bg doesn’t match tile biome
 -   [ ] wetlands biome resource spawning is too high
--   [ ] tile rotation is incorrect (spaces should only be facing outward)
--   [ ] lines still appearing on map
--   [ ] when you walk over a resource we should show a small box “Picked up [item name]”
 -   [ ] in exploration “Leave” should be bottom right
 -   [ ] desert music isn’t playing properly at all
 -   [ ] can we blink the number once n the top bar when we add an item to it?

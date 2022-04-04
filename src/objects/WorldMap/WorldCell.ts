@@ -89,9 +89,9 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
             this.overlay.setTint(0x000000).setAlpha(0.9);
         } else if (state === "hover") {
             this.overlay.play("cursor_blink", true);
-            this.overlay.setTint(0xffffff);
+            this.overlay.setTint(0xffffff).setAlpha(0.75);
             if (this.isVisitable) {
-                this.overlay.setTint(0x0000ff);
+                this.overlay.setTint(0x0000ff).setAlpha(0.75);
             }
         } else {
             this.overlay.stop();
