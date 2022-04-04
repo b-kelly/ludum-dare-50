@@ -52,6 +52,7 @@ export interface BaseStatus {
     fuelCostVisitedTile: number;
     fuelCostUnvisitedTile: number;
     fuelCostPerScan: number;
+    maxPlayerHp: number;
 }
 
 interface CurrentDay {
@@ -92,6 +93,7 @@ export class GlobalDataStore {
             fuelCostUnvisitedTile: startingValues.fuelCostUnvisitedTile,
             fuelCostVisitedTile: startingValues.fuelCostVisitedTile,
             fuelCostPerScan: startingValues.fuelCostPerScan,
+            maxPlayerHp: startingValues.playerHp,
         }));
     }
 
@@ -183,6 +185,20 @@ export class GlobalDataStore {
         this.scene.registry.set("currentDay", curr);
     }
 
+    upgradeBase(upgrade: GameEvent["upgrade"]) {
+        if (!upgrade?.resource) {
+            return;
+        }
+
+        if (upgrade.resource === "playerHp") {
+            this.baseStatus.maxPlayerHp += upgrade.delta;
+        } else if (upgrade.type === "capacity") {
+            this.baseStatus.maxStorage[upgrade.resource] += upgrade.delta;
+        } else if (upgrade.type === "replenishment") {
+            this.baseStatus.dailyReplenish[upgrade.resource] += upgrade.delta;
+        }
+    }
+
     startDay(): GameEvent {
         return this.scene.eventManager.chooseAndSetDailyEvent();
     }
@@ -220,6 +236,9 @@ export class GlobalDataStore {
                 stat.maxStorage.water
             ),
         });
+
+        // replenish playerHP as well
+        this.scene.registry.set("playerHp", this.baseStatus.maxPlayerHp);
 
         const stats = this.campaignStats;
         stats.dayCount += 1;

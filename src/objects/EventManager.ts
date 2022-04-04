@@ -50,7 +50,11 @@ export interface GameEvent {
     /** the specific character that is speaking */
     character?: EventCharacter;
     resourceDelta?: Partial<Resources>;
-    upgrades?: unknown; // TODO
+    upgrade?: {
+        resource: keyof Resources | "playerHp";
+        type: "replenishment" | "capacity";
+        delta: number;
+    };
     conditions?: {
         coloniesFound?: number;
         biome?: CellBiome;
@@ -131,8 +135,8 @@ export class EventManager {
         this.scene.global.adjustHaul(event?.resourceDelta);
 
         // apply upgrades and bonuses from colonies
-        if (event?.type === "colony") {
-            // TODO apply upgrades
+        if (event?.type === "colony" && event.upgrade?.type) {
+            this.scene.global.upgradeBase(event.upgrade);
         }
     }
 
