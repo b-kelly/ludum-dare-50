@@ -1,4 +1,4 @@
-import { baseTextOptions, UiAssets } from "../shared";
+import { baseTextOptions, SfxAssets, UiAssets } from "../shared";
 import { Button } from "./Button";
 
 type PagedText = string[][];
@@ -40,9 +40,17 @@ export class TextBox extends Phaser.GameObjects.Container {
             .setOrigin(0, 1);
         this.add(this.prevPageBtn);
 
-        this.prevPageBtn.setInteractive().on("pointerup", () => {
-            this.goToPage(this.currentPage - 1);
-        });
+        this.prevPageBtn
+            .setInteractive()
+            .on("pointerup", () => {
+                this.goToPage(this.currentPage - 1);
+            })
+            .on("pointerdown", () =>
+                this.scene.sound.play(
+                    SfxAssets.click.key,
+                    SfxAssets.click.config
+                )
+            );
 
         // next button
         this.nextPageBtn = this.scene.add
@@ -54,9 +62,17 @@ export class TextBox extends Phaser.GameObjects.Container {
             .setOrigin(1, 1);
         this.add(this.nextPageBtn);
 
-        this.nextPageBtn.setInteractive().on("pointerup", () => {
-            this.goToPage(this.currentPage + 1);
-        });
+        this.nextPageBtn
+            .setInteractive()
+            .on("pointerup", () => {
+                this.goToPage(this.currentPage + 1);
+            })
+            .on("pointerdown", () =>
+                this.scene.sound.play(
+                    SfxAssets.click.key,
+                    SfxAssets.click.config
+                )
+            );
 
         let buttonX: number;
         let origin: [number, number];
