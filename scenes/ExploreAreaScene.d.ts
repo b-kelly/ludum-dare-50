@@ -6,11 +6,12 @@ export declare class ExploreAreaScene extends CustomScene {
     private tileMap;
     private biome;
     private player;
+    private creatures;
     constructor();
     init(data: Cell): void;
     preload(): void;
     create(): void;
-    update(): void;
+    update(time: number): void;
     private spawnResources;
     private leaveArea;
     private translateCoord;
