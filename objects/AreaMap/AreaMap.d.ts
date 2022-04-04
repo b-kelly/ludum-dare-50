@@ -21,6 +21,8 @@ export declare class AreaMap {
     private readonly requiredNeighborsForLife;
     private readonly requiredNeighborsForBirth;
     private readonly iterations;
+    private readonly fillCavernsSmallerThan;
+    private readonly tunnelIfMoreThanNeighborCount;
     get map(): AreaCell[][];
     get size(): {
         width: number;
@@ -42,6 +44,8 @@ export declare class AreaMap {
     private generateMap;
     /** Initializes a map with seed cells placed */
     private initializeMap;
+    private getAllNeighborsWhere;
+    private getOpenNeighborCoords;
     /** Get the count of open neighbors around a given cell */
     private getOpenNeighbors;
     /** Runs a single cellular automata simulation step on a map */
@@ -50,6 +54,7 @@ export declare class AreaMap {
     private markWallsAndPlaceResources;
     /** Finds an open space near the middle of the map for the player to spawn */
     private findSuitableStartLocation;
+    private detectAndAlterCaverns;
     DEBUG_displayMap(): void;
 }
 export {};
