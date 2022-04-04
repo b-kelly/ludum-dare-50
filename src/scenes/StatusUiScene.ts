@@ -1,7 +1,12 @@
 import { AreaResource } from "../objects/AreaMap/AreaResource";
 import { CustomScene } from "../objects/CustomScene";
 import { Resources } from "../objects/GlobalDataStore";
-import { baseTextOptions, GeneralAssets, UiAssets } from "../shared";
+import {
+    baseTextOptions,
+    GeneralAssets,
+    TILE_WIDTH,
+    UiAssets,
+} from "../shared";
 
 export const STATUS_UI_HEIGHT = 80;
 
@@ -77,6 +82,17 @@ export class StatusUiScene extends CustomScene {
 
     constructor() {
         super({ key: StatusUiScene.KEY });
+    }
+
+    preload() {
+        this.load.spritesheet(
+            GeneralAssets.resources,
+            "assets/sprites/resources-tileset.png",
+            {
+                frameWidth: TILE_WIDTH,
+                frameHeight: TILE_WIDTH,
+            }
+        );
     }
 
     create() {
