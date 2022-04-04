@@ -22,7 +22,6 @@ export class CustomScene extends Phaser.Scene {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     init(_: unknown) {
-        console.log("init transition" + this.scene.key);
         this.events.on("transitionout", () => {
             this.cameras.main.fadeOut(500, 0, 0, 0);
         });
