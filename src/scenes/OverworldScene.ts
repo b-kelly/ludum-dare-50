@@ -4,7 +4,7 @@ import { Cell } from "../objects/WorldMap/shared";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
 import { WorldPlayer } from "../objects/WorldMap/WorldPlayer";
-import { baseTextOptions, GeneralAssets, SfxAssets } from "../shared";
+import { baseTextOptions, GeneralAssets, SfxAssets, UiAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { TextBox } from "../UI/TextBox";
 import { DayReviewScene } from "./DayReviewScene";
@@ -76,18 +76,18 @@ export class OverworldScene extends CustomScene {
             .setScrollFactor(0, 0, true)
             .setOrigin(1, 0);
 
-        const endDayBtn = new Button(this, {
+        new Button(this, {
             x: this.bounds.width - padding,
-            y: this.exploreButton.y + this.exploreButton.height + padding,
+            y: this.bounds.height - padding,
             text: "End day",
             onClick: () => this.returnToCamp(),
         })
             .setScrollFactor(0, 0, true)
-            .setOrigin(1, 0);
+            .setOrigin(1, 1);
 
         new Button(this, {
             x: this.bounds.width - padding,
-            y: endDayBtn.y + endDayBtn.height + padding,
+            y: this.exploreButton.y + this.exploreButton.height + padding,
             text: "Scan",
             onClick: () => {
                 if (!this.global.expendScanResources()) {
@@ -109,17 +109,14 @@ export class OverworldScene extends CustomScene {
         this.textBox = new TextBox(this, {
             x: padding,
             y: STATUS_UI_HEIGHT,
-            backgroundAsset: this.add.rectangle(
-                0,
-                0,
-                this.bounds.width / 3,
-                this.bounds.height / 2,
-                0x0a2a33
-            ),
+            backgroundAsset: this.add.image(0, 0, UiAssets.tutorialPane),
             pages: [],
-            padding: 8,
+            padding: 64,
             buttonText: "Got it",
             buttonAlign: "center",
+            pageStyles: {
+                fontSize: "14pt",
+            },
         })
             .setScrollFactor(0, 0, true)
             .setVisible(false);

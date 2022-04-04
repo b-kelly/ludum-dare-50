@@ -23,6 +23,7 @@ export class TextBox extends Phaser.GameObjects.Container {
             padding: number;
             buttonAlign?: "right" | "left" | "center";
             buttonText?: string;
+            pageStyles?: Phaser.Types.GameObjects.Text.TextStyle;
         }
     ) {
         super(scene, config.x, config.y);
@@ -92,6 +93,7 @@ export class TextBox extends Phaser.GameObjects.Container {
 
         this.text = this.scene.add.text(config.padding, config.padding, "", {
             ...baseTextOptions,
+            ...(config.pageStyles || {}),
             wordWrap: {
                 width: width - config.padding * 2,
             },
