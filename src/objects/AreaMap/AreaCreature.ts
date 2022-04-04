@@ -5,7 +5,11 @@ const GENERIC_CONVERSION_RATE = 0.3;
 
 export class AreaCreature extends Phaser.GameObjects.Sprite {
     static readonly DAMAGE_AMOUNT = 1;
+    static readonly SPEED = 50;
+    static readonly MOVE_DURATION_MS = 5000;
     declare body: Phaser.Physics.Arcade.Body;
+
+    private lastDirectionChange: number;
 
     constructor(scene: Phaser.Scene, x: number, y: number, biome: CellBiome) {
         super(
@@ -27,8 +31,50 @@ export class AreaCreature extends Phaser.GameObjects.Sprite {
         this.setBiomeTexture(biome);
     }
 
-    update() {
-        // TODO
+    update(time: number) {
+        // TODO RANDOMIZE?
+        // change direction every so often
+        const shouldChangeDirection =
+            !this.lastDirectionChange ||
+            time - this.lastDirectionChange >= AreaCreature.MOVE_DURATION_MS;
+
+        if (!shouldChangeDirection) {
+            return;
+        }
+
+        this.lastDirectionChange = time;
+
+        const xMod = Phaser.Math.RND.integerInRange(-1, 1);
+        const yMod = Phaser.Math.RND.integerInRange(-1, 1);
+        let speed = AreaCreature.SPEED;
+
+        if (xMod && yMod) {
+            speed = speed / 2;
+        }
+
+        this.body.setVelocity(speed * xMod, speed * yMod);
+
+        let rotation = this.angle;
+
+        if (!xMod && yMod < 0) {
+            rotation = 0;
+        } else if (xMod > 0 && yMod < 0) {
+            rotation = 45;
+        } else if (xMod > 0 && !yMod) {
+            rotation = 90;
+        } else if (xMod > 0 && yMod > 0) {
+            rotation = 135;
+        } else if (!xMod && yMod > 0) {
+            rotation = 180;
+        } else if (xMod < 0 && yMod > 0) {
+            rotation = 225;
+        } else if (xMod < 0 && !yMod) {
+            rotation = 270;
+        } else if (xMod < 0 && yMod < 0) {
+            rotation = 315;
+        }
+
+        this.setAngle(rotation);
     }
 
     private setBiomeTexture(biome: CellBiome) {

@@ -17,6 +17,7 @@ export class ExploreAreaScene extends CustomScene {
     private biome: CellBiome;
 
     private player: AreaPlayer;
+    private creatures: Phaser.GameObjects.Group;
 
     constructor() {
         super({ key: ExploreAreaScene.KEY });
@@ -138,26 +139,30 @@ export class ExploreAreaScene extends CustomScene {
         }
     }
 
-    update() {
+    update(time: number) {
         this.player.update();
+        this.creatures.getChildren().forEach((c) => c.update(time));
     }
 
     private spawnResources() {
         const resources = this.map.getResources();
+        const creatures: AreaCreature[] = [];
 
         resources.forEach((r) => {
             const coord = this.translateCoord(r.x, r.y);
 
             if (r.resource === "enemy") {
-                const res = new AreaCreature(
+                const creature = new AreaCreature(
                     this,
                     coord.x,
                     coord.y,
                     this.biome
                 );
+                creatures.push(creature);
+
                 this.physics.add.collider(
                     this.player,
-                    res,
+                    creature,
                     (player: AreaPlayer) => {
                         if (player.damage(this.time.now)) {
                             this.sound.play(SfxAssets.enemyHit);
@@ -194,6 +199,8 @@ export class ExploreAreaScene extends CustomScene {
                 );
             }
         });
+
+        this.creatures = this.add.group(creatures);
     }
 
     private leaveArea() {
