@@ -13,6 +13,7 @@ export const GeneralAssets = {
     baseBackgroundNight: "baseBackgroundNight",
     worldPlayer: "worldPlayer",
     areaPlayer: "areaPlayer",
+    areaEnemies: "areaEnemies",
     resources: "resources",
 } as const;
 

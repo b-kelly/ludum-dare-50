@@ -1,3 +1,4 @@
+import { AreaCreature } from "../objects/AreaMap/AreaCreature";
 import { AreaMap } from "../objects/AreaMap/AreaMap";
 import { AreaPlayer } from "../objects/AreaMap/AreaPlayer";
 import { AreaResource } from "../objects/AreaMap/AreaResource";
@@ -46,6 +47,15 @@ export class ExploreAreaScene extends CustomScene {
         );
 
         this.load.spritesheet(
+            GeneralAssets.areaEnemies,
+            "assets/sprites/enemies.png",
+            {
+                frameWidth: TILE_WIDTH,
+                frameHeight: TILE_WIDTH,
+            }
+        );
+
+        this.load.spritesheet(
             GeneralAssets.resources,
             "assets/sprites/resources-tileset.png",
             {
@@ -58,8 +68,7 @@ export class ExploreAreaScene extends CustomScene {
         this.load.audio(SfxAssets.bgForest, "assets/sfx/bg-forest.mp3");
         this.load.audio(SfxAssets.bgWetland, "assets/sfx/bg-wetland.mp3");
         this.load.audio(SfxAssets.grabResource, "assets/sfx/grab-resource.mp3");
-        // TODO
-        //this.load.audio(SfxAssets.enemyHit, "assets/sfx/enemy-hit.mp3");
+        this.load.audio(SfxAssets.enemyHit, "assets/sfx/enemy-hit.mp3");
     }
 
     create() {
@@ -138,21 +147,43 @@ export class ExploreAreaScene extends CustomScene {
 
         resources.forEach((r) => {
             const coord = this.translateCoord(r.x, r.y);
-            const res = new AreaResource(
-                this,
-                coord.x,
-                coord.y,
-                r.resource,
-                this.biome
-            );
 
-            this.physics.add.collider(res, this.player, (r: AreaResource) => {
-                this.sound.play(SfxAssets.grabResource);
-                this.global.adjustHaul({
-                    [r.resource]: 1,
-                });
-                r.destroy();
-            });
+            if (r.resource === "enemy") {
+                const res = new AreaCreature(
+                    this,
+                    coord.x,
+                    coord.y,
+                    this.biome
+                );
+                this.physics.add.collider(
+                    res,
+                    this.player,
+                    (res: AreaCreature) => {
+                        this.sound.play(SfxAssets.enemyHit);
+                        // TODO DO DAMAGE
+                    }
+                );
+            } else {
+                const res = new AreaResource(
+                    this,
+                    coord.x,
+                    coord.y,
+                    r.resource,
+                    this.biome
+                );
+
+                this.physics.add.collider(
+                    res,
+                    this.player,
+                    (r: AreaResource) => {
+                        this.sound.play(SfxAssets.grabResource);
+                        this.global.adjustHaul({
+                            [r.resource]: 1,
+                        });
+                        r.destroy();
+                    }
+                );
+            }
         });
     }
 
@@ -171,6 +202,44 @@ export class ExploreAreaScene extends CustomScene {
             frameRate: 5,
             frames: this.anims.generateFrameNumbers(GeneralAssets.areaPlayer, {
                 frames: [0, 1, 0, 2],
+            }),
+            repeat: -1,
+        });
+
+        // creatures
+        this.anims.create({
+            key: "areacreature_wetland",
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers(GeneralAssets.areaEnemies, {
+                start: 0,
+                end: 3,
+            }),
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "areacreature_desert",
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers(GeneralAssets.areaEnemies, {
+                start: 4,
+                end: 7,
+            }),
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "areacreature_forest",
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers(GeneralAssets.areaEnemies, {
+                start: 8,
+                end: 11,
+            }),
+            repeat: -1,
+        });
+        this.anims.create({
+            key: "areacreature_generic",
+            frameRate: 3,
+            frames: this.anims.generateFrameNumbers(GeneralAssets.areaEnemies, {
+                start: 12,
+                end: 15,
             }),
             repeat: -1,
         });

@@ -10,11 +10,14 @@ export enum CellState {
 
 interface AreaCell {
     state: CellState;
-    resource?: keyof Resources;
+    resource?: keyof Resources | "enemy";
     rotation?: number;
 }
 
-const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
+const resourceSpawnRate: Record<
+    CellBiome,
+    Record<keyof Resources | "enemy", number>
+> = {
     default: null,
     desert: {
         filters: 0.001,
@@ -23,6 +26,7 @@ const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
         panels: 0.002,
         parts: 0.005,
         water: 0.001,
+        enemy: 0.005,
     },
     forest: {
         filters: 0.002,
@@ -31,6 +35,7 @@ const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
         panels: 0.002,
         parts: 0.001,
         water: 0.001,
+        enemy: 0.005,
     },
     wetland: {
         filters: 0.002,
@@ -39,6 +44,7 @@ const resourceSpawnRate: Record<CellBiome, Record<keyof Resources, number>> = {
         panels: 0.001,
         parts: 0.001,
         water: 0.05,
+        enemy: 0.005,
     },
 } as const;
 
@@ -459,9 +465,13 @@ export class AreaMap {
                         case "parts":
                             ctx.fillStyle = "hotpink";
                             break;
-                        case "fuel":
-                        default:
+                        case "panels":
                             ctx.fillStyle = "purple";
+                            break;
+                        case "enemy":
+                        default:
+                            ctx.fillStyle = "gold";
+                            break;
                     }
                 }
 

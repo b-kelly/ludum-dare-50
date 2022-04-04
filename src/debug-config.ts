@@ -27,9 +27,9 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: OverworldScene.KEY,
+    sceneKey: ExploreAreaScene.KEY,
     data: {
-        biome: "wetland",
+        biome: "desert",
     },
     skipTutorial: true,
 };
