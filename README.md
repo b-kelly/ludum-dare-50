@@ -63,3 +63,5 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] implement special map event sound
 -   [ ] implement portraits and textboxes for crew requests
 -   [x] add transitions between scenes to slow it down a bit and make it feel more polished
+-   [ ] hit targets are wrong for buttons
+-   [ ] when you hit explore on the central tile it ends the day
