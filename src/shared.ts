@@ -27,6 +27,7 @@ export const UiAssets = {
     arrowRight: "arrowRight",
     tutorialPane: "tutorialPane",
     briefingPane: "briefingPane",
+    portraitPane: "portraitPane"
     // kevIcon: "kev",
     // storageIcon: "storage"
 } as const;

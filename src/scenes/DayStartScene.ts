@@ -6,7 +6,7 @@ import { OverworldScene } from "./OverworldScene";
 import { StatusUiScene } from "./StatusUiScene";
 
 const PADDING = 48;
-const ELPADDING = 8;
+const ELPADDING = 16;
 
 export class DayStartScene extends CustomScene {
     static readonly KEY = "DayStartScene";
@@ -48,8 +48,7 @@ export class DayStartScene extends CustomScene {
             .text(
                 paneX + paneWidth / 2,
                 paneY,
-                `13th Mission to Kepler 22B - Day ${
-                    30 + this.global.campaignStats.dayCount
+                `13th Mission to Kepler 22B - Day ${31 + this.global.campaignStats.dayCount
                 }`,
                 {
                     ...baseTextOptions,
@@ -194,9 +193,8 @@ export class DayStartScene extends CustomScene {
             ...Object.entries(startingResources).map(
                 (kv: [keyof Resources, number]) => {
                     const key = kv[0];
-                    const message = `${key}: ${String(kv[1])} (+${
-                        stat.dailyReplenish[key]
-                    }) / ${stat.maxStorage[key]}`;
+                    const message = `${key}: ${String(kv[1])} (+${stat.dailyReplenish[key]
+                        }) / ${stat.maxStorage[key]}`;
 
                     return message;
                 }
