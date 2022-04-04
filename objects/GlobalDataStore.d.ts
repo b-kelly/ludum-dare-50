@@ -17,6 +17,7 @@ export interface BaseStatus {
     fuelCostVisitedTile: number;
     fuelCostUnvisitedTile: number;
     fuelCostPerScan: number;
+    maxPlayerHp: number;
 }
 interface CurrentDay {
     colonyCount: number;
@@ -47,6 +48,7 @@ export declare class GlobalDataStore {
     logTileVisit(type: CellType): void;
     logTileExploration(): void;
     adjustHaul(delta: Partial<Resources>): void;
+    upgradeBase(upgrade: GameEvent["upgrade"]): void;
     startDay(): GameEvent;
     /** @returns true if a gameover was triggered */
     endDay(): GameOverType;

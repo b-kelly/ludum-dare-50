@@ -28,7 +28,11 @@ export interface GameEvent {
     /** the specific character that is speaking */
     character?: EventCharacter;
     resourceDelta?: Partial<Resources>;
-    upgrades?: unknown;
+    upgrade?: {
+        resource: keyof Resources | "playerHp";
+        type: "replenishment" | "capacity";
+        delta: number;
+    };
     conditions?: {
         coloniesFound?: number;
         biome?: CellBiome;
