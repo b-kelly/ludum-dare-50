@@ -9,10 +9,13 @@ export declare class TextBox extends Phaser.GameObjects.Container {
     constructor(scene: Phaser.Scene, config: {
         x: number;
         y: number;
-        backgroundAssetKey: string;
+        backgroundAsset: Phaser.GameObjects.GameObject & Phaser.GameObjects.Components.Origin & Phaser.GameObjects.Components.GetBounds;
         pages: PagedText;
         padding: number;
+        buttonAlign?: "right" | "left" | "center";
+        buttonText?: string;
     });
-    goToPage(page: number): void;
+    setPages(pages: PagedText): this;
+    private goToPage;
 }
 export {};

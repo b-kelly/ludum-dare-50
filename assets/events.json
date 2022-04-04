@@ -3,7 +3,17 @@
         {
             "type": "colony",
             "shortDescriptor": "found colony 2",
-            "message": "You approach the central dome in your KEV. “Second Mission of Humanity to Kepler-22b” is engraved on the front hatch, just like “Thirteenth” is engraved on yours. These colonists only landed about seven years ago, as far as you know, but their base might as well be an ancient ruin. The stiff plastic polymer that comprises the dome’s membrane is all but disintegrated, and the structure itself is pock-marked and brittle. The materials seem to be of lower quality than the ones that make up your base. There’s no sign of any crew members.",
+            "message": "You approach the central dome in your KEV. \"Second Mission of Humanity to Kepler-22b\" is engraved on the front hatch, just like \"Thirteenth\" is engraved on yours. These colonists only landed about seven years ago, as far as you know, but their base might as well be an ancient ruin. The stiff plastic polymer that comprises the dome's membrane is all but disintegrated, and the structure itself is pock-marked and brittle. The materials seem to be of lower quality than the ones that make up your base. There's no sign of any crew members.",
+            "unique": true,
+            "upgrades": "TODO",
+            "conditions": {
+                "coloniesFound": 0
+            }
+        },
+        {
+            "type": "colony",
+            "shortDescriptor": "found colony 8",
+            "message": "As you get closer to the dome of what appears to be the Eighth Colony, you hear a slight buzzing noise coming from somewhere inside. You step inside the hatch, which is ajar, and see some sort of electronic device nestled amongst fuel cells. You realize as you look closer that this is a jury-rigged signal jammer. A note written on the floor with a piece of charred wood reads: \"Only way to stop 4 from finding us. Gone to stop them.\" One of the lunar panels is in good repair, so you pick it up. The whining buzz emanating from the device peters out.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -12,8 +22,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 8",
-            "message": "As you get closer to the dome of what appears to be the Eighth Colony, you hear a slight buzzing noise coming from somewhere inside. You step inside the hatch, which is ajar, and see some sort of electronic device nestled amongst fuel cells. You realize as you look closer that this is a jury-rigged signal jammer. A note written on the floor with a piece of charred wood reads: “Only way to stop 4 from finding us. Gone to stop them.” One of the lunar panels is in good repair, so you pick it up. The whining buzz emanating from the device peters out.",
+            "shortDescriptor": "found colony 6",
+            "message": "Approaching the colony, it almost looks like they weren't able to set it up. Storage structures are still dotting the clearing, and only the central dome is readily identifiable - \"Sixth Mission.\" When you look closer, you see that while it seems like it was stopped in-progress, parts of this settlement have actually been dismantled. Stripped for parts. Shreds of polymer cling to the half-assembled dome, ripped from their anchor points. Whoever did this had no regard for the survival of this colony. When you poke your head into one of the storage structures, you see that crew members had attempted to take shelter inside, but they just weren't designed to sustain human life. One desiccated corpse is clinging to a scanner. You pry it from their hand, thinking that another scanner might make your job easier. Somehow.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -22,8 +32,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 6",
-            "message": "Approaching the colony, it almost looks like they weren’t able to set it up. Storage structures are still dotting the clearing, and only the central dome is readily identifiable - “Sixth Mission.” When you look closer, you see that while it seems like it was stopped in-progress, parts of this settlement have actually been dismantled. Stripped for parts. Shreds of polymer cling to the half-assembled dome, ripped from their anchor points. Whoever did this had no regard for the survival of this colony. When you poke your head into one of the storage structures, you see that crew members had attempted to take shelter inside, but they just weren’t designed to sustain human life. One desiccated corpse is clinging to a scanner. You pry it from their hand, thinking that another scanner might make your job easier. Somehow.",
+            "shortDescriptor": "found colony 1",
+            "message": "Walking up to the colony (there is no label on the hatch so you assume this is the First Mission, before they added the engraving) you see massive amounts of hexaslug residue everywhere. On the ground, on the surrounding flora, on the hatch door… but no hexaslugs. You get closer to the main dome and squint inside, but can't see anything. You try rubbing the plastic to get a clearer view, when you realize that you're staring directly into the underbelly of a hexaslug, which seems to be napping on the wall. The dome has been taken over by a different kind of colony. Ironically, the central dome turned slug chamber is in fairly good condition, since the slug residue effectively keeps the surfaces glued together. You scrape up a ton of slug residue on your way out, noting that you should be able to increase the durability of your own central dome with this much material.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -32,8 +42,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 1",
-            "message": "Walking up to the colony (there is no label on the hatch so you assume this is the First Mission, before they added the engraving) you see massive amounts of hexaslug residue everywhere. On the ground, on the surrounding flora, on the hatch door… but no hexaslugs. You get closer to the main dome and squint inside, but can’t see anything. You try rubbing the plastic to get a clearer view, when you realize that you’re staring directly into the underbelly of a hexaslug, which seems to be napping on the wall. The dome has been taken over by a different kind of colony. Ironically, the central dome turned slug chamber is in fairly good condition, since the slug residue effectively keeps the surfaces glued together. You scrape up a ton of slug residue on your way out, noting that you should be able to increase the durability of your own central dome with this much material.",
+            "shortDescriptor": "found colony 3",
+            "message": "You drive your KEV right up to the front hatch of the Third Mission - you want to be able to beat a quick escape if there's some other kind of infestation in there. It's clear that there aren't any living humans here, but surrounding the hatch are a ton of materials shoved into disintegrating packs. Fuel cells, dried up bundles of plant fiber… you squint at a tatter of fabric from what looks like an official Kepler-22b all-purpose coverall, and can just make out \"Second Mission\" embroidered on a faded patch. These must be the people who were missing from the second colony. But why did this colony not let them in? ",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -42,8 +52,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 3",
-            "message": "You drive your KEV right up to the front hatch of the Third Mission - you want to be able to beat a quick escape if there’s some other kind of infestation in there. It’s clear that there aren’t any living humans here, but surrounding the hatch are a ton of materials shoved into disintegrating packs. Fuel cells, dried up bundles of plant fiber… you squint at a tatter of fabric from what looks like an official Kepler-22b all-purpose coverall, and can just make out “Second Mission” embroidered on a faded patch. These must be the people who were missing from the second colony. But why did this colony not let them in? ",
+            "shortDescriptor": "found colony 7",
+            "message": "You see the dormitory quarters - a tiny dome off to your right. You see the medical and engineering domes set up alongside. But where's the central dome? Which colony is this? These colonists, it seems, tried to make a go of it using just the ancillary domes, but it was no use. Without the oxygen-generating agriculture in the central dome, they were fighting a losing battle. You pick up some medical supplies half-hidden under a crate in the medical dome, thinking that they may help you better survive encounters with native fauna.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -52,8 +62,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 7",
-            "message": "You see the dormitory quarters - a tiny dome off to your right. You see the medical and engineering domes set up alongside. But where’s the central dome? Which colony is this? These colonists, it seems, tried to make a go of it using just the ancillary domes, but it was no use. Without the oxygen-generating agriculture in the central dome, they were fighting a losing battle. You pick up some medical supplies half-hidden under a crate in the medical dome, thinking that they may help you better survive encounters with native fauna.",
+            "shortDescriptor": "found colony 5",
+            "message": "One notable thing about this dome is that there's a big tree growing out of it. Not an Earth tree, a local purple one with vines criss-crossing around the ceiling. When you step through a hole in the side, you see a large area that looks … interrupted. As if everyone in the 5th Mission was doing their work and then suddenly stopped. Storage boxes are opened and discarded wrappings strewn everywhere. The hatch to the dormitories is sealed shut. Opening the hatch, you're hit with an overpoweringly stale odor. Walking closer, you see skeletons huddled together on the floor and on the beds like they're waiting for something. One glance at their clogged air vents tells you that these crew members suffocated. What were they hiding from?",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -62,8 +72,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 5",
-            "message": "One notable thing about this dome is that there’s a big tree growing out of it. Not an Earth tree, a local purple one with vines criss-crossing around the ceiling. When you step through a hole in the side, you see a large area that looks … interrupted. As if everyone in the 5th Mission was doing their work and then suddenly stopped. Storage boxes are opened and discarded wrappings strewn everywhere. The hatch to the dormitories is sealed shut. Opening the hatch, you’re hit with an overpoweringly stale odor. Walking closer, you see skeletons huddled together on the floor and on the beds like they’re waiting for something. One glance at their clogged air vents tells you that these crew members suffocated. What were they hiding from?",
+            "shortDescriptor": "found colony 10",
+            "message": "You smell Colony 10 before you see it. For not the first time, you wonder why your in-suit air filtration doesn't filter out smells. Your first guess at the stench is a dreadfully unkempt chemical toilet, but then the makeshift pens full of starved toughskins come into view. Their corpses seem fairly fresh, especially when compared with the piles of human bones surrounding them. You can't help but wonder if the pens smelled any better when the toughskins were alive. ",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -72,8 +82,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 10",
-            "message": "You smell Colony 10 before you see it. For not the first time, you wonder why your in-suit air filtration doesn’t filter out smells. Your first guess at the stench is a dreadfully unkempt chemical toilet, but then the makeshift pens full of starved toughskins come into view. Their corpses seem fairly fresh, especially when compared with the piles of human bones surrounding them. You can’t help but wonder if the pens smelled any better when the toughskins were alive. ",
+            "shortDescriptor": "found colony 9",
+            "message": "Approaching the central dome, you feel some sense of excitement. It's the 9th Mission, and it looks well-preserved! There might be other colonists inside! Walking up to the semi-transparent exterior, you glance inside and see that the floor looks like it's… moving? Looking down a bit more closely, you notice a small hole gnawed through a weakened point in the plastic. The floor isn't moving. It's the nibblers. Nibblers everywhere, swarming over shapes on the ground that are too corpse-like for your taste. Did they stockpile too much food? Did they try to take one for a pet? Whatever the case, you get out of there as quickly as you can. On your way back to the KEV, you see theirs hidden in some overgrown weeds. Poking your head inside their KEV reveals a still-packaged backup air filter. You take it - this will increase your base's capacity substantially.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -82,8 +92,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 9",
-            "message": "Approaching the central dome, you feel some sense of excitement. It’s the 9th Mission, and it looks well-preserved! There might be other colonists inside! Walking up to the semi-transparent exterior, you glance inside and see that the floor looks like it’s… moving? Looking down a bit more closely, you notice a small hole gnawed through a weakened point in the plastic. The floor isn’t moving. It’s the nibblers. Nibblers everywhere, swarming over shapes on the ground that are too corpse-like for your taste. Did they stockpile too much food? Did they try to take one for a pet? Whatever the case, you get out of there as quickly as you can. On your way back to the KEV, you see theirs hidden in some overgrown weeds. Poking your head inside their KEV reveals a still-packaged backup air filter. You take it - this will increase your base’s capacity substantially.",
+            "shortDescriptor": "found colony 11",
+            "message": "Finally: you've found the 11th Mission. You know that __ and __ back at base are desperate to meet, well, anyone else, and approach the hatch confident that, this time, you'll find people inside. You were just talking to __ a couple of days ago. So when you see a scratched note on the hatch's face, your stomach sinks. \"Our water recycling system died. So did our KEV. Have coordinates for C13, are leaving now on foot.\" It's dated yesterday. You know how far you are from your base. Without water recycling? Without a KEV? Dejected, you walk away from the hatch and back to your vehicle.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -92,8 +102,8 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 11",
-            "message": "Finally: you’ve found the 11th Mission. You know that __ and __ back at base are desperate to meet, well, anyone else, and approach the hatch confident that, this time, you’ll find people inside. You were just talking to __ a couple of days ago. So when you see a scratched note on the hatch’s face, your stomach sinks. “Our water recycling system died. So did our KEV. Have coordinates for C13, are leaving now on foot.” It’s dated yesterday. You know how far you are from your base. Without water recycling? Without a KEV? Dejected, you walk away from the hatch and back to your vehicle.",
+            "shortDescriptor": "found colony 4",
+            "message": "You spot this colony from further away than the others. As you get closer, you see why: two center domes! Three KEVs? You know that Earth didn't send the 4th Mission here with tons of extra supplies, and are confused until you realize: that's where the plundered supplies from the other colonies went. This colony stole it all. Looking around, you see no signs of life save a few nibblers scurrying across the clearing. Half of the structures here are charred, with holes punctured into the membrane walls. There are human bones scattered around and you realize that what you're actually looking at is a battlefield. There is nothing here for you.",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
@@ -102,22 +112,12 @@
         },
         {
             "type": "colony",
-            "shortDescriptor": "found colony 4",
-            "message": "You spot this colony from further away than the others. As you get closer, you see why: two center domes! Three KEVs? You know that Earth didn’t send the 4th Mission here with tons of extra supplies, and are confused until you realize: that’s where the plundered supplies from the other colonies went. This colony stole it all. Looking around, you see no signs of life save a few nibblers scurrying across the clearing. Half of the structures here are charred, with holes punctured into the membrane walls. There are human bones scattered around and you realize that what you’re actually looking at is a battlefield. There is nothing here for you.",
+            "shortDescriptor": "found colony 12",
+            "message": "Could it be? Is this the 12th Mission? You approach cautiously, trying not to get your expectations too high. Realistically, you've only gotten one transmission from what you *think* is them, but who can know? You step over a pile of glittering debris to open the hatch - the seal is still working. Exiting the airlock, you see a central dome basically identical to yours. Plants, trees, comms center… this mission only left three months before yours did, so you have the same setup. Unfortunately, this base has gone dark. No blinking lights on the comms, no artificial sunlight set up by the Earth plants, nothing. And you don't see anyone. You realize then that the debris outside the door were the colony's smashed up lunar panels. And just when you realize that, your helmet comms flicker on. \"Is anyone here? I see your KEV, I know you're here.\" The voice is quavering, uncertain. It has an edge of hysteria to it. Did they do this? Should you respond? Would making contact add a member to your crew and save a life, or doom what's left of humanity?",
             "unique": true,
             "upgrades": "TODO",
             "conditions": {
                 "coloniesFound": 11
-            }
-        },
-        {
-            "type": "colony",
-            "shortDescriptor": "found colony 12",
-            "message": "Could it be? Is this the 12th Mission? You approach cautiously, trying not to get your expectations too high. Realistically, you’ve only gotten one transmission from what you *think* is them, but who can know? You step over a pile of glittering debris to open the hatch - the seal is still working. Exiting the airlock, you see a central dome basically identical to yours. Plants, trees, comms center… this mission only left three months before yours did, so you have the same setup. Unfortunately, this base has gone dark. No blinking lights on the comms, no artificial sunlight set up by the Earth plants, nothing. And you don’t see anyone. You realize then that the debris outside the door were the colony’s smashed up lunar panels. And just when you realize that, your helmet comms flicker on. “Is anyone here? I see your KEV, I know you’re here.” The voice is quavering, uncertain. It has an edge of hysteria to it. Did they do this? Should you respond? Would making contact add a member to your crew and save a life, or doom what’s left of humanity?",
-            "unique": true,
-            "upgrades": "TODO",
-            "conditions": {
-                "coloniesFound": 12
             }
         }
     ],
@@ -125,7 +125,7 @@
         {
             "type": "daily",
             "shortDescriptor": "day 1 event",
-            "morningMessage": "You’ve been foraging close to base since you arrived one month prior, but Engineering Specialist Luan has just finished fixing the Kepler Excursion Vehicle (KEV), which was damaged upon your arrival. As resources are scarce, today you begin foraging further afield. Comms Specialist Villalobos still can’t pick up any signals at all, so we’re not sure where the other colonies have landed, but perhaps you can find them.\n\nYour fuel cells aren’t fully charged, you’re running low on pretty much everything, and everyone is counting on you.",
+            "morningMessage": "You've been foraging close to base since you arrived one month prior, but Engineering Specialist Luan has just finished fixing the Kepler Excursion Vehicle (KEV), which was damaged upon your arrival. As resources are scarce, today you begin foraging further afield. Comms Specialist Villalobos still can't pick up any signals at all, so we're not sure where the other colonies have landed, but perhaps you can find them.\n\nYour fuel cells aren't fully charged, you're running low on pretty much everything, and everyone is counting on you.",
             "message": "Your first day in the field went well, and the crew takes a rare moment to get together and toast to your success. You only stick around for a few minutes before getting some sleep… tomorrow's work is looming",
             "conditions": {
                 "onDay": 0
@@ -134,7 +134,7 @@
         {
             "type": "daily",
             "shortDescriptor": "day 4 event",
-            "morningMessage": "You’re exhausted. The Lomans over in agriculture were bickering as soon as the first sun came up. Adzo wants to wait until we’ve finished up the base to continue expanding our farm, but Shreya insists that our top priority is sowing more seeds. You don’t care either way, you just want more sleep.",
+            "morningMessage": "You're exhausted. The Lomans over in agriculture were bickering as soon as the first sun came up. Adzo wants to wait until we've finished up the base to continue expanding our farm, but Shreya insists that our top priority is sowing more seeds. You don't care either way, you just want more sleep.",
             "message": "When you get back, the Lomans are still arguing about agriculture. You suppose it's better that they care too much than too little...",
             "conditions": {
                 "onDay": 3
@@ -143,8 +143,8 @@
         {
             "type": "daily",
             "shortDescriptor": "day 8 event",
-            "morningMessage": "Depressing news this morning: the comms system works. How did Comms Officer Villalobos figure that out? She got a transmission - the last transmission - from Earth. She’s still deciphering the garbled contents, but the first bit starts “This will be our last transmission,” so. Great way to start the day. If our comms work, where is everyone?",
-            "message": "The rest of Earth’s final transmission reads, “Our fate lies solely with you now. We have retreated into a bunker to live out our final days. May our collective hope for humanity’s future be the fuel you need to survive.” Somber moods all around tonight.",
+            "morningMessage": "Depressing news this morning: the comms system works. How did Comms Officer Villalobos figure that out? She got a transmission - the last transmission - from Earth. She's still deciphering the garbled contents, but the first bit starts \"This will be our last transmission,\" so. Great way to start the day. If our comms work, where is everyone?",
+            "message": "The rest of Earth's final transmission reads, \"Our fate lies solely with you now. We have retreated into a bunker to live out our final days. May our collective hope for humanity's future be the fuel you need to survive.\" Somber moods all around tonight.",
             "conditions": {
                 "onDay": 7
             }
@@ -153,7 +153,7 @@
             "type": "daily",
             "shortDescriptor": "day 13 event",
             "morningMessage": "Some of the other colonists have started wondering aloud if they're the last people alive. Commander Adam hates it when they get pessimistic, but it's hard not to.",
-            "message": "You’re starting to wonder yourself if you’ll find any other intelligent life out there. Toughskins and hardshells don’t count. Where are the other colonists? Why haven’t they contacted the 13th Mission yet? You’re so sure that they would have advice for your fledgling colony, but there’s nothing but radio silence.",
+            "message": "You're starting to wonder yourself if you'll find any other intelligent life out there. Toughskins and hardshells don't count. Where are the other colonists? Why haven't they contacted the 13th Mission yet? You're so sure that they would have advice for your fledgling colony, but there's nothing but radio silence.",
             "conditions": {
                 "onDay": 12
             }
@@ -162,7 +162,7 @@
             "type": "daily",
             "shortDescriptor": "day 19 event",
             "morningMessage": "The routine has settled in - you leave, the crew works on repairs with the supplies you brought in yesterday, rinse and repeat. You try to remember something about an ancient myth you once read about… something about Sisyphus? You shoulder your boulder and get ready to go.",
-            "message": "You're ready to sleep. Sisyphus’s boulder slowly rolls back to the bottom of the hill.",
+            "message": "You're ready to sleep. Sisyphus's boulder slowly rolls back to the bottom of the hill.",
             "conditions": {
                 "onDay": 18
             }
@@ -170,7 +170,7 @@
         {
             "type": "daily",
             "shortDescriptor": "day 30 event",
-            "morningMessage": "You had a conversation with Philosophy Specialist Kamal Marion this morning over breakfast.\n\n“Do you think our descendants will be the same as us? Pining after Earth?” you asked Kamal.\n\nHe shook his head. “To them, I think this will all be normal. They won’t know - or maybe even care - about our old life back on Earth.”\n\nYou looked so depressed that he barked out a sharp laugh. “But let’s not get ahead of ourselves. Let’s make it to tomorrow before we think about our descendants, eh?”",
+            "morningMessage": "You had a conversation with Philosophy Specialist Kamal Marion this morning over breakfast.\n\n\"Do you think our descendants will be the same as us? Pining after Earth?\" you asked Kamal.\n\nHe shook his head. \"To them, I think this will all be normal. They won't know - or maybe even care - about our old life back on Earth.\"\n\nYou looked so depressed that he barked out a sharp laugh. \"But let's not get ahead of ourselves. Let's make it to tomorrow before we think about our descendants, eh?\"",
             "message": "",
             "conditions": {
                 "onDay": 29
@@ -182,9 +182,9 @@
             "type": "daily",
             "shortDescriptor": "low on fuel cells",
             "character": "rupert",
-            "morningMessage": "“EXL, our lunar panels are not producing very much and we’re running low. Can you focus on finding additional reflective material today? Our future expeditions rely on a consistent energy source.”",
-            "message": "“Excellent work - we've ensured that our future expeditions will have more than enough fuel. That'll be all.”",
-            "failMessage": "“We really needed that material to make more lunar panels. I hope we have enough to make it through the week.",
+            "morningMessage": "\"EXL, our lunar panels are not producing very much and we're running low. Can you focus on finding additional reflective material today? Our future expeditions rely on a consistent energy source.\"",
+            "message": "\"Excellent work - we've ensured that our future expeditions will have more than enough fuel. That'll be all.\"",
+            "failMessage": "\"We really needed that material to make more lunar panels. I hope we have enough to make it through the week.",
             "conditions": {
                 "resource": {
                     "type": "fuel",
@@ -196,9 +196,9 @@
             "type": "daily",
             "shortDescriptor": "low on filtration material",
             "character": "chip",
-            "morningMessage": "“Lieutenant, our air filters are insufficient. They were designed for an environment with fewer fine particles, so we’re having to double up filters to make the air breathable. Please keep an eye out for filter-like material so that we can all die from something else.”",
-            "message": "“Good work finding those air filters, and keep em’ coming. I’ll let you know when I find something else threatening to kill us.”",
-            "failMessage": "“No luck with the filters then? My backup plan was getting everybody to hold their breath.”",
+            "morningMessage": "\"Lieutenant, our air filters are insufficient. They were designed for an environment with fewer fine particles, so we're having to double up filters to make the air breathable. Please keep an eye out for filter-like material so that we can all die from something else.\"",
+            "message": "\"Good work finding those air filters, and keep em' coming. I'll let you know when I find something else threatening to kill us.\"",
+            "failMessage": "\"No luck with the filters then? My backup plan was getting everybody to hold their breath.\"",
             "conditions": {
                 "resource": {
                     "type": "filters",
@@ -210,9 +210,9 @@
             "type": "daily",
             "shortDescriptor": "low on water",
             "character": "britt",
-            "morningMessage": "“We need more water! Our agricultural yield is already behind projections and if we don’t get another source of water then I can’t keep these plants alive at all!”",
-            "message": "“Thanks for replenishing our water supply, this should keep us going for a while.”",
-            "failMessage": "“I can’t grow anything without water!”",
+            "morningMessage": "\"We need more water! Our agricultural yield is already behind projections and if we don't get another source of water then I can't keep these plants alive at all!\"",
+            "message": "\"Thanks for replenishing our water supply, this should keep us going for a while.\"",
+            "failMessage": "\"I can't grow anything without water!\"",
             "conditions": {
                 "resource": {
                     "type": "water",
@@ -224,9 +224,9 @@
             "type": "daily",
             "shortDescriptor": "low on food",
             "character": "harish",
-            "morningMessage": "“Good morning, if you can call it that. We’re nearly out of food reserves and not growing enough of our own food to make up for it. Find something to feed us, or the remainder of humanity can starve to death. Your call.”",
-            "message": "“I’m glad to see you found some food for us. But don’t think we’re out of the woods yet.”",
-            "failMessage": "“It seems you chose the ‘starvation ration’ option for us. Not what I would have picked, but who am I to question your judgment?”",
+            "morningMessage": "\"Good morning, if you can call it that. We're nearly out of food reserves and not growing enough of our own food to make up for it. Find something to feed us, or the remainder of humanity can starve to death. Your call.\"",
+            "message": "\"I'm glad to see you found some food for us. But don't think we're out of the woods yet.\"",
+            "failMessage": "\"It seems you chose the ‘starvation ration' option for us. Not what I would have picked, but who am I to question your judgment?\"",
             "conditions": {
                 "resource": {
                     "type": "food",
@@ -238,9 +238,9 @@
             "type": "daily",
             "shortDescriptor": "low on repair materials",
             "character": "dora",
-            "morningMessage": "“EXL! I’m trying to keep all our maintenance systems running but our colony’s infrastructure was designed with a more… hospitable planet in mind. Kepler-22b makes PSOJ 318.5-22 look like Gliese 667cc!! Hah! …No one? Tough crowd. Anyway. If we don’t get some more repair materials to keep up maintenance we might as well just open all the windows and let the fresh air in, if you get my drift. Hah! …seriously, no one?”",
-            "message": "“Thanks for finding those repair scraps! I should be able to keep us up and running for a while now.”",
-            "failMessage": "“No luck, eh? I’ll see what I can do with what we’ve got.”",
+            "morningMessage": "\"EXL! I'm trying to keep all our maintenance systems running but our colony's infrastructure was designed with a more… hospitable planet in mind. Kepler-22b makes PSOJ 318.5-22 look like Gliese 667cc!! Hah! …No one? Tough crowd. Anyway. If we don't get some more repair materials to keep up maintenance we might as well just open all the windows and let the fresh air in, if you get my drift. Hah! …seriously, no one?\"",
+            "message": "\"Thanks for finding those repair scraps! I should be able to keep us up and running for a while now.\"",
+            "failMessage": "\"No luck, eh? I'll see what I can do with what we've got.\"",
             "conditions": {
                 "resource": {
                     "type": "parts",
@@ -252,9 +252,9 @@
             "type": "daily",
             "shortDescriptor": "overstocked panel material",
             "character": "gaston",
-            "morningMessage": "”Good morning, thanks for finding us so much panel material. We’ve got all we need for some time so I’d recommend focusing on other resources.”",
-            "message": "“We’ll need more panel material eventually, but for now we’ve got plenty.”",
-            "failMessage": "“You got even more panel material? I suppose we’ll need it eventually, but it’s taking more of our time to store it safely than it’s worth.”",
+            "morningMessage": "\"Good morning, thanks for finding us so much panel material. We've got all we need for some time so I'd recommend focusing on other resources.\"",
+            "message": "\"We'll need more panel material eventually, but for now we've got plenty.\"",
+            "failMessage": "\"You got even more panel material? I suppose we'll need it eventually, but it's taking more of our time to store it safely than it's worth.\"",
             "conditions": {
                 "resource": {
                     "type": "fuel",
@@ -266,9 +266,9 @@
             "type": "daily",
             "shortDescriptor": "overstocked panel material",
             "character": "martin",
-            "morningMessage": "”Lieutenant! Excellent work finding so much panel material. Too excellent! We can’t safely store all these volatile materials, we can’t build these panels fast enough, and if we don’t safely dispose of the excess then humanity’s really going out with a bang.”",
-            "message": "“We should be okay now, as far as blowing our colony off the map goes anyway.”",
-            "failMessage": "“MORE panel material?? Are you an enemy spy or something?”",
+            "morningMessage": "\"Lieutenant! Excellent work finding so much panel material. Too excellent! We can't safely store all these volatile materials, we can't build these panels fast enough, and if we don't safely dispose of the excess then humanity's really going out with a bang.\"",
+            "message": "\"We should be okay now, as far as blowing our colony off the map goes anyway.\"",
+            "failMessage": "\"MORE panel material?? Are you an enemy spy or something?\"",
             "conditions": {
                 "resource": {
                     "type": "fuel",
@@ -280,7 +280,7 @@
             "type": "daily",
             "shortDescriptor": "overstocked food",
             "character": "adzo",
-            "morningMessage": "”EXL! You’ve helped us tremendously with finding so much food; I suspect we’ll have far lower rates of violence than our initial projections if we keep this up.”",
+            "morningMessage": "\"EXL! You've helped us tremendously with finding so much food; I suspect we'll have far lower rates of violence than our initial projections if we keep this up.\"",
             "message": "TODO",
             "failMessage": "TODO",
             "conditions": {
@@ -296,7 +296,7 @@
             "character": "shreya",
             "morningMessage": "TODO",
             "message": "TODO",
-            "failMessage": "”Lieutenant, our food stores have been compromised. Looks like we overstocked and the nibblers took notice. At this point I suggest we poison the remaining food supply in that sector and take the tiny bastards down with us.”",
+            "failMessage": "\"Lieutenant, our food stores have been compromised. Looks like we overstocked and the nibblers took notice. At this point I suggest we poison the remaining food supply in that sector and take the tiny bastards down with us.\"",
             "conditions": {
                 "resource": {
                     "type": "food",
@@ -308,9 +308,9 @@
             "type": "daily",
             "shortDescriptor": "overstocked filters",
             "character": "harish",
-            "morningMessage": "”We’ve got higher priorities right now than air filters, lieutenant. I don’t see why you’re spending so much time on trivial items, if we can’t even see the dust I don’t see how it can kill us.”",
+            "morningMessage": "\"We've got higher priorities right now than air filters, lieutenant. I don't see why you're spending so much time on trivial items, if we can't even see the dust I don't see how it can kill us.\"",
             "message": "TODO",
-            "failMessage": "“Maybe the future aliens that find our corpses will be impressed by your vast collection of air filters, but probably not.”",
+            "failMessage": "\"Maybe the future aliens that find our corpses will be impressed by your vast collection of air filters, but probably not.\"",
             "conditions": {
                 "resource": {
                     "type": "filters",
@@ -322,9 +322,9 @@
             "type": "daily",
             "shortDescriptor": "overstocked filters",
             "character": "sachin",
-            "morningMessage": "”EXL, we overstocked our air filter materials. If we keep gathering more right now, we risk damaging them in storage.”",
-            "message": "”Good work, we should be able to replace the damaged units with the fresh ones you brought in.”",
-            "failMessage": "“Not all the damaged air filters were rendered useless, but we’ll need to replace the ones that were. Thanks a lot.”",
+            "morningMessage": "\"EXL, we overstocked our air filter materials. If we keep gathering more right now, we risk damaging them in storage.\"",
+            "message": "\"Good work, we should be able to replace the damaged units with the fresh ones you brought in.\"",
+            "failMessage": "\"Not all the damaged air filters were rendered useless, but we'll need to replace the ones that were. Thanks a lot.\"",
             "conditions": {
                 "resource": {
                     "type": "filters",
@@ -336,7 +336,7 @@
             "type": "daily",
             "shortDescriptor": "overstocked parts",
             "character": "rupert",
-            "morningMessage": "”EXL, we’re carrying as many repair materials as we can reasonably store. Any more would occupy space allocated to another resource, so we would have to destroy our excess and your efforts would be wasted.”",
+            "morningMessage": "\"EXL, we're carrying as many repair materials as we can reasonably store. Any more would occupy space allocated to another resource, so we would have to destroy our excess and your efforts would be wasted.\"",
             "message": "TODO",
             "failMessage": "TODO",
             "conditions": {
@@ -350,9 +350,9 @@
             "type": "daily",
             "shortDescriptor": "overstocked parts",
             "character": "dora",
-            "morningMessage": "”Good morning! Well, no, bad morning. Those excess repair materials you brought in threaten to overflow into the food stores nearby. Do you want canned grassfruit mixed with hydraulic fluid? I'll bet they don’t taste nearly as good as they sound!”",
+            "morningMessage": "\"Good morning! Well, no, bad morning. Those excess repair materials you brought in threaten to overflow into the food stores nearby. Do you want canned grassfruit mixed with hydraulic fluid? I'll bet they don't taste nearly as good as they sound!\"",
             "message": "TODO",
-            "failMessage": "”What are you expecting us to do with even more repair materials? I can’t ‘repair’ our food with this stuff! Maybe if we were robots or something… Sometimes I wish I lived in a science fiction story.”",
+            "failMessage": "\"What are you expecting us to do with even more repair materials? I can't ‘repair' our food with this stuff! Maybe if we were robots or something… Sometimes I wish I lived in a science fiction story.\"",
             "conditions": {
                 "resource": {
                     "type": "parts",
@@ -364,36 +364,36 @@
             "type": "daily",
             "shortDescriptor": "20 tiles visited",
             "character": "lufti",
-            "morningMessage": "“Must be fun drivin’ around all day, but don’t go and get yourself killed! It’s anyone’s guess what’s out there and if you die in our only KEV then we’re all screwed. Grab us some more intel on what all’s around us so that nobody but you’s gotta get killed, alright?”",
-            "message": "“You made it back! Looks like I just lost a bet.”",
-            "failMessage": "”Look now, I know I told you to come back safely, but I didn’t mean at the expense of more data!”",
+            "morningMessage": "\"Must be fun drivin' around all day, but don't go and get yourself killed! It's anyone's guess what's out there and if you die in our only KEV then we're all screwed. Grab us some more intel on what all's around us so that nobody but you's gotta get killed, alright?\"",
+            "message": "\"You made it back! Looks like I just lost a bet.\"",
+            "failMessage": "\"Look now, I know I told you to come back safely, but I didn't mean at the expense of more data!\"",
             "conditions": {}
         },
         {
             "type": "daily",
             "shortDescriptor": "40 tiles visited",
             "character": "lufti",
-            "morningMessage": "“You’re doin’ some great work, Lieutenant! More data you bring back more I find myself convinced we ain’t gonna make it, but could be there’s somethin’ out there well worth your trouble.”",
-            "message": "“I do count myself lucky to work with a EXL without any regard for their own safety or wellbeing.”",
-            "failMessage": "”We need to gather more data on our surroundings so we don’t die all slow and painful like you.”",
+            "morningMessage": "\"You're doin' some great work, Lieutenant! More data you bring back more I find myself convinced we ain't gonna make it, but could be there's somethin' out there well worth your trouble.\"",
+            "message": "\"I do count myself lucky to work with a EXL without any regard for their own safety or wellbeing.\"",
+            "failMessage": "\"We need to gather more data on our surroundings so we don't die all slow and painful like you.\"",
             "conditions": {}
         },
         {
             "type": "daily",
             "shortDescriptor": "60 tiles visited",
             "character": "lufti",
-            "morningMessage": "“G’mornin Lieutenant, the area scans you’ve been bringing back have been real useful. We know a hell of a lot more about what we got here and we might even survive as a colony now. We won’t, but it’s a nice thought ain’t it?”",
-            "message": "“Beautiful! Well not beautiful, this place is more horrifying than any nightmare I ever had. But thanks anyway!”",
-            "failMessage": "“That all? We’re gonna need more data but if I’m bein’ honest I might actually get some sleep tonight if I ain’t starin’ at hexaslugs and nibblers all damn day.”",
+            "morningMessage": "\"G'mornin Lieutenant, the area scans you've been bringing back have been real useful. We know a hell of a lot more about what we got here and we might even survive as a colony now. We won't, but it's a nice thought ain't it?\"",
+            "message": "\"Beautiful! Well not beautiful, this place is more horrifying than any nightmare I ever had. But thanks anyway!\"",
+            "failMessage": "\"That all? We're gonna need more data but if I'm bein' honest I might actually get some sleep tonight if I ain't starin' at hexaslugs and nibblers all damn day.\"",
             "conditions": {}
         },
         {
             "type": "daily",
             "shortDescriptor": "found colony 5",
             "character": "kamal",
-            "morningMessage": "”So sorry to hear about Colony 5, I wish there were time to spare for an investigation so that we might better prepare ourselves against whatever caused those colonists to hide. But there may be another colony out there that we can help, and we need to exhaust all such possibilities before getting tied down to any one location.”",
-            "message": "“I’m starting to wonder if we’re any better off here than we would have been on Earth…”",
-            "failMessage": "”I wish I could say no news is good news, but there may be people out there in dire need of our help.”",
+            "morningMessage": "\"So sorry to hear about Colony 5, I wish there were time to spare for an investigation so that we might better prepare ourselves against whatever caused those colonists to hide. But there may be another colony out there that we can help, and we need to exhaust all such possibilities before getting tied down to any one location.\"",
+            "message": "\"I'm starting to wonder if we're any better off here than we would have been on Earth…\"",
+            "failMessage": "\"I wish I could say no news is good news, but there may be people out there in dire need of our help.\"",
             "conditions": {
                 "coloniesFound": 7
             }
@@ -402,7 +402,7 @@
             "type": "daily",
             "shortDescriptor": "found colony 11",
             "character": "annika",
-            "morningMessage": "“If only the good folks of the 11th Mission had waited… But if they chose to go out on foot, then they were surely desperate already.”",
+            "morningMessage": "\"If only the good folks of the 11th Mission had waited… But if they chose to go out on foot, then they were surely desperate already.\"",
             "message": "TODO",
             "failMessage": "TODO",
             "conditions": {
@@ -412,7 +412,7 @@
         {
             "type": "daily",
             "shortDescriptor": "found colony 8",
-            "morningMessage": "“So you found the 8th Mission? Well, this place just gets worse and worse, doesn’t it? Taking out that signal jammer might open up comms with other colonies though.”",
+            "morningMessage": "\"So you found the 8th Mission? Well, this place just gets worse and worse, doesn't it? Taking out that signal jammer might open up comms with other colonies though.\"",
             "message": "TODO",
             "failMessage": "TODO",
             "conditions": {
@@ -429,7 +429,7 @@
         {
             "type": "map",
             "shortDescriptor": "remnants of 2nd colony",
-            "message": "You chance upon a small bound book made from large leaves and vine-weave binding. The last page reads: “Whichever idiot politician's son designed the dome supports should be killed. Our base is falling apart, but luckily C3 is not too far. They are not answering our messages but they are our only hope.",
+            "message": "You chance upon a small bound book made from large leaves and vine-weave binding. The last page reads: \"Whichever idiot politician's son designed the dome supports should be killed. Our base is falling apart, but luckily C3 is not too far. They are not answering our messages but they are our only hope.",
             "conditions": {
                 "coloniesFound": 1
             }
@@ -502,7 +502,7 @@
         },
         {
             "type": "map",
-            "message": "A gust of wind kicks up and you’re suddenly surrounded by puffball plant spores. You recognize them as being excellent air filter material and grab some up.",
+            "message": "A gust of wind kicks up and you're suddenly surrounded by puffball plant spores. You recognize them as being excellent air filter material and grab some up.",
             "shortDescriptor": "puffballs blown to you",
             "resourceDelta": {
                 "filters": 1
@@ -513,7 +513,7 @@
         },
         {
             "type": "map",
-            "message": "The KEV is buffeted about by the wind, and some of the lighter materials you’ve gathered soar out the window.",
+            "message": "The KEV is buffeted about by the wind, and some of the lighter materials you've gathered soar out the window.",
             "shortDescriptor": "puffballs blown out the window",
             "resourceDelta": {
                 "filters": -1
@@ -535,7 +535,7 @@
         },
         {
             "type": "map",
-            "message": "The KEV splashes through a massive puddle, soaking some of the air filtration material you’ve gathered.",
+            "message": "The KEV splashes through a massive puddle, soaking some of the air filtration material you've gathered.",
             "shortDescriptor": "ruined some of your filtration material",
             "resourceDelta": {
                 "filters": -1
@@ -623,7 +623,7 @@
         },
         {
             "type": "map",
-            "message": "The rough ride is causing all of the things you’ve gathered to fly around the cab. You’re worried about losing precious goods so you use some vine pieces to tie it all down.",
+            "message": "The rough ride is causing all of the things you've gathered to fly around the cab. You're worried about losing precious goods so you use some vine pieces to tie it all down.",
             "shortDescriptor": "tied down loose articles",
             "resourceDelta": {
                 "parts": -1
@@ -634,7 +634,7 @@
         },
         {
             "type": "map",
-            "message": "You haven’t seen it rain on Kepple-B before, but the bucket plants in this area are filled with water. You pour it all into the canister on your KEV.",
+            "message": "You haven't seen it rain on Kepple-B before, but the bucket plants in this area are filled with water. You pour it all into the canister on your KEV.",
             "shortDescriptor": "tied down loose articles",
             "resourceDelta": {
                 "water": 1
@@ -667,7 +667,7 @@
         },
         {
             "type": "map",
-            "message": "The cap on your water canister flies open and you lose some water while you’re trying to get it closed again.",
+            "message": "The cap on your water canister flies open and you lose some water while you're trying to get it closed again.",
             "shortDescriptor": "had an issue with water storage",
             "resourceDelta": {
                 "water": -1

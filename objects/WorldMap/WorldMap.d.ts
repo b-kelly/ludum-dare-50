@@ -8,11 +8,9 @@ export declare const WorldAssets: {
     readonly tiles: "tiles";
     readonly tilesData: {
         readonly forest: 0;
-        readonly wetland: 1;
-        readonly desert: 2;
-        readonly Empty: 3;
-        readonly Colony: 4;
-        readonly Overlay: 5;
+        readonly desert: 1;
+        readonly wetland: 2;
+        readonly Overlay: 3;
     };
 };
 export declare class WorldMap {

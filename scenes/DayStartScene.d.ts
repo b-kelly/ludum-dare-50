@@ -5,5 +5,5 @@ export declare class DayStartScene extends CustomScene {
     init(): void;
     preload(): void;
     create(): void;
-    private createResourcesDisplay;
+    private getDisplayText;
 }

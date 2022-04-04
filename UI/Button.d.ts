@@ -1,6 +1,8 @@
 export declare class Button extends Phaser.GameObjects.Container {
     private isDisabled;
     private buttonImg;
+    get height(): number;
+    get width(): number;
     constructor(scene: Phaser.Scene, options: {
         x: number;
         y: number;
