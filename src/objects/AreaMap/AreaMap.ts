@@ -300,9 +300,9 @@ export class AreaMap {
         display.height = this.size.height * scale;
         ctx.scale(ctxScale, ctxScale);
 
-        for (let i = 0; i < map.length; i++) {
-            for (let j = 0; j < map[i].length; j++) {
-                const cell = map[i][j];
+        for (let y = 0; y < this.size.height; y++) {
+            for (let x = 0; x < this.size.width; x++) {
+                const cell = map[y][x];
                 switch (cell.state) {
                     case CellState.Open:
                         ctx.fillStyle = "white";
@@ -314,7 +314,7 @@ export class AreaMap {
                         ctx.fillStyle = "black";
                 }
 
-                ctx.fillRect(i * width, j * width, width, width);
+                ctx.fillRect(y * width, x * width, width, width);
 
                 if (cell.resource) {
                     switch (cell.resource) {
@@ -336,12 +336,7 @@ export class AreaMap {
                     }
                 }
 
-                ctx.fillRect(
-                    i * width + width / 4,
-                    j * width + width / 4,
-                    width / 2,
-                    width / 2
-                );
+                ctx.fillRect(y * width, x * width, width, width);
             }
         }
 

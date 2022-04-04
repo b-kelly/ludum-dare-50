@@ -80,14 +80,14 @@ export class ExploreAreaScene extends CustomScene {
             layer.setCollisionBetween(start, end, true);
         });
 
+        const { width, height } = layer;
+        this.physics.world.setBounds(0, 0, width, height);
+        this.physics.world.setBoundsCollision();
+
         const coords = this.translateCoord(
             this.map.startLocation.x,
             this.map.startLocation.y
         );
-
-        const { width, height } = layer;
-        this.physics.world.setBounds(0, 0, width, height);
-        this.physics.world.setBoundsCollision();
 
         this.player = new AreaPlayer(this, coords.x, coords.y);
 
@@ -140,10 +140,8 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     private translateCoord(xIndex: number, yIndex: number) {
-        return {
-            x: xIndex * TILE_WIDTH,
-            y: yIndex * TILE_WIDTH,
-        };
+        // swap the y and x so *our* cells match with the tilemap cells
+        return this.tileMap.tileToWorldXY(yIndex, xIndex);
     }
 
     private createAnimations() {
