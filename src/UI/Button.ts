@@ -3,6 +3,7 @@ import { baseTextOptions, SfxAssets, UiAssets } from "../shared";
 export class Button extends Phaser.GameObjects.Container {
     private isDisabled: boolean;
     private buttonImg: Phaser.GameObjects.Sprite;
+    private buttonSize: "large" | "small";
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
@@ -23,7 +24,7 @@ export class Button extends Phaser.GameObjects.Container {
             y: number;
             text: string;
             onClick: () => void;
-            size?: "large" | "small";
+            size?: Button["buttonSize"];
             disabled?: boolean;
         }
     ) {
@@ -32,8 +33,9 @@ export class Button extends Phaser.GameObjects.Container {
         scene.add.existing(this);
 
         // large is the default size
+        this.buttonSize = options.size || "large";
         const asset =
-            options.size === "small" ? UiAssets.buttonSm : UiAssets.buttonLg;
+            this.buttonSize === "small" ? UiAssets.buttonSm : UiAssets.buttonLg;
         this.buttonImg = this.scene.add.sprite(0, 0, asset).setOrigin(0, 0);
 
         this.setInteractive(
@@ -46,16 +48,22 @@ export class Button extends Phaser.GameObjects.Container {
             // eslint-disable-next-line @typescript-eslint/unbound-method
             Phaser.Geom.Rectangle.Contains
         )
-            .on("pointerup", options.onClick)
-            .on("pointerdown", () =>
+            .on("pointerdown", () => {
                 this.scene.sound.play(
                     SfxAssets.click.key,
                     SfxAssets.click.config
-                )
-            )
+                );
+                // TODO small
+                this.buttonImg.setTexture(
+                    this.buttonSize === "large"
+                        ? UiAssets.buttonLgPress
+                        : UiAssets.buttonSm
+                );
+            })
             .on("pointerover", () => this.hover(true))
             .on("pointerout", () => this.hover(false));
 
+        this.setOnClick(options.onClick);
         this.setDisabled(options.disabled);
 
         // take the width of the shadow into consideration when visually centering
@@ -81,11 +89,26 @@ export class Button extends Phaser.GameObjects.Container {
         const newY = this.y - this.buttonImg.height * y;
         this.setPosition(newX, newY);
 
+        // TODO fix the hit box!
+        // this.input.hitArea.setTo(
+        //     newX,
+        //     newY,
+        //     this.buttonImg.width,
+        //     this.buttonImg.height
+        // );
+
         return this;
     }
 
     setOnClick(callback: () => void) {
-        this.off("pointerup").on("pointerup", callback);
+        this.off("pointerup").on("pointerup", () => {
+            this.buttonImg.setTexture(
+                this.buttonSize === "large"
+                    ? UiAssets.buttonLg
+                    : UiAssets.buttonSm
+            );
+            callback();
+        });
     }
 
     setDisabled(isDisabled: boolean) {
@@ -105,9 +128,18 @@ export class Button extends Phaser.GameObjects.Container {
         }
 
         if (entered) {
-            // TODO change sprite frame
+            //TODO sm
+            this.buttonImg.setTexture(
+                this.buttonSize === "large"
+                    ? UiAssets.buttonLgHover
+                    : UiAssets.buttonSm
+            );
         } else {
-            // TODO change sprite frame
+            this.buttonImg.setTexture(
+                this.buttonSize === "large"
+                    ? UiAssets.buttonLg
+                    : UiAssets.buttonSm
+            );
         }
     }
 }

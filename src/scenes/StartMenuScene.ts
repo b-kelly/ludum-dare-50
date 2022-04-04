@@ -29,6 +29,14 @@ export class StartMenuScene extends CustomScene {
         this.load.image(UiAssets.arrowLeft, "assets/ui/arrow-left.png");
         this.load.image(UiAssets.arrowRight, "assets/ui/arrow-right.png");
         this.load.image(UiAssets.buttonLg, "assets/ui/button-lg.png");
+        this.load.image(
+            UiAssets.buttonLgHover,
+            "assets/ui/button-lg-hover.png"
+        );
+        this.load.image(
+            UiAssets.buttonLgPress,
+            "assets/ui/button-lg-press.png"
+        );
         this.load.image(UiAssets.buttonSm, "assets/ui/button-sm.png");
         this.load.image(
             UiAssets.briefingPane,
@@ -36,8 +44,8 @@ export class StartMenuScene extends CustomScene {
         );
         this.load.image(UiAssets.topbar, "assets/ui/top-bar.png");
         this.load.image(UiAssets.tutorialPane, "assets/ui/tutorial-pane.png");
-        this.load.image(UiAssets.kevIcon, "assets/ui/kev.png");
-        this.load.image(UiAssets.storageIcon, "assets/ui/storage.png");
+        // this.load.image(UiAssets.kevIcon, "assets/ui/kev.png");
+        // this.load.image(UiAssets.storageIcon, "assets/ui/storage.png");
 
         // audio/sfx
 

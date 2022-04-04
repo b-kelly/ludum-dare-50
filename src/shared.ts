@@ -19,14 +19,16 @@ export const GeneralAssets = {
 
 export const UiAssets = {
     buttonLg: "buttonLg",
+    buttonLgHover: "buttonLgHover",
+    buttonLgPress: "buttonLgPress",
     buttonSm: "buttonSm",
     topbar: "topbar",
     arrowLeft: "arrowLeft",
     arrowRight: "arrowRight",
     tutorialPane: "tutorialPane",
     briefingPane: "briefingPane",
-    kevIcon: "kev",
-    storageIcon: "storage"
+    // kevIcon: "kev",
+    // storageIcon: "storage"
 } as const;
 
 export const SfxAssets = {
