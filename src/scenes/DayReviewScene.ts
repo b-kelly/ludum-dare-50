@@ -1,12 +1,14 @@
 import { CustomScene } from "../objects/CustomScene";
 import { EventOutcome } from "../objects/EventManager";
 import { Resources } from "../objects/GlobalDataStore";
-import { baseTextOptions, GeneralAssets } from "../shared";
+import { baseTextOptions, GeneralAssets, UiAssets } from "../shared";
 import { Button } from "../UI/Button";
 import { DayStartScene } from "./DayStartScene";
 import { GameOverScene } from "./GameOverScene";
 import { StatusUiScene } from "./StatusUiScene";
 
+const PADDING = 48;
+const ELPADDING = 8;
 export class DayReviewScene extends CustomScene {
     static readonly KEY = "DayReviewScene";
     private dailyHaul: Resources;
@@ -34,14 +36,83 @@ export class DayReviewScene extends CustomScene {
 
     create() {
         // add background
-        this.add.image(0, 0, GeneralAssets.baseBackgroundNight).setOrigin(0, 0);
-        this.createResourcesDisplay();
+        const img = this.add
+            .image(0, 0, GeneralAssets.baseBackgroundNight)
+            .setOrigin(0, 0);
+
+        const pane = this.add.image(
+            img.width / 2,
+            img.height / 2,
+            UiAssets.briefingPane
+        );
+
+        const paneX = PADDING + pane.x - pane.width / 2;
+        const paneY = PADDING + pane.y - pane.height / 2;
+        const paneWidth = pane.width - PADDING * 2 - PADDING / 2;
+        const paneHeight = pane.height - PADDING * 2;
+
+        const title = this.add
+            .text(
+                paneX + paneWidth / 2,
+                paneY,
+                `13th Mission to Kepler 22B - Day ${
+                    30 + this.global.campaignStats.dayCount
+                }`,
+                {
+                    ...baseTextOptions,
+                }
+            )
+            .setOrigin(0.5, 0);
+
+        const sectionTitle = this.add
+            .text(
+                paneX + paneWidth / 2,
+                title.y + title.height + ELPADDING,
+                `Debrief`,
+                {
+                    ...baseTextOptions,
+                }
+            )
+            .setOrigin(0.5, 0);
+
+        let prevHeight = sectionTitle.height + ELPADDING;
+        prevHeight +=
+            this.generateRow(
+                paneX,
+                sectionTitle.y + prevHeight,
+                paneWidth / 3,
+                null
+            ).height + ELPADDING;
+
+        Object.keys(this.global.resources).forEach((k: keyof Resources) => {
+            prevHeight +=
+                this.generateRow(
+                    paneX,
+                    sectionTitle.y + prevHeight,
+                    paneWidth / 3,
+                    k
+                ).height + ELPADDING;
+        });
+
+        const dialogue = this.add.text(
+            paneX,
+            sectionTitle.y + sectionTitle.height + prevHeight + ELPADDING,
+            this.dailyEventOutcome?.message,
+            {
+                ...baseTextOptions,
+                fontSize: "14pt",
+                wordWrap: {
+                    width: paneWidth,
+                },
+            }
+        );
+
         new Button(this, {
-            x: 0,
-            y: 0,
+            x: paneX + paneWidth / 2,
+            y: paneY + paneHeight - PADDING,
             text: "Sleep",
             onClick: () => this.sleepAndStartNextDay(),
-        });
+        }).setOrigin(0.5, 0);
 
         if (this.scene.isActive(StatusUiScene.KEY)) {
             this.scene.stop(StatusUiScene.KEY);
@@ -62,26 +133,80 @@ export class DayReviewScene extends CustomScene {
         });
     }
 
-    private createResourcesDisplay() {
-        const { width, height } = this.bounds;
+    private generateRow(
+        x: number,
+        y: number,
+        sectionWidth: number,
+        resource: keyof Resources
+    ) {
+        const textConfig = {
+            ...baseTextOptions,
+            fontSize: "14pt",
+        };
 
-        // resource box TODO HARDCODED COORDS - better way?
-        this.add.rectangle(
-            width * 0.5,
-            height * 0.5,
-            width * 0.5,
-            height * 0.75,
-            0x000000,
-            0.5
+        let text = this.add.text(x, y, resource, textConfig).setOrigin(0, 0);
+
+        text.x += sectionWidth - text.width - ELPADDING;
+
+        // divider
+        let divider = this.add
+            .rectangle(
+                x + sectionWidth,
+                y,
+                2,
+                text.height + ELPADDING,
+                0x000000
+            )
+            .setOrigin(0, 0);
+
+        // TODO align numbers / signs
+        let deltaCountText = "Gathered today";
+        if (resource) {
+            const count = this.dailyHaul?.[resource] || 0;
+            const eventDelta =
+                this.dailyEventOutcome?.resourceDelta?.[resource] || 0;
+            deltaCountText = `${count < 0 ? "-" : "+"} ${Math.abs(count)}`;
+
+            if (eventDelta !== 0) {
+                deltaCountText += ` ${eventDelta < 0 ? "-" : "+"} ${Math.abs(
+                    eventDelta
+                )}`;
+            }
+        }
+
+        text = this.add.text(
+            divider.x + divider.width,
+            divider.y,
+            deltaCountText,
+            textConfig
         );
-        let message = `${this.dailyEventOutcome.message}`;
+        text.x += sectionWidth - text.width - ELPADDING;
 
-        // TODO SHOW DELTA
-        const resources = this.dailyHaul || {};
-        Object.entries(resources).forEach((kv) => {
-            message += `\n${kv[0]}: ${String(kv[1])}`;
-        });
+        divider = this.add
+            .rectangle(
+                x + sectionWidth + sectionWidth,
+                y,
+                2,
+                text.height + ELPADDING,
+                0x000000
+            )
+            .setOrigin(0, 0);
 
-        this.add.text(width * 0.25, height * 0.125, message, baseTextOptions);
+        let storageCountText = "Total stored";
+        if (resource) {
+            const stat = this.global.baseStatus;
+            storageCountText = `${this.global.resources[resource]} / ${stat.maxStorage[resource]}`;
+        }
+
+        // TODO align numbers / signs
+        text = this.add.text(
+            divider.x + divider.width,
+            divider.y,
+            storageCountText,
+            textConfig
+        );
+        text.x += sectionWidth - text.width - ELPADDING;
+
+        return text;
     }
 }
