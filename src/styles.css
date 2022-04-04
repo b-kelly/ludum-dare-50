@@ -11,6 +11,7 @@ body {
 
 .game-container {
     width:90%;
+    margin: 0 auto;
 }
 
 .js-hide-debug {
@@ -23,9 +24,18 @@ body {
 
 .game-title {
     font-size: large;
-    font-family:'Courier New', Courier, monospace;
-    color:cornflowerblue;
+    font-weight: bold;
     margin: 0 auto;
     margin-bottom: 20px;
     width:90%;
+}
+
+.more-info {
+    width: 90%;
+    text-align:center;
+    margin: 0 auto;
+}
+
+a {
+    color:lightblue;
 }
