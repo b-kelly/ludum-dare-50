@@ -46,11 +46,15 @@ export class AreaMap {
     private readonly _startLocation: { x: number; y: number };
     private readonly _cellType: CellBiome;
 
+    // generation
     private readonly chanceToStartOpen = 0.4;
-    //private readonly chanceToGenerateResource = 0.01;
     private readonly requiredNeighborsForLife = 4;
     private readonly requiredNeighborsForBirth = 3;
     private readonly iterations = 4;
+
+    // filling and tunneling
+    private readonly fillCavernsSmallerThan = 40;
+    private readonly tunnelIfMoreThanNeighborCount = 4;
 
     get map(): AreaCell[][] {
         return this._map;
@@ -115,6 +119,8 @@ export class AreaMap {
             map = this.runSimulationStep(map);
         }
 
+        this.detectAndAlterCaverns(map);
+
         // identify caverns and walls
         this.markWallsAndPlaceResources(map);
 
@@ -140,9 +146,13 @@ export class AreaMap {
         return map;
     }
 
-    /** Get the count of open neighbors around a given cell */
-    private getOpenNeighbors(map: AreaCell[][], px: number, py: number) {
-        let openNeighbors = 0;
+    private getAllNeighborsWhere(
+        map: AreaCell[][],
+        px: number,
+        py: number,
+        predicate: (c: AreaCell) => boolean
+    ) {
+        const openNeighbors = [];
         for (let y = -1; y < 2; y++) {
             for (let x = -1; x < 2; x++) {
                 if (x == 0 && y == 0) {
@@ -162,12 +172,26 @@ export class AreaMap {
                 }
 
                 // if this neighbor is open, increment the count
-                else if (map[yNeighbor][xNeighbor].state === CellState.Open) {
-                    openNeighbors += 1;
+                else if (predicate(map[yNeighbor][xNeighbor])) {
+                    openNeighbors.push({ x: xNeighbor, y: yNeighbor });
                 }
             }
         }
         return openNeighbors;
+    }
+
+    private getOpenNeighborCoords(map: AreaCell[][], px: number, py: number) {
+        return this.getAllNeighborsWhere(
+            map,
+            px,
+            py,
+            (c) => c.state === CellState.Open
+        );
+    }
+
+    /** Get the count of open neighbors around a given cell */
+    private getOpenNeighbors(map: AreaCell[][], px: number, py: number) {
+        return this.getOpenNeighborCoords(map, px, py).length;
     }
 
     /** Runs a single cellular automata simulation step on a map */
@@ -286,6 +310,96 @@ export class AreaMap {
         throw "Cannot spawn player - no empty cells found";
     }
 
+    // OMG this function is SO BAD LOOK AT ALL THOSE COPY PASTED LOOPS
+    private detectAndAlterCaverns(
+        map: (AreaCell & { _cavernId?: number; _tunnelled?: boolean })[][]
+    ) {
+        let currentCavern = 0;
+        const sizes: {
+            [cId: number]: number;
+        } = {};
+
+        const fillCell = (x: number, y: number, cId: number) => {
+            const c = map[y][x];
+            if ("_cavernId" in c || c.state !== CellState.Open) {
+                return false;
+            }
+
+            c._cavernId = cId;
+            sizes[cId] = (sizes[cId] || 0) + 1;
+
+            this.getOpenNeighborCoords(map, x, y).forEach((n) =>
+                fillCell(n.x, n.y, cId)
+            );
+
+            return true;
+        };
+
+        // fill in all the baby caverns left over
+        for (let y = 0; y < this._size.height; y++) {
+            for (let x = 0; x < this._size.width; x++) {
+                if (fillCell(x, y, currentCavern)) {
+                    currentCavern += 1;
+                }
+            }
+        }
+
+        // start filling and destroying
+        const cavernsToFill = Object.entries(sizes)
+            .filter((kv) => kv[1] < this.fillCavernsSmallerThan)
+            .map((kv) => +kv[0]);
+
+        for (let y = 0; y < this._size.height; y++) {
+            for (let x = 0; x < this._size.width; x++) {
+                const cell = map[y][x];
+                if (
+                    "_cavernId" in cell &&
+                    cavernsToFill.includes(cell._cavernId)
+                ) {
+                    cell.state = CellState.Filled;
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-expect-error
+                    cell.filled = true;
+                }
+            }
+        }
+
+        // check for tunnel candidates
+        for (let y = 0; y < this._size.height; y++) {
+            for (let x = 0; x < this._size.width; x++) {
+                const cell = map[y][x];
+                const neighbors = this.getAllNeighborsWhere(
+                    map,
+                    x,
+                    y,
+                    () => true
+                ).map((c) => map[c.y][c.x]);
+                const open = neighbors.filter(
+                    (c) => c.state === CellState.Open
+                ).length;
+                if (
+                    cell.state === CellState.Open &&
+                    open >= this.tunnelIfMoreThanNeighborCount
+                ) {
+                    // mark all filled neighbors - don't delete yet or it'll spread like crazy
+                    neighbors
+                        .filter((c) => c.state !== CellState.Open)
+                        .forEach((c) => (c._tunnelled = true));
+                }
+            }
+        }
+
+        // actually do the deleting now
+        for (let y = 0; y < this._size.height; y++) {
+            for (let x = 0; x < this._size.width; x++) {
+                const cell = map[y][x];
+                if (cell._tunnelled) {
+                    cell.state = CellState.Open;
+                }
+            }
+        }
+    }
+
     public DEBUG_displayMap(): void {
         const display = document.querySelector<HTMLCanvasElement>(".js-map");
         display.classList.remove("hide-debug");
@@ -312,6 +426,18 @@ export class AreaMap {
                         break;
                     default:
                         ctx.fillStyle = "black";
+                }
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                if (cell.filled) {
+                    ctx.fillStyle = "#332233";
+                }
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                if (cell._tunnelled) {
+                    ctx.fillStyle = "#ccccee";
                 }
 
                 ctx.fillRect(y * width, x * width, width, width);
