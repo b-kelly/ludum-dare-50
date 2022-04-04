@@ -40,6 +40,8 @@ export declare class GlobalDataStore {
     get baseStatus(): BaseStatus;
     get campaignStats(): CampaignStats;
     get currentDay(): CurrentDay;
+    get playerHp(): number;
+    damagePlayer(value: number): boolean;
     setDailyEvent(event: GameEvent): void;
     logEvent(event: GameEvent): void;
     logTileVisit(type: CellType): void;
