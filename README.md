@@ -65,7 +65,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] (MID) fade in base-bg, and then wait a second before fading in the text overlay. otherwise they will never see the base bg.
 -   [ ] (MID) top bar should have new UI applied
 -   [x] (MID) “explore” shouldn’t show up on first tile
--   [ ] (MID) “end day” should be at bottom right
+-   [x] (MID) “end day” should be at bottom right
 -   [ ] (MID) sometimes biome bg doesn’t match tile biome
 -   [ ] (MID) music doesn’t restart when we go back to the overworld
 -   [ ] (MID) nighttime needs to have the same transitioning that morning has

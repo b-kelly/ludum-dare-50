@@ -31,5 +31,5 @@ export const debugConfig: DebugConfig = {
     data: {
         biome: "desert",
     },
-    skipTutorial: true,
+    skipTutorial: false,
 };
