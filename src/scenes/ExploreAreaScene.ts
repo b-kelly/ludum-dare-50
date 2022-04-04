@@ -143,8 +143,14 @@ export class ExploreAreaScene extends CustomScene {
     }
 
     update(time: number) {
+        if (!this.scene.isActive) {
+            return;
+        }
+
         this.player.update();
-        this.creatures.getChildren().forEach((c) => c.update(time));
+        if (this.creatures.children) {
+            this.creatures.getChildren().forEach((c) => c.update(time));
+        }
     }
 
     private spawnResources() {

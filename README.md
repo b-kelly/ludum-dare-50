@@ -25,7 +25,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 ### New UI
 
 -   [x] tutorial / popup support
--   [ ] hover tooltip support
+-   [x] hover tooltip support
 -   [ ] select A vs B in popup
 -   [x] paginate intro pages
 -   [x] update font
