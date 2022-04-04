@@ -10,7 +10,7 @@ import { StatusUiScene } from "./scenes/StatusUiScene";
 import { DayReviewScene } from "./scenes/DayReviewScene";
 import { GameOverScene } from "./scenes/GameOverScene";
 
-const USE_TEST_SEED = true;
+const USE_TEST_SEED = false;
 const TEST_SEED = ["ld50"];
 
 export const game = new Phaser.Game({

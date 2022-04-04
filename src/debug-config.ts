@@ -9,6 +9,7 @@ import { OverworldScene } from "./scenes/OverworldScene";
 interface DebugConfig {
     sceneKey?: string;
     data?: object;
+    skipTutorial: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,4 +36,5 @@ export const debugConfig: DebugConfig = {
         ],
         onComplete: () => console.log("complete"),
     },
+    skipTutorial: true,
 };

@@ -1,4 +1,5 @@
 import { CustomScene } from "../objects/CustomScene";
+import { EventOutcome } from "../objects/EventManager";
 import { Cell } from "../objects/WorldMap/shared";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
@@ -16,6 +17,7 @@ export class OverworldScene extends CustomScene {
     private movingTowardsCoords: { x: number; y: number };
     private exploreButton: Button;
     private textBox: TextBox;
+    private noticeBox: TextBox;
 
     constructor() {
         super({ key: OverworldScene.KEY });
@@ -91,6 +93,27 @@ export class OverworldScene extends CustomScene {
         })
             .setScrollFactor(0, 0, true)
             .setVisible(false);
+
+        this.noticeBox = new TextBox(this, {
+            x: padding,
+            y: STATUS_UI_HEIGHT,
+            backgroundAsset: this.add.rectangle(
+                0,
+                0,
+                this.bounds.width / 3,
+                this.bounds.height / 2,
+                0x0a2a33
+            ),
+            pages: [],
+            padding: 8,
+            buttonText: "Close",
+            buttonAlign: "center",
+        })
+            .setScrollFactor(0, 0, true)
+            .setVisible(false)
+            .on("proceedclick", () => {
+                this.noticeBox.setVisible(false);
+            });
 
         this.launchTutorial();
     }
@@ -201,7 +224,7 @@ export class OverworldScene extends CustomScene {
 
         // if there are not enough resources to move
         if (!this.global.expendMoveResources(fuelCost)) {
-            console.log("TODO CANNOT MOVE");
+            this.showNotice(["CANNOT MOVE"]);
             return false;
         }
 
@@ -254,12 +277,10 @@ export class OverworldScene extends CustomScene {
                 // fire off events
                 if (playerCell.type === "event") {
                     const event = this.eventManager.spawnMapEvent();
-                    // TODO show on UI
-                    console.log(event);
+                    this.showEventNotice(event);
                 } else if (playerCell.type === "colony") {
                     const event = this.eventManager.spawnColonyEvent();
-                    // TODO show on UI
-                    console.log(event);
+                    this.showEventNotice(event);
                 }
 
                 this.global.logTileVisit(playerCell.type);
@@ -301,6 +322,18 @@ export class OverworldScene extends CustomScene {
 
             wc.setCellState({ isVisitable: !disable, clearFogOfWar: true });
         });
+    }
+
+    private showEventNotice(event: EventOutcome) {
+        const message = [
+            `${event.message}`,
+            `TODO ${JSON.stringify(event.resourceDelta)}`,
+        ];
+        this.showNotice(message);
+    }
+
+    private showNotice(message: string[]) {
+        this.noticeBox.setPages([message]).setVisible(true);
     }
 
     private getCell(x: number, y: number) {

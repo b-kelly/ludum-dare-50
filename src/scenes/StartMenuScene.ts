@@ -36,11 +36,7 @@ export class StartMenuScene extends Phaser.Scene {
     }
 
     create() {
-        if (DEBUG_isDebugBuild() && debugConfig.sceneKey) {
-            console.warn("LOADING DEBUG CONFIG OVERRIDES");
-            this.scene.start(debugConfig.sceneKey, debugConfig.data);
-            return;
-        }
+        this.DEBUG_ACTIONS();
 
         this.add.image(0, 0, GeneralAssets.startBackground).setOrigin(0, 0);
 
@@ -62,5 +58,21 @@ export class StartMenuScene extends Phaser.Scene {
                 this.scene.start(DayStartScene.KEY);
             },
         });
+    }
+
+    private DEBUG_ACTIONS() {
+        if (!DEBUG_isDebugBuild()) {
+            return;
+        }
+
+        if (debugConfig.skipTutorial) {
+            this.registry.set("tutorialStep", 3);
+        }
+
+        if (debugConfig.sceneKey) {
+            console.warn("LOADING DEBUG CONFIG OVERRIDES");
+            this.scene.start(debugConfig.sceneKey, debugConfig.data);
+            return;
+        }
     }
 }
