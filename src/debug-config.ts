@@ -1,6 +1,7 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
 import { GameOverScene } from "./scenes/GameOverScene";
+import { OverworldScene } from "./scenes/OverworldScene";
 
 interface DebugConfig {
     sceneKey?: string;
@@ -23,7 +24,7 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: GameOverScene.KEY,
+    sceneKey: OverworldScene.KEY,
     data: {
         type: "colonies",
     },
