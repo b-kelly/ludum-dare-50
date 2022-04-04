@@ -50,7 +50,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 ### Other
 -   [ ] (HIGH) hit targets are wrong for buttons
--   [ ] (HIGH) when you hit explore on the central tile it ends the day
+-   [ ] (HIGH) when you hit explore on the central tile it ends the day (we should remove explore from central tile
 -   [ ] (HIGH) Music doesn’t continue once you click “Start” on main page
 -   [ ] (HIGH) implement portraits and textboxes for crew requests
 -   [ ] (HIGH) update overlay’s layout
