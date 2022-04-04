@@ -4,11 +4,12 @@ import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
 export declare type GameOverType = "resource" | "tiles" | null;
 export interface Resources {
-    fuel: number;
-    food: number;
-    water: number;
-    parts: number;
     filters: number;
+    food: number;
+    fuel: number;
+    panels: number;
+    parts: number;
+    water: number;
 }
 export interface BaseStatus {
     maxStorage: Resources;
