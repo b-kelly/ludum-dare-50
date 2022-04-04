@@ -16,7 +16,6 @@ export class OverworldScene extends CustomScene {
     private movingTowardsCoords: { x: number; y: number };
     private exploreButton: Button;
     private textBox: TextBox;
-    private tutorialShown: boolean;
 
     constructor() {
         super({ key: OverworldScene.KEY });
@@ -119,7 +118,7 @@ export class OverworldScene extends CustomScene {
     private launchTutorial() {
         const tutorialComplete = this.getTutorialCompleted();
         if (tutorialComplete || this.global.campaignStats.dayCount !== 0) {
-            return;
+            return false;
         }
 
         const currentDay = this.global.currentDay;
@@ -139,6 +138,7 @@ export class OverworldScene extends CustomScene {
                     this.textBox.setVisible(false);
                 })
                 .setVisible(true);
+            return true;
         } else if (currentDay.tilesVisited === 0 && tutorialStep > 0) {
             // tutorial 2
             this.textBox
@@ -153,6 +153,7 @@ export class OverworldScene extends CustomScene {
                     this.textBox.setVisible(false);
                 })
                 .setVisible(true);
+            return true;
         } else if (tutorialStep === 0) {
             // tutorial 1
             this.textBox
@@ -167,7 +168,10 @@ export class OverworldScene extends CustomScene {
                     this.completeTutorialStep(1);
                 })
                 .setVisible(true);
+            return true;
         }
+
+        return false;
     }
 
     private exploreCell() {
@@ -203,8 +207,7 @@ export class OverworldScene extends CustomScene {
 
         const next = () => this.movePlayerAndUpdateCells(x, y);
 
-        if (!this.getTutorialCompleted()) {
-            this.launchTutorial();
+        if (!this.getTutorialCompleted() && this.launchTutorial()) {
             this.textBox.on("proceedclick", () => next());
         } else {
             next();

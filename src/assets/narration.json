@@ -24,6 +24,14 @@
         "Tiles that have been previously explored cost 1 energy unit to traverse, and newly discovered tiles cost 2.\n",
         "Left click on an adjacent tile to travel there."
     ],
-    "tutorial2": ["t2"],
-    "tutorial3": ["t3"]
+    "tutorial2": [
+        "Upon arriving to a new tile, you can usually do one of two things:",
+        "- Explore the area to find resources (tiles which have no resources left are marked)",
+        "- Spend (#) extra fuel to scan tiles further out\n",
+        "Certain random tiles have events that occur when you first travel to them. Those tiles are not marked, and you cannot explore them.\n",
+        "Certain other tiles are barren and have no resources or interactions at all."
+    ],
+    "tutorial3": [
+        "You can keep exploring until you're out of fuel for the KEV, or until you are out of health. At that point, you will return back to base automatically."
+    ]
 }
