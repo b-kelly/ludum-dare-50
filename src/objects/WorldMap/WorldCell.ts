@@ -56,16 +56,11 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         if (DEBUG_isDebugBuild() && SHOW_DEBUG) {
             const typeStr = cell.type.slice(0, 3).toUpperCase();
             const biomeStr = cell.biome.slice(0, 3).toUpperCase();
-            this.scene.add
-                .text(
-                    x + h2,
-                    y + h2,
-                    `x${xIndex}y${yIndex}f${cell.randomSpriteFrame}\n${biomeStr},${typeStr}`,
-                    {
-                        color: cell.biome === "default" ? "black" : "white",
-                    }
-                )
-                .setOrigin(0.25, 0.5);
+            this.scene.add.text(
+                x,
+                y + h2,
+                `x${xIndex}y${yIndex},b${biomeStr},t${typeStr}`
+            );
         }
     }
 

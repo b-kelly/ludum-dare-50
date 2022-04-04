@@ -90,16 +90,18 @@ export class WorldMap {
     }
 
     getAdjacentCellCoords(px: number, py: number) {
+        const mod = px % 2 == 0 ? 1 : 0;
+
         return [
             // top/bottom
             { x: px, y: py - 1 },
             { x: px, y: py + 1 },
             // left row
-            { x: px - 1, y: py },
-            { x: px - 1, y: py + 1 },
+            { x: px - 1, y: py - mod },
+            { x: px - 1, y: py - mod + 1 },
             // right row
-            { x: px + 1, y: py },
-            { x: px + 1, y: py + 1 },
+            { x: px + 1, y: py - mod },
+            { x: px + 1, y: py - mod + 1 },
         ];
     }
 
