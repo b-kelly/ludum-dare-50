@@ -1,7 +1,7 @@
 export const baseTextOptions: Phaser.Types.GameObjects.Text.TextStyle = {
     fontSize: "20pt",
     fontFamily: '"Exo 2", sans-serif',
-    // TODO
+    fontStyle: "small-caps",
 };
 
 export const GeneralAssets = {
