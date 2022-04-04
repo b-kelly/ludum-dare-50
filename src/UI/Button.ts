@@ -82,6 +82,7 @@ export class Button extends Phaser.GameObjects.Container {
 
         this.add(this.buttonImg);
         this.add(text);
+        this.setOrigin(0, 0);
     }
 
     setOrigin(x: number, y: number) {
@@ -89,13 +90,13 @@ export class Button extends Phaser.GameObjects.Container {
         const newY = this.y - this.buttonImg.height * y;
         this.setPosition(newX, newY);
 
-        // TODO fix the hit box!
-        // this.input.hitArea.setTo(
-        //     newX,
-        //     newY,
-        //     this.buttonImg.width,
-        //     this.buttonImg.height
-        // );
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        this.input.hitArea.setTo(
+            this.buttonImg.width / 2,
+            this.buttonImg.height / 2,
+            this.buttonImg.width,
+            this.buttonImg.height
+        );
 
         return this;
     }
