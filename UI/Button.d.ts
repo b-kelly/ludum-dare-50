@@ -1,14 +1,12 @@
-export declare type ButtonType = "button" | "primary";
-export declare class Button extends Phaser.GameObjects.Text {
+export declare class Button extends Phaser.GameObjects.Container {
     private isDisabled;
+    private buttonImg;
     constructor(scene: Phaser.Scene, options: {
         x: number;
         y: number;
         text: string;
         onClick: () => void;
-        width?: number;
-        height?: number;
-        type?: ButtonType;
+        size?: "large" | "small";
         disabled?: boolean;
     });
     setOnClick(callback: () => void): void;
