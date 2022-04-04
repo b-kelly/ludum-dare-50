@@ -9,6 +9,7 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     private overlay: Phaser.GameObjects.Sprite;
     private hasFogOfWar: boolean;
     private isVisitable: boolean;
+    private isHomeCell: boolean;
 
     private coords: { x: number; y: number };
 
@@ -45,13 +46,17 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
         this.setOrigin(0, 0);
         this.scene.add.existing(this);
 
+        let overlayFrame = WorldAssets.tilesData.Overlay * TILES_SHEET_WIDTH;
+
+        const homeCoords = scene.global.worldMap.homeCoords;
+        this.isHomeCell =
+            homeCoords.x === this.coords.x && homeCoords.y === this.coords.y;
+        if (this.isHomeCell) {
+            overlayFrame += 3;
+        }
+
         this.overlay = scene.add
-            .sprite(
-                x,
-                y,
-                WorldAssets.tiles,
-                WorldAssets.tilesData.Overlay * TILES_SHEET_WIDTH
-            )
+            .sprite(x, y, WorldAssets.tiles, overlayFrame)
             .setOrigin(0, 0);
 
         this.hasFogOfWar = !cell.clearedFogOfWar;
@@ -82,6 +87,11 @@ export class WorldCell extends Phaser.GameObjects.Sprite {
     }
 
     private setOverlayState(state: "fog" | "hover" | null) {
+        if (this.isHomeCell) {
+            this.overlay.setVisible(true);
+            return;
+        }
+
         this.overlay.setVisible(!!state);
 
         if (state === "fog") {

@@ -33,5 +33,32 @@
     ],
     "tutorial3": [
         "You can keep exploring until you're out of fuel for the KEV, or until you are out of health. At that point, you will return back to base automatically."
+    ],
+    "gameover_resources": [
+        "You ran out of resources!\n",
+        "You made your best effort. You did, and humanity did, but it wasn't enough. Perhaps there are some other colonists left here, somewhere. You hope so, because you've run out of {{resource}}, and now it's only a matter of time. A matter of a very small amount of time."
+    ],
+    "gameover_tiles": [
+        "You survived… for now!\n",
+        "You're fighting an uphill battle against a hostile environment, but for now, you're winning. If you can survive, are there other colonies out there that are doing the same?"
+    ],
+    "gameover_colonies_prompt": [
+        "Could it be? Is this the 12th Mission? You approach cautiously, trying not to get your expectations too high. Realistically, you’ve only gotten one transmission from what you *think* is them, but who can know?\n",
+        "You step over a pile of glittering debris to open the hatch - the seal is still working. Exiting the airlock, you see a central dome basically identical to yours. Plants, trees, comms center… this mission only left three months before yours did, so you have the same setup.\n",
+        "Unfortunately, this base has gone dark. No blinking lights on the comms, no artificial sunlight set up by the Earth plants, nothing.\n",
+        "And you don’t see anyone. You realize then that the debris outside the door were the colony’s smashed up lunar panels. And just when you realize that, your helmet comms flicker on.\n",
+        "“Is anyone here? I see your KEV, I know you’re here.” The voice is quavering, uncertain. It has an edge of hysteria to it.\n",
+        "Did they do this? Should you respond? Would making contact add a member to your crew and save a life, or doom what’s left of humanity?"
+    ],
+    "gameover_colonies_answered": [
+        "You found all of the colonies!\n",
+        "Ultimately, what sets humanity apart from other creatures is our willingness to throw prudence and logic out the window to save one another.\n",
+        "You respond to the call: \"Hello, this is 13th Mission EXL.  What is your location?\"\n",
+        "The voice's hysteria morphs into a desperately relieved croak: \"EXL, I cannot tell you how happy we are to hear your voice.\""
+    ],
+    "gameover_colonies_ignored": [
+        "You found all of the colonies!\n",
+        "Humanity is too important to risk its entire continued existence on saving one life. But isn't that what humanity is, you might ask? Doing whatever we can to save our fellow humans? Well…\n\n",
+        "Not anymore."
     ]
 }

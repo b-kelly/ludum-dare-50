@@ -63,6 +63,10 @@ export class WorldMap {
         return { ...this.currentPlayerCoords };
     }
 
+    get homeCoords(): Readonly<WorldMap["playerHomeCoords"]> {
+        return { ...this.playerHomeCoords };
+    }
+
     constructor() {
         this.currentPlayerCoords = {
             x: Math.floor(MAP_WIDTH / 2),

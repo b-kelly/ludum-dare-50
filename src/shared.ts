@@ -11,11 +11,13 @@ export const GeneralAssets = {
     logBackground: "logBackground",
     baseBackgroundDay: "baseBackgroundDay",
     baseBackgroundNight: "baseBackgroundNight",
+    colonyEventBackground: "colonyEventBackground",
     worldPlayer: "worldPlayer",
     areaPlayer: "areaPlayer",
     areaEnemies: "areaEnemies",
     resources: "resources",
-    characterPortraits: "characterPortraits"
+    characterPortraits: "characterPortraits",
+    characterInfo: "characterInfo",
 } as const;
 
 export const UiAssets = {
@@ -28,7 +30,7 @@ export const UiAssets = {
     arrowRight: "arrowRight",
     tutorialPane: "tutorialPane",
     briefingPane: "briefingPane",
-    portraitPane: "portraitPane"
+    portraitPane: "portraitPane",
     // kevIcon: "kev",
     // storageIcon: "storage"
 } as const;
