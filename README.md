@@ -29,7 +29,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] select A vs B in popup
 -   [ ] paginate intro pages
 -   [x] update font
--   [ ] new topbar - no images, text only
+-   [x] new topbar - no images, text only
 -   [ ] include fuel and health in topbar
 -   [ ] button hover/active/disabled states
 

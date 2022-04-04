@@ -1,14 +1,11 @@
 import { CustomScene } from "../objects/CustomScene";
-import { baseTextOptions, GeneralAssets } from "../shared";
-import { Button } from "../UI/Button";
+import { GeneralAssets } from "../shared";
+import { TextBox } from "../UI/TextBox";
 
 export class LogScene extends CustomScene {
     static readonly KEY = "LogScene";
 
-    private content: string[];
-
-    private interactButton: Button;
-    private text: Phaser.GameObjects.Text;
+    private content: string[][];
 
     private onComplete: (this: Phaser.Scene) => void;
 
@@ -16,7 +13,7 @@ export class LogScene extends CustomScene {
         super({ key: LogScene.KEY });
     }
 
-    init(data: { text: string[]; onComplete: () => void }) {
+    init(data: { text: string[][]; onComplete: () => void }) {
         this.content = data.text;
         this.onComplete = data.onComplete.bind(this);
     }
@@ -29,45 +26,14 @@ export class LogScene extends CustomScene {
     }
 
     create() {
-        this.add.image(0, 0, GeneralAssets.logBackground).setOrigin(0, 0);
-        const { width, height } = this.bounds;
-
-        const graphics = this.make.graphics({});
-        graphics.fillRect(0, 0, width, height);
-        const mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
-
-        // TODO MULTIPAGE SUPPORT
-        this.text = this.add
-            .text(0, 0, this.content, {
-                ...baseTextOptions,
-                wordWrap: { width: width },
-            })
-            .setOrigin(0);
-        this.text.setMask(mask);
-
-        this.interactButton = new Button(this, {
-            x: width,
-            y: height,
-            text: "▼",
-            onClick: () => {
-                this.scrollDown();
-            },
+        const textBox = new TextBox(this, {
+            x: 0,
+            y: 0,
+            backgroundAssetKey: GeneralAssets.logBackground,
+            pages: this.content,
+            padding: 64,
         });
-        this.showNext();
-    }
 
-    // TODO scroll up?
-    private scrollDown() {
-        this.text.y -= 100; // TODO what's the height of one line?
-        this.showNext();
-    }
-
-    private showNext() {
-        // if (this.text.y * -1 >= this.text.height - this.bounds.height) {
-        //     this.interactButton.text = "Next";
-        //     this.interactButton.setOnClick(() => {
-        //         this.onComplete();
-        //     });
-        // }
+        textBox.on("proceedclick", () => this.onComplete());
     }
 }
