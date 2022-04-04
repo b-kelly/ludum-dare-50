@@ -26,16 +26,13 @@ export class DayStartScene extends CustomScene {
             GeneralAssets.baseBackgroundDay,
             "assets/bg/base-bg.png"
         );
-        this.load.image(
-            UiAssets.portraitPane,
-            "assets/ui/portrait-text.png"
-        );
+        this.load.image(UiAssets.portraitPane, "assets/ui/portrait-text.png");
         this.load.spritesheet(
             GeneralAssets.characterPortraits,
             "assets/sprites/portrait-spritesheet.png",
             {
                 frameWidth: 200,
-                frameHeight: 200
+                frameHeight: 200,
             }
         );
     }
@@ -52,11 +49,13 @@ export class DayStartScene extends CustomScene {
             UiAssets.briefingPane
         );
 
-        const portrait = this.add.image(
-            pane.x - pane.width / 2 + PADDING + ELPADDING,
-            pane.y - pane.width / 2 + (PADDING * 3) - ELPADDING / 2,
-            UiAssets.portraitPane
-        ).setOrigin(0, 0);
+        const portrait = this.add
+            .image(
+                pane.x - pane.width / 2 + PADDING + ELPADDING,
+                pane.y - pane.width / 2 + PADDING * 3 - ELPADDING / 2,
+                UiAssets.portraitPane
+            )
+            .setOrigin(0, 0);
 
         const paneX = PADDING + pane.x - pane.width / 2;
         const paneY = PADDING + pane.y - pane.height / 2;
@@ -66,7 +65,8 @@ export class DayStartScene extends CustomScene {
             .text(
                 paneX + paneWidth / 2,
                 paneY,
-                `13th Mission to Kepler 22B - Day ${31 + this.global.campaignStats.dayCount
+                `13th Mission to Kepler 22B - Day ${
+                    31 + this.global.campaignStats.dayCount
                 }`,
                 {
                     ...baseTextOptions,
@@ -170,18 +170,13 @@ export class DayStartScene extends CustomScene {
         );
 
         let sectionStartHeight = dialogue.y + dialogue.height + ELPADDING;
-        if ((portrait.y + portrait.height + ELPADDING) > sectionStartHeight) {
+        if (portrait.y + portrait.height + ELPADDING > sectionStartHeight) {
             sectionStartHeight = portrait.y + portrait.height + ELPADDING;
         }
         const sectionTitle = this.add
-            .text(
-                paneX + paneWidth / 2,
-                sectionStartHeight,
-                `Supplies`,
-                {
-                    ...baseTextOptions,
-                }
-            )
+            .text(paneX + paneWidth / 2, sectionStartHeight, `Supplies`, {
+                ...baseTextOptions,
+            })
             .setOrigin(0.5, 0);
 
         let prevHeight = sectionTitle.height + ELPADDING;
@@ -295,8 +290,9 @@ export class DayStartScene extends CustomScene {
             ...Object.entries(startingResources).map(
                 (kv: [keyof Resources, number]) => {
                     const key = kv[0];
-                    const message = `${key}: ${String(kv[1])} (+${stat.dailyReplenish[key]
-                        }) / ${stat.maxStorage[key]}`;
+                    const message = `${key}: ${String(kv[1])} (+${
+                        stat.dailyReplenish[key]
+                    }) / ${stat.maxStorage[key]}`;
 
                     return message;
                 }

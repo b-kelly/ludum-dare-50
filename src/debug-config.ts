@@ -1,11 +1,6 @@
 /* DEBUG ONLY - CHANGE VALUES HERE TO TEST DIFFERENT PARTS OF THE SYSTEM EASILY */
 
-import { CellBiome } from "./objects/WorldMap/shared";
-import { DayReviewScene } from "./scenes/DayReviewScene";
-import { DayStartScene } from "./scenes/DayStartScene";
-import { ExploreAreaScene } from "./scenes/ExploreAreaScene";
-import { LogScene } from "./scenes/LogScene";
-import { OverworldScene } from "./scenes/OverworldScene";
+import { GameOverScene } from "./scenes/GameOverScene";
 
 interface DebugConfig {
     sceneKey?: string;
@@ -28,9 +23,9 @@ function debugGenerateText() {
 }
 
 export const debugConfig: DebugConfig = {
-    sceneKey: DayStartScene.KEY,
+    sceneKey: GameOverScene.KEY,
     data: {
-        biome: "desert",
+        type: "colonies",
     },
     skipTutorial: false,
 };

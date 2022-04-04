@@ -3,8 +3,9 @@ import { GameEvent } from "./EventManager";
 import { CellType } from "./WorldMap/shared";
 import { WorldMap } from "./WorldMap/WorldMap";
 
-export type GameOverType = "resource" | "tiles" | null;
+export type GameOverType = "resource" | "tiles" | "colonies" | null;
 const GAME_OVER_TILES_COUNT = 80; // How many visited tiles it takes to get a "game success"
+const COLONY_COUNT = 12;
 
 const startingValues = {
     resources: {
@@ -73,7 +74,7 @@ export interface CampaignStats {
 
 /** Handy wrapper around our shared data */
 export class GlobalDataStore {
-    constructor(private scene: CustomScene) { }
+    constructor(private scene: CustomScene) {}
 
     get resources(): Readonly<Resources> {
         return this.getOrCreate<Resources>(
@@ -254,6 +255,10 @@ export class GlobalDataStore {
 
         this.scene.registry.set("campaignStats", stats);
         this.scene.registry.remove("currentDay");
+
+        if (stats.colonyCount >= COLONY_COUNT) {
+            return "colonies";
+        }
 
         // check if any resource dropped below zero
         const resources = this.resources;
