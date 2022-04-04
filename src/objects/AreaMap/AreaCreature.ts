@@ -5,7 +5,7 @@ const GENERIC_CONVERSION_RATE = 0.3;
 
 export class AreaCreature extends Phaser.GameObjects.Sprite {
     static readonly DAMAGE_AMOUNT = 1;
-    static readonly SPEED = 50;
+    static readonly SPEED = 200;
     static readonly MOVE_DURATION_MS = 5000;
     declare body: Phaser.Physics.Arcade.Body;
 
