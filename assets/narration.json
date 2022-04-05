@@ -42,6 +42,9 @@
         "You survived… for now!\n",
         "You're fighting an uphill battle against a hostile environment, but for now, you're winning. If you can survive, are there other colonies out there that are doing the same?"
     ],
+    "faint_notice": [
+        "You got hit one too many times by the native fauna - you have to return to base!"
+    ],
     "gameover_colonies_prompt": [
         "Could it be? Is this the 12th Mission? You approach cautiously, trying not to get your expectations too high. Realistically, you’ve only gotten one transmission from what you *think* is them, but who can know?\n",
         "You step over a pile of glittering debris to open the hatch - the seal is still working. Exiting the airlock, you see a central dome basically identical to yours. Plants, trees, comms center… this mission only left three months before yours did, so you have the same setup.\n",
