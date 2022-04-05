@@ -47,6 +47,7 @@ export interface GameEvent {
 export interface EventOutcome {
     message: string;
     resourceDelta: Partial<Resources>;
+    upgrade: GameEvent["upgrade"];
     resourcesPrior: Resources;
     /** event caused a game over */
     gameOver: boolean;
