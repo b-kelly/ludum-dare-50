@@ -449,6 +449,20 @@ export class OverworldScene extends CustomScene {
             });
         }
 
+        if (event.upgrade) {
+            if (event.upgrade.type === "capacity") {
+                extra.push(
+                    `Your storage capacity for ${event.upgrade.resource} has increased by ${event.upgrade.delta}.`
+                );
+            }
+
+            if (event.upgrade.type === "replenishment") {
+                extra.push(
+                    `Your daily replenishment for ${event.upgrade.resource} has increased by ${event.upgrade.delta}.`
+                );
+            }
+        }
+
         const message = [`${event.message}\n`, ...extra];
         this.showNotice(message);
     }

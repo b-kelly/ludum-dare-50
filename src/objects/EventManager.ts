@@ -70,6 +70,7 @@ export interface GameEvent {
 export interface EventOutcome {
     message: string;
     resourceDelta: Partial<Resources>;
+    upgrade: GameEvent["upgrade"];
     resourcesPrior: Resources;
     /** event caused a game over */
     gameOver: boolean;
@@ -96,6 +97,7 @@ export class EventManager {
             resourceDelta: dailyEvent?.resourceDelta,
             resourcesPrior: resources,
             gameOver: false,
+            upgrade: dailyEvent.upgrade,
         };
     }
 
@@ -126,6 +128,7 @@ export class EventManager {
             resourceDelta: event.resourceDelta,
             resourcesPrior: resources,
             gameOver: false,
+            upgrade: event.upgrade,
         };
     }
 
