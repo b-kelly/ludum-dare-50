@@ -451,14 +451,18 @@ export class OverworldScene extends CustomScene {
 
         if (event.upgrade) {
             if (event.upgrade.type === "capacity") {
+                const resourceText =
+                    event.upgrade.resource === "playerHp"
+                        ? "total hit points have"
+                        : `storage capacity for ${event.upgrade.resource} has`;
                 extra.push(
-                    `Your storage capacity for ${event.upgrade.resource} has increased by ${event.upgrade.delta}.`
+                    `Your ${resourceText} increased by ${event.upgrade.delta}.`
                 );
             }
 
             if (event.upgrade.type === "replenishment") {
                 extra.push(
-                    `Your daily replenishment for ${event.upgrade.resource} has increased by ${event.upgrade.delta}.`
+                    `You now use and produce ${event.upgrade.resource} more efficently.`
                 );
             }
         }
