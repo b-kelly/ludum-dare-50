@@ -1,5 +1,6 @@
 import { CustomScene } from "../objects/CustomScene";
 import { EventOutcome } from "../objects/EventManager";
+import { Resources } from "../objects/GlobalDataStore";
 import { Cell } from "../objects/WorldMap/shared";
 import { WorldCell } from "../objects/WorldMap/WorldCell";
 import { WorldAssets } from "../objects/WorldMap/WorldMap";
@@ -124,17 +125,14 @@ export class OverworldScene extends CustomScene {
         this.noticeBox = new TextBox(this, {
             x: padding,
             y: STATUS_UI_HEIGHT,
-            backgroundAsset: this.add.rectangle(
-                0,
-                0,
-                this.bounds.width / 3,
-                this.bounds.height / 2,
-                0x0a2a33
-            ),
+            backgroundAsset: this.add.image(0, 0, UiAssets.tutorialPane),
             pages: [],
-            padding: 8,
+            padding: 64,
             buttonText: "Close",
             buttonAlign: "center",
+            pageStyles: {
+                fontSize: "14pt",
+            },
         })
             .setScrollFactor(0, 0, true)
             .setVisible(false)
@@ -176,8 +174,8 @@ export class OverworldScene extends CustomScene {
                 const status = cell.playerHasExplored
                     ? "Explored"
                     : cell.playerHasVisited
-                        ? "Visited"
-                        : "Unvisited";
+                    ? "Visited"
+                    : "Unvisited";
                 const explored =
                     cell.playerHasVisited && cell.type === "explorable"
                         ? cell.playerHasExplored
@@ -306,7 +304,9 @@ export class OverworldScene extends CustomScene {
 
         // if there are not enough resources to move
         if (!this.global.expendMoveResources(fuelCost)) {
-            this.showNotice(["Not enough fuel to move!"]);
+            this.showNotice([
+                "You've almost run out of fuel. You have just enough to make it back to base for the night.",
+            ]);
             return false;
         }
 
@@ -438,13 +438,18 @@ export class OverworldScene extends CustomScene {
     }
 
     private showEventNotice(event: EventOutcome) {
-        let message = [`${event.message}`];
-        if (event.resourceDelta != null) {
-            message = [
-                `${event.message}`,
-                `You got: ${JSON.stringify(event.resourceDelta)}`,
-            ];
+        const extra: string[] = [];
+
+        if (event.resourceDelta) {
+            Object.keys(event.resourceDelta).forEach((r: keyof Resources) => {
+                const count = event.resourceDelta[r];
+                extra.push(
+                    `You ${count > 0 ? "gained" : "lost"} ${count} ${r}.`
+                );
+            });
         }
+
+        const message = [`${event.message}\n`, ...extra];
         this.showNotice(message);
     }
 
