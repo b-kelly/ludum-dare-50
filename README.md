@@ -26,7 +26,6 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 
 -   [x] tutorial / popup support
 -   [x] hover tooltip support
--   [ ] select A vs B in popup
 -   [x] paginate intro pages
 -   [x] update font
 -   [x] new topbar - no images, text only
@@ -53,9 +52,9 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [x] (HIGH) hit targets are wrong for buttons
 -   [x] (HIGH) when you hit explore on the central tile it ends the day
 -   [x] (HIGH) Music doesn’t continue once you click “Start” on main page
--   [ ] (HIGH) implement portraits and textboxes for crew requests
+-   [x] (HIGH) implement portraits and textboxes for crew requests
 -   [-] (HIGH) update layouts as per sketches
--   [ ] (HIGH) tutorials should have new UI elements and should be centered on the page so they have to read before they can interact. (i know, i changed my mind on this)
+-   [ ] (HIGH) tutorials should have new UI elements and should be centered on the page so they have to read before they can interact
 -   [x] (HIGH) Implement all gameover states
 -   [x] (HIGH) area music sometimes doesn't start
 
@@ -73,11 +72,11 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [ ] (LOW) Music doesn’t start on main page until you click the canvas
 -   [ ] (LOW) Text in intro page 1 should be vertically centered.
 -   [ ] (LOW) Text in intro page 3, “Will humanity survive” needs to be bigger font and centered
--   [ ] (LOW) Intro page 3, button should say “BEGIN” instead of “NEXT” and button should be centered below “will humanity survive”
+-   [x] (LOW) Intro page 3, button should say “BEGIN” instead of “NEXT” and button should be centered below “will humanity survive”
 -   [ ] (LOW) “scan” shouldn’t be available on home tile
 -   [ ] (LOW) home tile should always be forest if possible (since bg is forest)
--   [ ] (LOW) wetlands biome resource spawning is too high
--   [ ] (LOW) in exploration “Leave” should be bottom right
+-   [x] (LOW) wetlands biome resource spawning is too high
+-   [x] (LOW) in exploration “Leave” should be bottom right
 -   [ ] (LOW) can we blink the number once n the top bar when we add an item to it?
 
 -   [x] hover overlays on tiles (the blue outline) should be at about 75% transparency
@@ -89,4 +88,3 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [-] add toast and sound when you pick up an item
 -   [x] don't spawn resources on walls
 -   [x] event upgrade support
--   [ ] (WONTFIX) area map wall/corner rotation

@@ -148,12 +148,12 @@ export class ExploreAreaScene extends CustomScene {
 
         this.leaveButton = new Button(this, {
             x: this.bounds.width - PADDING,
-            y: STATUS_UI_HEIGHT + PADDING,
+            y: this.bounds.height - PADDING,
             text: "Leave",
             onClick: () => this.leaveArea(),
         })
             .setScrollFactor(0, 0)
-            .setOrigin(1, 0);
+            .setOrigin(1, 1);
 
         this.spawnResources();
 
@@ -243,13 +243,16 @@ export class ExploreAreaScene extends CustomScene {
     private killPlayer() {
         this.player.destroy();
         this.leaveButton.setDisabled(true);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const text = this.cache.json.get(GeneralAssets.narration)
+            .faint_notice as string[];
         new TextBox(this, {
             x: PADDING,
             y: STATUS_UI_HEIGHT,
             backgroundAsset: this.add.image(0, 0, UiAssets.tutorialPane),
             buttonText: "Back to base",
             padding: 64,
-            pages: [["YOU DIED"]],
+            pages: [text],
             buttonAlign: "center",
         })
             .setScrollFactor(0, 0, true)

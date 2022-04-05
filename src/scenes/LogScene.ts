@@ -35,6 +35,7 @@ export class LogScene extends CustomScene {
                 .setOrigin(0, 0),
             pages: this.content,
             padding: 64,
+            buttonText: "Begin",
         });
 
         textBox.on("proceedclick", () => this.onComplete());
