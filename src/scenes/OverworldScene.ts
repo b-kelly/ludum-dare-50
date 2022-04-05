@@ -176,8 +176,8 @@ export class OverworldScene extends CustomScene {
                 const status = cell.playerHasExplored
                     ? "Explored"
                     : cell.playerHasVisited
-                    ? "Visited"
-                    : "Unvisited";
+                        ? "Visited"
+                        : "Unvisited";
                 const explored =
                     cell.playerHasVisited && cell.type === "explorable"
                         ? cell.playerHasExplored
@@ -440,7 +440,7 @@ export class OverworldScene extends CustomScene {
     private showEventNotice(event: EventOutcome) {
         const message = [
             `${event.message}`,
-            `TODO ${JSON.stringify(event.resourceDelta)}`,
+            `You got: ${JSON.stringify(event.resourceDelta)}`,
         ];
         this.showNotice(message);
     }
