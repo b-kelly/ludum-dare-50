@@ -91,7 +91,7 @@ export class OverworldScene extends CustomScene {
             text: "Scan",
             onClick: () => {
                 if (!this.global.expendScanResources()) {
-                    this.showNotice(["CANNOT SCAN"]);
+                    this.showNotice(["Not enough fuel to scan!"]);
                 } else {
                     this.scanSurroundings();
                 }
@@ -306,7 +306,7 @@ export class OverworldScene extends CustomScene {
 
         // if there are not enough resources to move
         if (!this.global.expendMoveResources(fuelCost)) {
-            this.showNotice(["CANNOT MOVE"]);
+            this.showNotice(["Not enough fuel to move!"]);
             return false;
         }
 
@@ -438,10 +438,13 @@ export class OverworldScene extends CustomScene {
     }
 
     private showEventNotice(event: EventOutcome) {
-        const message = [
-            `${event.message}`,
-            `You got: ${JSON.stringify(event.resourceDelta)}`,
-        ];
+        let message = [`${event.message}`];
+        if (event.resourceDelta != null) {
+            message = [
+                `${event.message}`,
+                `You got: ${JSON.stringify(event.resourceDelta)}`,
+            ];
+        }
         this.showNotice(message);
     }
 

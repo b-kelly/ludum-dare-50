@@ -86,7 +86,7 @@ export class AreaSpriteSheet {
     }
 
     getRandomSmallStatementFrame() {
-        return this.getFrameFromRows(8, 1);
+        return this.getFrameFromRows(7, 1);
     }
 
     getCollisionRanges() {
