@@ -314,8 +314,8 @@
             "shortDescriptor": "overstocked food",
             "character": "adzo",
             "morningMessage": "\"EXL! You've helped us tremendously with finding so much food; I suspect we'll have far lower rates of violence than our initial projections if we keep this up.\"",
-            "message": "TODO",
-            "failMessage": "TODO",
+            "message": "",
+            "failMessage": "",
             "conditions": {
                 "resource": {
                     "type": "food",
@@ -327,8 +327,8 @@
             "type": "daily",
             "shortDescriptor": "overstocked food",
             "character": "shreya",
-            "morningMessage": "TODO",
-            "message": "TODO",
+            "morningMessage": "",
+            "message": "",
             "failMessage": "\"Lieutenant, our food stores have been compromised. Looks like we overstocked and the nibblers took notice. At this point I suggest we poison the remaining food supply in that sector and take the tiny bastards down with us.\"",
             "conditions": {
                 "resource": {
@@ -342,7 +342,7 @@
             "shortDescriptor": "overstocked filters",
             "character": "harish",
             "morningMessage": "\"We've got higher priorities right now than air filters, lieutenant. I don't see why you're spending so much time on trivial items, if we can't even see the dust I don't see how it can kill us.\"",
-            "message": "TODO",
+            "message": "",
             "failMessage": "\"Maybe the future aliens that find our corpses will be impressed by your vast collection of air filters, but probably not.\"",
             "conditions": {
                 "resource": {
@@ -370,8 +370,8 @@
             "shortDescriptor": "overstocked parts",
             "character": "rupert",
             "morningMessage": "\"EXL, we're carrying as many repair materials as we can reasonably store. Any more would occupy space allocated to another resource, so we would have to destroy our excess and your efforts would be wasted.\"",
-            "message": "TODO",
-            "failMessage": "TODO",
+            "message": "",
+            "failMessage": "",
             "conditions": {
                 "resource": {
                     "type": "parts",
@@ -384,7 +384,7 @@
             "shortDescriptor": "overstocked parts",
             "character": "dora",
             "morningMessage": "\"Good morning! Well, no, bad morning. Those excess repair materials you brought in threaten to overflow into the food stores nearby. Do you want canned grassfruit mixed with hydraulic fluid? I'll bet they don't taste nearly as good as they sound!\"",
-            "message": "TODO",
+            "message": "",
             "failMessage": "\"What are you expecting us to do with even more repair materials? I can't ‘repair' our food with this stuff! Maybe if we were robots or something… Sometimes I wish I lived in a science fiction story.\"",
             "conditions": {
                 "resource": {
@@ -436,8 +436,8 @@
             "shortDescriptor": "found colony 11",
             "character": "annika",
             "morningMessage": "\"If only the good folks of the 11th Mission had waited… But if they chose to go out on foot, then they were surely desperate already.\"",
-            "message": "TODO",
-            "failMessage": "TODO",
+            "message": "",
+            "failMessage": "",
             "conditions": {
                 "coloniesFound": 10
             }
@@ -446,8 +446,8 @@
             "type": "daily",
             "shortDescriptor": "found colony 8",
             "morningMessage": "\"So you found the 8th Mission? Well, this place just gets worse and worse, doesn't it? Taking out that signal jammer might open up comms with other colonies though.\"",
-            "message": "TODO",
-            "failMessage": "TODO",
+            "message": "",
+            "failMessage": "",
             "conditions": {
                 "coloniesFound": 2
             }
@@ -472,7 +472,7 @@
             "message": "You spot what looks like an old abandoned cache from one of the other colonies. Inside, you find a feast's worth of toughskin tail that probably hasn't gone off yet.",
             "shortDescriptor": "found food cache",
             "resourceDelta": {
-                "food": 1
+                "food": 5
             },
             "conditions": {
                 "biome": "wetland"
@@ -483,7 +483,7 @@
             "message": "Suddenly, the area behind you erupts with a loud squelching noise. You see a horde of hexaslugs sliming towards you at top speed (which isn't that fast, but still). You drop some food to distract them and make your escape.",
             "shortDescriptor": "chased by hexaslugs",
             "resourceDelta": {
-                "food": -1
+                "food": -5
             },
             "conditions": {
                 "biome": "wetland"
@@ -494,7 +494,7 @@
             "message": "A tree near you starts shaking, and a toughskin jumps out. He scurries away, but his leap has knocked many nut pods from its branches.",
             "shortDescriptor": "gathered nut pods",
             "resourceDelta": {
-                "food": 1
+                "food": 5
             },
             "conditions": {
                 "biome": "forest"
@@ -505,7 +505,7 @@
             "message": "You get turned around in the seemingly endless forest and end up staying longer than you planned. You get really hungry.",
             "shortDescriptor": "got lost in a forest",
             "resourceDelta": {
-                "food": -1
+                "food": -5
             },
             "conditions": {
                 "biome": "forest"
@@ -516,7 +516,7 @@
             "message": "Driving past a spineplant, you notice something off about it. When you check, you realize it's hollowed out and filled with some creature's food stash.",
             "shortDescriptor": "found an animal's food stash",
             "resourceDelta": {
-                "food": 1
+                "food": 5
             },
             "conditions": {
                 "biome": "desert"
@@ -527,7 +527,7 @@
             "message": "You're cornered by a few toughskins who are hungry and have nothing to lose. You, however, have plenty to lose.",
             "shortDescriptor": "attacked by toughskins",
             "resourceDelta": {
-                "food": -1
+                "food": -5
             },
             "conditions": {
                 "biome": "desert"
@@ -538,7 +538,7 @@
             "message": "A gust of wind kicks up and you're suddenly surrounded by puffball plant spores. You recognize them as being excellent air filter material and grab some up.",
             "shortDescriptor": "puffballs blown to you",
             "resourceDelta": {
-                "filters": 1
+                "filters": 5
             },
             "conditions": {
                 "biome": "forest"
@@ -549,7 +549,7 @@
             "message": "The KEV is buffeted about by the wind, and some of the lighter materials you've gathered soar out the window.",
             "shortDescriptor": "puffballs blown out the window",
             "resourceDelta": {
-                "filters": -1
+                "filters": -5
             },
             "conditions": {
                 "biome": "forest"
@@ -560,7 +560,7 @@
             "message": "Driving across a shallow gulley of mud, you realize that what you thought was mud is actually submerged plants. The flesh acts, when dried, as an excellent air filter.",
             "shortDescriptor": "found tons of plants for filtering",
             "resourceDelta": {
-                "filters": 1
+                "filters": 5
             },
             "conditions": {
                 "biome": "wetland"
@@ -571,7 +571,7 @@
             "message": "The KEV splashes through a massive puddle, soaking some of the air filtration material you've gathered.",
             "shortDescriptor": "ruined some of your filtration material",
             "resourceDelta": {
-                "filters": -1
+                "filters": -5
             },
             "conditions": {
                 "biome": "wetland"
@@ -582,7 +582,7 @@
             "message": "You see a small cave ahead. Venturing inside, you see that the walls are covered in porous green stone - one of the best air filtration materials available on Kepple-B.",
             "shortDescriptor": "found cave full of filter stones",
             "resourceDelta": {
-                "filters": 1
+                "filters": 5
             },
             "conditions": {
                 "biome": "desert"
@@ -593,7 +593,7 @@
             "message": "You drive over a particularly large bump and the green porous stones in your pack jostle a bit too hard. Some of them crumble.",
             "shortDescriptor": "filter stones in your car crumble",
             "resourceDelta": {
-                "filters": -1
+                "filters": -5
             },
             "conditions": {
                 "biome": "desert"
@@ -604,7 +604,7 @@
             "message": "Some sort of fungal growth has killed off a whole grove of trees. Lucky for you, the dried up vines are perfect for patching things up back home.",
             "shortDescriptor": "found dead vines among fungus",
             "resourceDelta": {
-                "parts": 1
+                "parts": 5
             },
             "conditions": {
                 "biome": "forest"
@@ -615,7 +615,7 @@
             "message": "A swarm of hardshells engulfs the KEV. You leap out the door and wait for them to dissipate. Turns out, all they wanted was their husks back.",
             "shortDescriptor": "hardshells swarmed the KEV",
             "resourceDelta": {
-                "parts": -1
+                "parts": -5
             },
             "conditions": {
                 "biome": "forest"
@@ -626,7 +626,7 @@
             "message": "You find yourself passing through what seems like the Great Hexaslug Migration. Residue everywhere. You scoop it up for future use back at base.",
             "shortDescriptor": "found a ton of hexaslug residue",
             "resourceDelta": {
-                "parts": 1
+                "parts": 5
             },
             "conditions": {
                 "biome": "wetland"
@@ -637,7 +637,7 @@
             "message": "One of your KEV tires springs a leak. You use up some of your hexaslug residue to patch it.",
             "shortDescriptor": "tire sprung a leak",
             "resourceDelta": {
-                "parts": -1
+                "parts": -5
             },
             "conditions": {
                 "biome": "wetland"
@@ -648,7 +648,7 @@
             "message": "It looks like a nibbler was burrowing into the surrounding spineplants. There are chunks of its paste-like flesh everywhere. You gather up as much as you can.",
             "shortDescriptor": "nibbler found spineplant flesh",
             "resourceDelta": {
-                "parts": 1
+                "parts": 5
             },
             "conditions": {
                 "biome": "desert"
@@ -659,7 +659,7 @@
             "message": "The rough ride is causing all of the things you've gathered to fly around the cab. You're worried about losing precious goods so you use some vine pieces to tie it all down.",
             "shortDescriptor": "tied down loose articles",
             "resourceDelta": {
-                "parts": -1
+                "parts": -5
             },
             "conditions": {
                 "biome": "desert"
@@ -670,7 +670,7 @@
             "message": "You haven't seen it rain on Kepple-B before, but the bucket plants in this area are filled with water. You pour it all into the canister on your KEV.",
             "shortDescriptor": "tied down loose articles",
             "resourceDelta": {
-                "water": 1
+                "water": 5
             },
             "conditions": {
                 "biome": "forest"
@@ -681,7 +681,7 @@
             "message": "You chance upon a toughskin laying in a clearing. It looks hurt. You leave it with a small pool of water and hope it helps.",
             "shortDescriptor": "tried to save a toughskin",
             "resourceDelta": {
-                "water": -1
+                "water": -5
             },
             "conditions": {
                 "biome": "forest"
@@ -692,7 +692,7 @@
             "message": "For once, the pool of water next to you is clear and cool. It must be fed by a large underground spring. You put as much water as you can carry into your canister.",
             "shortDescriptor": "found a big spring",
             "resourceDelta": {
-                "water": 1
+                "water": 5
             },
             "conditions": {
                 "biome": "wetland"
@@ -703,7 +703,7 @@
             "message": "The cap on your water canister flies open and you lose some water while you're trying to get it closed again.",
             "shortDescriptor": "had an issue with water storage",
             "resourceDelta": {
-                "water": -1
+                "water": -5
             },
             "conditions": {
                 "biome": "wetland"
