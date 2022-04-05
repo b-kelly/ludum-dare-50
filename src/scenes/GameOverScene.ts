@@ -79,7 +79,7 @@ export class GameOverScene extends CustomScene {
                 0,
                 GeneralAssets.colonyEventBackground
             ),
-            pages: [text, ["TODO STATS"], ["TODO CREDITS"]],
+            pages: [text, ["THANK YOU SO MUCH FOR PLAYING OUR GAME!"], ["CLICK TO PLAY AGAIN!"]],
             padding: PADDING,
             buttonText: "Start again?",
         }).on("proceedclick", () => {
