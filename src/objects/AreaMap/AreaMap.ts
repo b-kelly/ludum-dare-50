@@ -54,7 +54,7 @@ const resourceSpawnRate: Record<
 const STATEMENT_FILL_RATE = 0.1;
 
 // how likely is a statement piece converted to a large piece?
-const STATEMENT_LARGE_CONVERT_RATE = 0.1;
+//TODO const STATEMENT_LARGE_CONVERT_RATE = 0.1;
 
 /** Generates a connected "cave" with cellular automata */
 export class AreaMap {

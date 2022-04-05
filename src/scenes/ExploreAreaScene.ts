@@ -5,11 +5,14 @@ import { AreaResource } from "../objects/AreaMap/AreaResource";
 import { AreaSpriteSheet } from "../objects/AreaMap/AreaSpriteSheet";
 import { CustomScene } from "../objects/CustomScene";
 import { Cell, CellBiome } from "../objects/WorldMap/shared";
-import { GeneralAssets, SfxAssets, TILE_WIDTH } from "../shared";
+import { GeneralAssets, SfxAssets, TILE_WIDTH, UiAssets } from "../shared";
 import { Button } from "../UI/Button";
+import { TextBox } from "../UI/TextBox";
+import { DayReviewScene } from "./DayReviewScene";
 import { OverworldScene } from "./OverworldScene";
 import { StatusUiScene, STATUS_UI_HEIGHT } from "./StatusUiScene";
 
+const PADDING = 8;
 export class ExploreAreaScene extends CustomScene {
     static readonly KEY = "ExploreAreaScene";
     private map: AreaMap;
@@ -18,6 +21,7 @@ export class ExploreAreaScene extends CustomScene {
 
     private player: AreaPlayer;
     private creatures: Phaser.GameObjects.Group;
+    private leaveButton: Button;
 
     constructor() {
         super({ key: ExploreAreaScene.KEY });
@@ -142,10 +146,9 @@ export class ExploreAreaScene extends CustomScene {
         this.physics.add.collider(this.player, layer);
         this.physics.add.collider(this.creatures, layer);
 
-        const padding = 8;
-        new Button(this, {
-            x: this.bounds.width - padding,
-            y: STATUS_UI_HEIGHT + padding,
+        this.leaveButton = new Button(this, {
+            x: this.bounds.width - PADDING,
+            y: STATUS_UI_HEIGHT + PADDING,
             text: "Leave",
             onClick: () => this.leaveArea(),
         })
@@ -199,7 +202,7 @@ export class ExploreAreaScene extends CustomScene {
                                     AreaCreature.DAMAGE_AMOUNT
                                 )
                             ) {
-                                // TODO DEAD
+                                this.killPlayer();
                             }
                         }
                     }
@@ -235,6 +238,28 @@ export class ExploreAreaScene extends CustomScene {
     private translateCoord(xIndex: number, yIndex: number) {
         // swap the y and x so *our* cells match with the tilemap cells
         return this.tileMap.tileToWorldXY(yIndex, xIndex);
+    }
+
+    private killPlayer() {
+        this.player.destroy();
+        this.leaveButton.setDisabled(true);
+        new TextBox(this, {
+            x: PADDING,
+            y: STATUS_UI_HEIGHT,
+            backgroundAsset: this.add.image(0, 0, UiAssets.tutorialPane),
+            buttonText: "Back to base",
+            padding: 64,
+            pages: [["YOU DIED"]],
+            buttonAlign: "center",
+        })
+            .setScrollFactor(0, 0, true)
+            .on("proceedclick", () => {
+                this.fadeToScene(DayReviewScene.KEY, {
+                    dailyHaul: this.global.currentDay.haul,
+                });
+            });
+        // popup
+        // transition
     }
 
     private createAnimations() {
