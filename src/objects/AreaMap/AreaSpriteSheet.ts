@@ -47,7 +47,8 @@ export class AreaSpriteSheet {
             return this.getRandomWallFrame();
         }
 
-        throw `Unable to get frame for CellState: ${String(state)} (${CellState[state]
+        throw `Unable to get frame for CellState: ${String(state)} (${
+            CellState[state]
         })`;
     }
 
@@ -101,7 +102,7 @@ export class AreaSpriteSheet {
         const rowStartIndex = this.rowStart(rowNum);
         return Phaser.Math.RND.integerInRange(
             rowStartIndex,
-            rowStartIndex + TILES_SHEET_WIDTH * rowCount
+            rowStartIndex + TILES_SHEET_WIDTH * rowCount - 1
         );
     }
 
