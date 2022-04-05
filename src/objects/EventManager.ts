@@ -97,7 +97,7 @@ export class EventManager {
             resourceDelta: dailyEvent?.resourceDelta,
             resourcesPrior: resources,
             gameOver: false,
-            upgrade: dailyEvent.upgrade,
+            upgrade: dailyEvent?.upgrade,
         };
     }
 
