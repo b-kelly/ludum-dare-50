@@ -7,6 +7,7 @@ export declare class ExploreAreaScene extends CustomScene {
     private biome;
     private player;
     private creatures;
+    private leaveButton;
     constructor();
     init(data: Cell): void;
     preload(): void;
@@ -15,5 +16,6 @@ export declare class ExploreAreaScene extends CustomScene {
     private spawnResources;
     private leaveArea;
     private translateCoord;
+    private killPlayer;
     private createAnimations;
 }
