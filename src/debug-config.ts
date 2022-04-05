@@ -27,7 +27,7 @@ function debugGenerateText() {
 export const debugConfig: DebugConfig = {
     sceneKey: ExploreAreaScene.KEY,
     data: {
-        type: "colonies",
+        biome: "desert",
     },
     skipTutorial: false,
 };
