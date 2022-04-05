@@ -10,6 +10,8 @@ interface AreaCell {
     state: CellState;
     resource?: keyof Resources | "enemy";
     rotation?: number;
+    wallType?: "wall" | "corner";
+    fillType?: "regular" | "small" | "large";
 }
 /** Generates a connected "cave" with cellular automata */
 export declare class AreaMap {
@@ -52,6 +54,7 @@ export declare class AreaMap {
     private runSimulationStep;
     /** Mark all the cavern walls in place, placing resources on them if able */
     private markWallsAndPlaceResources;
+    private determineWallType;
     /** Finds an open space near the middle of the map for the player to spawn */
     private findSuitableStartLocation;
     private detectAndAlterCaverns;
