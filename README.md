@@ -59,7 +59,7 @@ Ensure GitHub pages is enabled for your repository. The project will autobuild a
 -   [x] (HIGH) Implement all gameover states
 -   [x] (HIGH) area music sometimes doesn't start
 
--   [ ] (MID) rotate tiles in exploration areas properly
+-   [x] (MID) rotate tiles in exploration areas properly
 -   [ ] (MID) add statement pieces to exploration areas
 -   [x] (MID) implement unique home base tile
 -   [ ] (MID) fade in base-bg, and then wait a second before fading in the text overlay. otherwise they will never see the base bg.

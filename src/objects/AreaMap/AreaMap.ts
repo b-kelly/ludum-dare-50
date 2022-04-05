@@ -12,6 +12,8 @@ interface AreaCell {
     state: CellState;
     resource?: keyof Resources | "enemy";
     rotation?: number;
+    wallType?: "wall" | "corner";
+    fillType?: "regular" | "small" | "large";
 }
 
 const resourceSpawnRate: Record<
@@ -47,6 +49,12 @@ const resourceSpawnRate: Record<
         enemy: 0.03,
     },
 } as const;
+
+// how likely is a fill slot a statement piece?
+const STATEMENT_FILL_RATE = 0.1;
+
+// how likely is a statement piece converted to a large piece?
+const STATEMENT_LARGE_CONVERT_RATE = 0.1;
 
 /** Generates a connected "cave" with cellular automata */
 export class AreaMap {
@@ -244,13 +252,20 @@ export class AreaMap {
         for (let y = 0; y < this._size.height; y++) {
             for (let x = 0; x < this._size.width; x++) {
                 const cell = map[y][x];
-                if (
-                    cell.state === CellState.Filled &&
-                    this.getOpenNeighbors(map, x, y) > 0
-                ) {
+                const neighbors = this.getOpenNeighborCoords(map, x, y);
+                if (cell.state === CellState.Filled && neighbors.length > 0) {
                     map[y][x] = {
                         state: CellState.Wall,
+                        wallType: "wall",
+                        rotation: 0,
                     };
+                    this.determineWallType(map, x, y, neighbors);
+                } else if (cell.state === CellState.Filled) {
+                    map[y][x].fillType =
+                        Phaser.Math.RND.frac() <= STATEMENT_FILL_RATE
+                            ? "small"
+                            : "regular";
+                    // TODO small -> large conversion
                 } else if (cell.state === CellState.Open) {
                     entries.forEach((kv) => {
                         if (Phaser.Math.RND.frac() <= kv[1]) {
@@ -261,6 +276,57 @@ export class AreaMap {
                 }
             }
         }
+    }
+
+    private determineWallType(
+        map: AreaCell[][],
+        x: number,
+        y: number,
+        neighbors: {
+            x: number;
+            y: number;
+        }[]
+    ) {
+        const cell = map[y][x];
+
+        const hasDirection = {
+            n: false,
+            s: false,
+            e: false,
+            w: false,
+        };
+
+        neighbors.forEach((n) => {
+            hasDirection.n ||= n.y < y;
+            hasDirection.s ||= n.y > y;
+            hasDirection.e ||= n.x > x;
+            hasDirection.w ||= n.x < x;
+        });
+
+        if (hasDirection.n && hasDirection.e) {
+            cell.wallType = "corner";
+            cell.rotation = 90;
+        } else if (hasDirection.n && hasDirection.w) {
+            cell.wallType = "corner";
+        } else if (hasDirection.n) {
+            cell.rotation = 0;
+        } else if (hasDirection.s && hasDirection.e) {
+            cell.wallType = "corner";
+            cell.rotation = 180;
+        } else if (hasDirection.s && hasDirection.w) {
+            cell.wallType = "corner";
+            cell.rotation = 270;
+        } else if (hasDirection.s) {
+            cell.rotation = 180;
+        } else if (hasDirection.e) {
+            cell.rotation = 90;
+        } else if (hasDirection.w) {
+            cell.rotation = -90;
+        }
+
+        cell.rotation = Phaser.Math.DegToRad(cell.rotation);
+
+        return 0;
     }
 
     /** Finds an open space near the middle of the map for the player to spawn */

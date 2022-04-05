@@ -111,6 +111,25 @@ export class ExploreAreaScene extends CustomScene {
         this.physics.world.setBounds(0, 0, width, height);
         this.physics.world.setBoundsCollision();
 
+        // update the sprites
+        layer.forEachTile((tile: Phaser.Tilemaps.Tile) => {
+            const cell = this.map.map[tile.x][tile.y];
+
+            if (cell.wallType === "corner") {
+                layer.fill(
+                    aSSheet.getRandomCornerFrame(),
+                    tile.x,
+                    tile.y,
+                    0,
+                    0
+                );
+            }
+
+            if (cell.rotation) {
+                tile.rotation = cell.rotation;
+            }
+        });
+
         const coords = this.translateCoord(
             this.map.startLocation.x,
             this.map.startLocation.y
