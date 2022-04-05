@@ -155,10 +155,15 @@ export class DayStartScene extends CustomScene {
             characterNum
         );
 
+        let placeholderText = characterText + ": " + "”Nothing much for you today, EXL. Up and at 'em!”";
+        if (dailyEvent?.message != null && dailyEvent?.message != "TODO") {
+            placeholderText = characterText + ": ”" + dailyEvent?.message + "”";
+        }
+
         const dialogue = this.add.text(
             paneX + portrait.width + PADDING - ELPADDING,
             title.y + title.height + ELPADDING,
-            characterText + ": ”" + dailyEvent?.morningMessage + "”",
+            placeholderText,
             {
                 ...baseTextOptions,
                 fontSize: "14pt",

@@ -192,7 +192,7 @@ export class DayReviewScene extends CustomScene {
         );
 
         let placeholderText = characterText + ": " + "”Good job today, EXL.”";
-        if (this.dailyEventOutcome?.message != null) {
+        if (this.dailyEventOutcome?.message != null && this.dailyEventOutcome?.message != "TODO") {
             placeholderText = characterText + ": ”" + this.dailyEventOutcome?.message + "”";
         }
 
@@ -204,7 +204,7 @@ export class DayReviewScene extends CustomScene {
                 ...baseTextOptions,
                 fontSize: "14pt",
                 wordWrap: {
-                    width: paneWidth - portrait.width + PADDING,
+                    width: paneWidth - (portrait.width + PADDING),
                 },
             }
         );

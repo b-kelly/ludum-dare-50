@@ -7,6 +7,7 @@ body {
     font-family:'Courier New', Courier, monospace;
     color:cornflowerblue;
     background-color: black;
+    margin-bottom: 32px !important;
 }
 
 .game-container {
@@ -40,4 +41,20 @@ body {
 
 a {
     color:lightblue;
+}
+
+.resource-table {
+    text-align: left;
+    margin: 32 auto;
+    background-color: darkblue;
+    color: white;
+    border: 1px solid cornflowerblue;
+}
+
+td {
+    border: 1px solid cornflowerblue;
+}
+
+.endofpage {
+    margin-bottom: 32px !important;
 }
